@@ -6,6 +6,84 @@ environment:
   NASM_PREFIX: C:\Program Files\NASM\
   EDK_TOOLS_BIN: C:\projects\edk2-BaseTools-win32
 
+  matrix:
+    # IA32 Build
+    - ARCH: IA32
+      BUILD_TARGET: DEBUG
+      BUILD_TOOLS: VS2015
+    - ARCH: IA32
+      BUILD_TARGET: DEBUG
+      BUILD_TOOLS: VS2015x86
+    - ARCH: IA32
+      BUILD_TARGET: RELEASE
+      BUILD_TOOLS: VS2015
+    - ARCH: IA32
+      BUILD_TARGET: RELEASE
+      BUILD_TOOLS: VS2015x86
+    - ARCH: IA32
+      BUILD_TARGET: NOOPT
+      BUILD_TOOLS: VS2015
+    - ARCH: IA32
+      BUILD_TARGET: NOOPT
+      BUILD_TOOLS: VS2015x86
+    # X64 Build
+    - ARCH: X64
+      BUILD_TARGET: DEBUG
+      BUILD_TOOLS: VS2015
+    - ARCH: X64
+      BUILD_TARGET: DEBUG
+      BUILD_TOOLS: VS2015x86
+    - ARCH: X64
+      BUILD_TARGET: RELEASE
+      BUILD_TOOLS: VS2015
+    - ARCH: X64
+      BUILD_TARGET: RELEASE
+      BUILD_TOOLS: VS2015x86
+    - ARCH: X64
+      BUILD_TARGET: NOOPT
+      BUILD_TOOLS: VS2015
+    - ARCH: X64
+      BUILD_TARGET: NOOPT
+      BUILD_TOOLS: VS2015x86
+    # ARM Build
+    - ARCH: ARM
+      BUILD_TARGET: DEBUG
+      BUILD_TOOLS: VS2015
+    - ARCH: ARM
+      BUILD_TARGET: DEBUG
+      BUILD_TOOLS: VS2015x86
+    - ARCH: ARM
+      BUILD_TARGET: RELEASE
+      BUILD_TOOLS: VS2015
+    - ARCH: ARM
+      BUILD_TARGET: RELEASE
+      BUILD_TOOLS: VS2015x86
+    - ARCH: ARM
+      BUILD_TARGET: NOOPT
+      BUILD_TOOLS: VS2015
+    - ARCH: ARM
+      BUILD_TARGET: NOOPT
+      BUILD_TOOLS: VS2015x86
+    # AARCH64 Build
+    - ARCH: AARCH64
+      BUILD_TARGET: DEBUG
+      BUILD_TOOLS: VS2015
+    - ARCH: AARCH64
+      BUILD_TARGET: DEBUG
+      BUILD_TOOLS: VS2015x86
+    - ARCH: AARCH64
+      BUILD_TARGET: RELEASE
+      BUILD_TOOLS: VS2015
+    - ARCH: AARCH64
+      BUILD_TARGET: RELEASE
+      BUILD_TOOLS: VS2015x86
+    - ARCH: AARCH64
+      BUILD_TARGET: NOOPT
+      BUILD_TOOLS: VS2015
+    - ARCH: AARCH64
+      BUILD_TARGET: NOOPT
+      BUILD_TOOLS: VS2015x86
+
 install:
   # Clone submodules
   - git submodule init -q
@@ -23,8 +101,6 @@ install:
   # Setup VS2015 environment variables
   - '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64'
 
-build_script:
-  - nmake -f Makefile.win32 build
-  - nmake -f Makefile.win32 build-ovmf
+build_script: nmake -f Makefile.win32 build
 
 test: off

@@ -1,15 +1,25 @@
 # Updraft
 
-## Requirements
+[![Build status](https://ci.appveyor.com/api/projects/status/gdgm3pft3gcovlrh?svg=true)](https://ci.appveyor.com/project/prince0203/updraft)
 
-Follow [instructions](https://github.com/tianocore/tianocore.github.io/wiki/Getting-Started-with-EDK-II) to set up requirements.
-
-## Building
+## Building Updraft
 
 ### Windows
 
-```bash
+#### Requirements
+
+* [Nasm](http://www.nasm.us/)
+  * Install and configure `NASM_PREFIX` env to point `C:\path\to\nasm\`. **(Don't forget the trailing backslash character!)**
+* [ASL Compiler](https://acpica.org/downloads/binary-tools)
+  * Download and extract zip to `C:\ASL`.
+* [edk2-BaseTools-win32](https://github.com/tianocore/edk2-BaseTools-win32)
+  * Clone the repository and configure `EDK_TOOLS_BIN` env to `C:\path\to\edk2-BaseTools-win32`.
+* [QEMU](https://www.qemu.org/)
+
+```shell
 # VS2015 command prompt
+> git submodule init
+> git submodule update
 > nmake -f Makefile.win32 build
 > nmake -f Makefile.win32 build-ovmf
 > nmake -f Makefile.win32 run

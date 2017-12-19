@@ -1,0 +1,38 @@
+all: build run
+
+build:
+	-rmdir /s /q edk2\UpdraftPkg dist
+	xcopy /e /q src\UpdraftPkg "edk2\UpdraftPkg\"
+	cd edk2 && \
+	Edk2Setup.bat > nul && \
+	build --arch=X64 \
+		--platform=UpdraftPkg/UpdraftPkg.dsc \
+		--buildtarget=RELEASE \
+		--tagname VS2015 \
+		-n $(NUMBER_OF_PROCESSORS)
+	mkdir dist && mkdir dist\image && mkdir dist\image\EFI && mkdir dist\image\EFI\BOOT
+	copy edk2\Build\UpdraftPkgX64\RELEASE_VS2015\X64\Updraft.efi dist\image\EFI\BOOT\BOOTX64.efi
+
+run:
+	copy edk2\Build\OvmfX64\RELEASE_VS2015x86\FV\OVMF_VARS.fd dist\OVMF_VARS.fd
+	qemu-system-x86_64 \
+		-drive if=pflash,format=raw,readonly,file=edk2\Build\OvmfX64\RELEASE_VS2015x86\FV\OVMF_CODE.fd \
+		-drive if=pflash,format=raw,file=dist\OVMF_VARS.fd \
+		-drive if=ide,format=raw,file=fat:rw:dist\image,index=0,media=disk
+
+clean:
+	-rmdir /s /q edk2\UpdraftPkg
+	-rmdir /s /q dist
+	-rmdir /s /q edk2\build\UpdraftPkgX64
+
+build-ovmf:
+	cd edk2 && \
+	Edk2Setup.bat > nul && \
+	build --arch=X64 \
+		--platform=OvmfPkg/OvmfPkgX64.dsc \
+		--buildtarget=RELEASE \
+		--tagname VS2015x86 \
+		-n $(NUMBER_OF_PROCESSORS)
+
+clean-ovmf:
+	-rmdir /s /q edk2\build\OvmfX64

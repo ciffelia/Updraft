@@ -1,0 +1,29 @@
+[Defines]
+  INF_VERSION                    = 0x00010006
+  BASE_NAME                      = Updraft
+  FILE_GUID                      = 1ccb8f0d-da82-46b8-b371-5967e2d31f59
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 0.1
+  ENTRY_POINT                    = UefiMain
+
+[Sources]
+  Main.cpp
+  UefiSystem.cpp
+  Logger.cpp
+  Graphics/Point.cpp
+  Graphics/Rect.cpp
+  Graphics/Screen.cpp
+
+[Packages]
+  MdePkg/MdePkg.dec
+  StdLib/StdLib.dec
+
+[LibraryClasses]
+  UefiLib
+  UefiApplicationEntryPoint
+  BaseCpuLib
+  LibC
+  LibStdio
+
+[Protocols]
+  gEfiGraphicsOutputProtocolGuid

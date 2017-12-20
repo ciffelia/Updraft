@@ -20,9 +20,7 @@
 # VS2015 command prompt
 > git submodule init
 > git submodule update
-> nmake -f Makefile.win32 build
-> nmake -f Makefile.win32 build-ovmf
-> nmake -f Makefile.win32 run
+> nmake -f Makefile.win32 build build-ovmf run
 ```
 
 ### Linux/Unix

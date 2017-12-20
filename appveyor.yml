@@ -107,6 +107,11 @@ install:
   # Setup VS2015 environment variables
   - '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64'
 
-build_script: nmake -f Makefile.win32 build
+build_script:
+  - nmake -f Makefile.win32 build
+  - cd dist\image && 7z a ../../UpDraft.zip
+
+artifacts:
+  - path: UpDraft.zip
 
 test: off

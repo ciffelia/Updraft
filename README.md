@@ -13,7 +13,7 @@
 * [ASL Compiler](https://acpica.org/downloads/binary-tools)
   * Download and extract zip to `C:\ASL`.
 * [edk2-BaseTools-win32](https://github.com/tianocore/edk2-BaseTools-win32)
-  * Clone the repository and configure `EDK_TOOLS_BIN` env to `C:\path\to\edk2-BaseTools-win32`.
+  * Clone the repository and configure `EDK_TOOLS_BIN` env to point `C:\path\to\edk2-BaseTools-win32`.
 * [QEMU](https://www.qemu.org/)
 
 ```shell

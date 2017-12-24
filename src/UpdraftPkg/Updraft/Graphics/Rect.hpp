@@ -16,7 +16,7 @@ struct Rect {
     , size(_size)
   { }
 
-  constexpr Rect(const uint32 x, const uint32 y, const uint32 width, const uint32 height)
+  constexpr Rect(const int32 x, const int32 y, const uint32 width, const uint32 height)
     : pos(x, y)
     , size(width, height)
   { }

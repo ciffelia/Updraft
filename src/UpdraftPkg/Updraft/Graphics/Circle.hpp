@@ -15,7 +15,7 @@ struct Circle {
     , r(_r)
   { }
 
-  constexpr Circle(const uint32 x, const uint32 y, const uint32 _r)
+  constexpr Circle(const int32 x, const int32 y, const uint32 _r)
     : pos(x, y)
     , r(_r)
   { }

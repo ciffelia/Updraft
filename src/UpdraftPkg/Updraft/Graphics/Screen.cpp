@@ -9,7 +9,7 @@ Size Screen::size()
 
 Point Screen::center()
 {
-  return {width() / 2, height() / 2};
+  return {(int32)width() / 2, (int32)height() / 2};
 }
 
 Rect Screen::rect()

@@ -8,6 +8,7 @@
 
 [Sources]
   Main.cpp
+  Math.cpp
   UefiSystem.cpp
   Logger.cpp
   Graphics/Point.cpp

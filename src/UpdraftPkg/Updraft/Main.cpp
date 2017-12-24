@@ -18,6 +18,7 @@ EFI_STATUS UefiMain(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
   constexpr Color color = Palette::Orange;
   Logger::Println_("Draw a rectangle! ", rect, " Color: ", color);
   rect.draw(color);
+  Circle(200, 300, 125).draw(Palette::Skyblue);
 
   UefiSystem::loop_forever();
 

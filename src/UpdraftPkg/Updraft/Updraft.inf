@@ -12,6 +12,7 @@
   UefiSystem.cpp
   Logger.cpp
   Graphics/Point.cpp
+  Graphics/Circle.cpp
   Graphics/Rect.cpp
   Graphics/Screen.cpp
 

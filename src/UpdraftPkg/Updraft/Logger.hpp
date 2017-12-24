@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Graphics/Circle.hpp"
 #include "Graphics/Color.hpp"
 #include "Graphics/Point.hpp"
 #include "Graphics/Rect.hpp"
@@ -45,6 +46,8 @@ namespace Logger {
   // void Print_(const RETURN_STATUS value);
 
   void Print_(const bool value);
+
+  void Print_(const Circle value);
 
   void Print_(const Color value);
 

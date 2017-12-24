@@ -103,6 +103,11 @@ void Logger::Print_(const bool value)
   Print_(value ? "true" : "false");
 }
 
+void Logger::Print_(const Circle value)
+{
+  Print_('(', value.center.x, ',', value.center.y, ',', value.r, ')');
+}
+
 void Logger::Print_(const Color value)
 {
   Print_('(', value.r, ',', value.g, ',', value.b, ')');

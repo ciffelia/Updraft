@@ -10,7 +10,7 @@ class UefiSystem {
 
   static void locate_gop();
 
-  // static void check_pixel_format();
+  static void check_pixel_format();
 
   static void clear_screen();
 

@@ -35,23 +35,15 @@ void UefiSystem::locate_gop()
   }
 }
 
-// void UefiSystem::check_pixel_format()
-// {
-//   const auto pixelFormat = GraphicsOutputProtocol->Mode->Info->PixelFormat;
-//   if(pixelFormat == PixelRedGreenBlueReserved8BitPerColor)
-//   {
-//     Logger::Println_("Pixel format is PixelRedGreenBlueReserved8BitPerColor");
-//   }
-//   else if(pixelFormat == PixelBlueGreenRedReserved8BitPerColor)
-//   {
-//     Logger::Println_("Pixel format is PixelBlueGreenRedReserved8BitPerColor");
-//   }
-//   else
-//   {
-//     Logger::Println_("Pixel format is not supported.");
-//     UefiSystem::loop_forever();
-//   }
-// }
+void UefiSystem::check_pixel_format()
+{
+  const auto pixelFormat = GraphicsOutputProtocol->Mode->Info->PixelFormat;
+  if(pixelFormat != PixelRedGreenBlueReserved8BitPerColor && pixelFormat != PixelBlueGreenRedReserved8BitPerColor)
+  {
+    Logger::Println_("Error: Not supported pixel format.");
+    UefiSystem::loop_forever();
+  }
+}
 
 void UefiSystem::clear_screen()
 {
@@ -67,7 +59,7 @@ void UefiSystem::initialize(EFI_SYSTEM_TABLE *ST)
 
   locate_gop();
 
-  // check_pixel_format();
+  check_pixel_format();
 
   clear_screen();
 }

@@ -7,4 +7,9 @@ namespace Math {
   {
     return pow(x, y);
   }
+
+  double Sqrt(const double x)
+  {
+    return sqrt(x);
+  }
 }

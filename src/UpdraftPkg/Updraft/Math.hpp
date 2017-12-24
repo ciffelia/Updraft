@@ -2,4 +2,6 @@
 
 namespace Math {
   double Pow(const double x, const double y);
+
+  double Sqrt(const double x);
 }

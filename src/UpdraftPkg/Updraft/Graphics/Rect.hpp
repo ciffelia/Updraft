@@ -9,6 +9,8 @@ struct Rect {
   Point pos;
   Size size;
 
+  constexpr Rect() = default;
+
   constexpr Rect(const Point _pos, const Size _size)
     : pos(_pos)
     , size(_size)

@@ -8,6 +8,11 @@ namespace Math {
     return pow(x, y);
   }
 
+  double Square(const double x)
+  {
+    return x * x;
+  }
+
   double Sqrt(const double x)
   {
     return sqrt(x);

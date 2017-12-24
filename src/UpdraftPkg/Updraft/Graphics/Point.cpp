@@ -6,7 +6,13 @@ extern "C" {
 }
 
 #include "../UefiSystem.hpp"
+#include "../Math.hpp"
 #include "Screen.hpp"
+
+double Point::distanceFrom(const Point pos) const
+{
+  return Math::Sqrt(Math::Square(pos.x - x) + Math::Square(pos.y - y));
+}
 
 void Point::draw(const Color color) const
 {

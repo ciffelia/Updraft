@@ -12,5 +12,7 @@ struct Point {
     : x(_x), y(_y)
   { }
 
+  double distanceFrom(const Point pos) const;
+
   void draw(const Color color) const;
 };

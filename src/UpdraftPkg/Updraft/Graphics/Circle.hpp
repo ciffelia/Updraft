@@ -5,18 +5,18 @@
 #include "Point.hpp"
 
 struct Circle {
-  Point pos;
+  Point center;
   uint32 r;
 
   constexpr Circle() = default;
 
-  constexpr Circle(const Point _pos, const uint32 _r)
-    : pos(_pos)
+  constexpr Circle(const Point _center, const uint32 _r)
+    : center(_center)
     , r(_r)
   { }
 
   constexpr Circle(const int32 x, const int32 y, const uint32 _r)
-    : pos(x, y)
+    : center(x, y)
     , r(_r)
   { }
 

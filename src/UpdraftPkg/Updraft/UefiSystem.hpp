@@ -5,6 +5,8 @@ extern "C" {
 #include <Protocol/GraphicsOutput.h>
 }
 
+#include "Types.hpp"
+
 class UefiSystem {
   static void release_watchdog_timer();
 
@@ -12,7 +14,11 @@ class UefiSystem {
 
   static void check_pixel_format();
 
-  static void clear_screen();
+  static bool is_proper_graphics_mode(const EFI_GRAPHICS_OUTPUT_MODE_INFORMATION *modeInfo, const uint32 horizontalResolution, const uint32 verticalResolution);
+
+  static uint32 get_proper_graphics_mode(const uint32 horizontalResolution, const uint32 verticalResolution);
+
+  static void set_video_mode(const uint32 mode);
 
 public:
   static EFI_SYSTEM_TABLE *SystemTable;

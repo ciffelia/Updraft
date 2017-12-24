@@ -5,8 +5,6 @@ extern "C" {
 }
 
 #include "Logger.hpp"
-#include "Graphics/ColorPalette.hpp"
-#include "Graphics/Screen.hpp"
 
 EFI_SYSTEM_TABLE *UefiSystem::SystemTable = nullptr;
 
@@ -45,10 +43,43 @@ void UefiSystem::check_pixel_format()
   }
 }
 
-void UefiSystem::clear_screen()
+bool UefiSystem::is_proper_graphics_mode(const EFI_GRAPHICS_OUTPUT_MODE_INFORMATION *modeInfo, const uint32 horizontalResolution, const uint32 verticalResolution)
 {
+  return (modeInfo->PixelFormat == PixelBlueGreenRedReserved8BitPerColor || modeInfo->PixelFormat == PixelRedGreenBlueReserved8BitPerColor) &&
+    modeInfo->HorizontalResolution == horizontalResolution &&
+    modeInfo->VerticalResolution == verticalResolution;
+}
+
+uint32 UefiSystem::get_proper_graphics_mode(const uint32 horizontalResolution, const uint32 verticalResolution)
+{
+  for(uint32 i = 0; i < GraphicsOutputProtocol->Mode->MaxMode; i++){
+    EFI_GRAPHICS_OUTPUT_MODE_INFORMATION *modeInfo;
+    uintn sizeOfModeInfo;
+
+    const auto status = GraphicsOutputProtocol->QueryMode(GraphicsOutputProtocol, i, &sizeOfModeInfo, &modeInfo);
+    if(EFI_ERROR(status))
+    {
+      Logger::Println_("Error: ", status, " on query video mode.");
+      UefiSystem::loop_forever();
+    }
+    else if(is_proper_graphics_mode(modeInfo, horizontalResolution, verticalResolution))
+    {
+      return i;
+    }
+  }
+
+  return 0;
+}
+
+void UefiSystem::set_video_mode(const uint32 mode)
+{
+  const auto status = GraphicsOutputProtocol->SetMode(GraphicsOutputProtocol, mode);
+  if(EFI_ERROR(status))
+  {
+    Logger::Println_("Error: ", status, " on set video mode.");
+    UefiSystem::loop_forever();
+  }
   Logger::ClearPrint();
-  Screen::rect().draw(Palette::Black);
 }
 
 void UefiSystem::initialize(EFI_SYSTEM_TABLE *ST)
@@ -61,7 +92,7 @@ void UefiSystem::initialize(EFI_SYSTEM_TABLE *ST)
 
   check_pixel_format();
 
-  clear_screen();
+  set_video_mode(get_proper_graphics_mode(800, 600));
 }
 
 void UefiSystem::loop_forever()

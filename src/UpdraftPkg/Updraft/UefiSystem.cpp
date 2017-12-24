@@ -13,13 +13,13 @@ EFI_SYSTEM_TABLE *UefiSystem::SystemTable = nullptr;
 EFI_GRAPHICS_OUTPUT_PROTOCOL *UefiSystem::GraphicsOutputProtocol = nullptr;
 
 // ウォッチドッグタイマを解除
-// これをやらないと起動後5分で再起動する
+// これをやらないと起動後5分で再起動するらしい
 void UefiSystem::release_watchdog_timer()
 {
   const EFI_STATUS status = SystemTable->BootServices->SetWatchdogTimer(0, 0, 0, nullptr);
   if(EFI_ERROR(status))
   {
-    Logger::Println_(status, " on UEFI Initialization.");
+    Logger::Println_("Error: ", status, " on UEFI initialization.");
     loop_forever();
   }
 }
@@ -30,7 +30,7 @@ void UefiSystem::locate_gop()
     SystemTable->BootServices->LocateProtocol(&gEfiGraphicsOutputProtocolGuid, NULL, (void **)&GraphicsOutputProtocol);
   if(EFI_ERROR(status))
   {
-    Logger::Println_(status, " on Locate EFI Graphics Output Protocol.");
+    Logger::Println_("Error: ", status, " on locate EFI Graphics Output Protocol.");
     UefiSystem::loop_forever();
   }
 }

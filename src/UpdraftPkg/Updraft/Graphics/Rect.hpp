@@ -6,16 +6,16 @@
 #include "Size.hpp"
 
 struct Rect {
-  Point point;
+  Point pos;
   Size size;
 
-  constexpr Rect(const Point _point, const Size _size)
-    : point(_point)
+  constexpr Rect(const Point _pos, const Size _size)
+    : pos(_pos)
     , size(_size)
   { }
 
   constexpr Rect(const uint32 x, const uint32 y, const uint32 width, const uint32 height)
-    : point(x, y)
+    : pos(x, y)
     , size(width, height)
   { }
 

@@ -110,7 +110,7 @@ void Logger::Print_(const Point value)
 
 void Logger::Print_(const Rect value)
 {
-  Print_('(', value.point.x, ',', value.point.y, ',', value.size.width, ',', value.size.height, ')');
+  Print_('(', value.pos.x, ',', value.pos.y, ',', value.size.width, ',', value.size.height, ')');
 }
 
 void Logger::Print_(const Size value)

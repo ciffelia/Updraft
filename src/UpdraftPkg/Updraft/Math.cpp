@@ -1,10 +1,10 @@
 #include "Math.hpp"
 
+#include <math.h>
+
 namespace Math {
-  int Pow(const int x, const int y)
+  double Pow(const double x, const double y)
   {
-    int ret = 1;
-    for(int i = 0; i < y; i++) ret *= x;
-    return ret;
+    return pow(x, y);
   }
 }

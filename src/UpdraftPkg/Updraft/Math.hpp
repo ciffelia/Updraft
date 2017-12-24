@@ -1,5 +1,5 @@
 #pragma once
 
 namespace Math {
-  int Pow(const int x, const int y);
+  double Pow(const double x, const double y);
 }

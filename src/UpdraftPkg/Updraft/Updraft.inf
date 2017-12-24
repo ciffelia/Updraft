@@ -26,6 +26,7 @@
   BaseCpuLib
   LibC
   LibStdio
+  LibMath
 
 [Protocols]
   gEfiGraphicsOutputProtocolGuid

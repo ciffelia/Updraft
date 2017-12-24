@@ -44,6 +44,8 @@ namespace Logger {
 
   // void Print_(const RETURN_STATUS value);
 
+  void Print_(const bool value);
+
   void Print_(const Color value);
 
   void Print_(const Point value);

@@ -98,6 +98,11 @@ void Logger::Print_(const EFI_TIME *value)
 //   ::Print((CHAR16*)u"%r", value);
 // }
 
+void Logger::Print_(const bool value)
+{
+  Print_(value ? "true" : "false");
+}
+
 void Logger::Print_(const Color value)
 {
   Print_('(', value.r, ',', value.g, ',', value.b, ')');

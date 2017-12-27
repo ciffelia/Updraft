@@ -18,7 +18,7 @@ EFI_STATUS UefiMain(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
   Rect(300, 200, 120, 230).draw(Palette::Orange);
   Circle(200, 300, 125).draw(Palette::Skyblue);
 
-  UefiSystem::loop_forever();
+  UefiSystem::loopForever();
 
   //return EFI_SUCCESS;
 }

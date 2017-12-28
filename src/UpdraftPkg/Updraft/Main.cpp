@@ -3,12 +3,14 @@ extern "C" {
 }
 
 #include "System/UefiSystem.hpp"
+#include "System/Lifecycle.hpp"
 #include "System/Logger.hpp"
 #include "Graphics/Graphics.hpp"
 
 EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
 {
   UefiSystem::initialize(SystemTable);
+  Lifecycle::initialize();
   Logger::Println_("Hello, UEFI World!");
 
   // Check screen resolution
@@ -18,9 +20,9 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   Rect(300, 200, 120, 230).draw(Palette::Orange);
   Circle(200, 300, 125).draw(Palette::Skyblue);
 
-  while(UefiSystem::update())
+  while(Lifecycle::update())
   {
-    Logger::Println_("Timer!", UefiSystem::getFrameCount());
+    Logger::Println_("Timer!", Lifecycle::getFrameCount());
   }
 
   //return EFI_SUCCESS;

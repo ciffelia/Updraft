@@ -10,6 +10,7 @@
   Main.cpp
   System/Math.cpp
   System/UefiSystem.cpp
+  System/Lifecycle.cpp
   System/Logger.cpp
   Graphics/Point.cpp
   Graphics/Circle.cpp

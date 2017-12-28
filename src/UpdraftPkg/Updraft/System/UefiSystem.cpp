@@ -87,13 +87,13 @@ void UefiSystem::initialize(EFI_SYSTEM_TABLE *ST)
 {
   SystemTable = ST;
 
-  releaseWatchdogTimer();
-
   locateGOP();
 
   checkPixelFormat();
 
   setVideoMode(getProperGraphicsMode(800, 600));
+
+  releaseWatchdogTimer();
 }
 
 EFI_SYSTEM_TABLE* UefiSystem::getSystemTable()

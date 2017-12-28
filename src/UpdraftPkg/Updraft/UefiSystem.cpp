@@ -10,6 +10,16 @@ EFI_SYSTEM_TABLE *UefiSystem::SystemTable = nullptr;
 
 EFI_GRAPHICS_OUTPUT_PROTOCOL *UefiSystem::GraphicsOutputProtocol = nullptr;
 
+EFI_EVENT UefiSystem::timerEvent = nullptr;
+
+EFI_EVENT UefiSystem::eventList[];
+
+uintn UefiSystem::eventIndex = 0;
+
+uint8 UefiSystem::fps = 60;
+
+uint32 UefiSystem::frameCount = 0;
+
 // ウォッチドッグタイマを解除
 // これをやらないと起動後5分で再起動するらしい
 void UefiSystem::releaseWatchdogTimer()
@@ -82,6 +92,18 @@ void UefiSystem::setVideoMode(const uint32 mode)
   Logger::ClearPrint();
 }
 
+void UefiSystem::setupTimerEvent()
+{
+  const auto status = SystemTable->BootServices->CreateEvent(EVT_TIMER, 0, nullptr, nullptr, &timerEvent);
+  if(EFI_ERROR(status))
+  {
+    Logger::Println_("Error: ", status, " on timer event setup.");
+    UefiSystem::loopForever();
+  }
+
+  eventList[0] = timerEvent;
+}
+
 void UefiSystem::initialize(EFI_SYSTEM_TABLE *ST)
 {
   SystemTable = ST;
@@ -93,6 +115,29 @@ void UefiSystem::initialize(EFI_SYSTEM_TABLE *ST)
   checkPixelFormat();
 
   setVideoMode(getProperGraphicsMode(800, 600));
+
+  setupTimerEvent();
+}
+
+bool UefiSystem::update()
+{
+  const auto status1 = SystemTable->BootServices->SetTimer(timerEvent, TimerRelative, 10000000 / fps);
+  if(EFI_ERROR(status1))
+  {
+    Logger::Println_("Error: ", status1, " on update.");
+    UefiSystem::loopForever();
+  }
+
+  const auto status2 = SystemTable->BootServices->WaitForEvent(1, eventList, &eventIndex);
+  if(EFI_ERROR(status2))
+  {
+    Logger::Println_("Error: ", status2, " on update.");
+    UefiSystem::loopForever();
+  }
+
+  frameCount++;
+
+  return true;
 }
 
 void UefiSystem::loopForever()

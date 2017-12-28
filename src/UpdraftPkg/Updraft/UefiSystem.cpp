@@ -35,7 +35,7 @@ void UefiSystem::releaseWatchdogTimer()
 void UefiSystem::locateGOP()
 {
   const auto status =
-    SystemTable->BootServices->LocateProtocol(&gEfiGraphicsOutputProtocolGuid, NULL, (void **)&GraphicsOutputProtocol);
+    SystemTable->BootServices->LocateProtocol(&gEfiGraphicsOutputProtocolGuid, nullptr, (void **)&GraphicsOutputProtocol);
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on locate EFI Graphics Output Protocol.");
@@ -89,6 +89,7 @@ void UefiSystem::setVideoMode(const uint32 mode)
     Logger::Println_("Error: ", status, " on set video mode.");
     UefiSystem::loopForever();
   }
+
   Logger::ClearPrint();
 }
 

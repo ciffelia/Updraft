@@ -2,8 +2,8 @@ extern "C" {
 #include <Uefi.h>
 }
 
-#include "UefiSystem.hpp"
-#include "Logger.hpp"
+#include "System/UefiSystem.hpp"
+#include "System/Logger.hpp"
 #include "Graphics/Graphics.hpp"
 
 EFI_STATUS UefiMain(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)

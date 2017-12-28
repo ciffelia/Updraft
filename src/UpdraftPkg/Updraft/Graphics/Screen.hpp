@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Types.hpp"
+#include "../System/Types.hpp"
 #include "Point.hpp"
 #include "Rect.hpp"
 #include "Size.hpp"

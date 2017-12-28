@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Types.hpp"
+#include "../System/Types.hpp"
 
 struct Size {
   uint32 width, height;

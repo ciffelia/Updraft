@@ -5,8 +5,8 @@ extern "C" {
 #include <Protocol/GraphicsOutput.h>
 }
 
-#include "../UefiSystem.hpp"
-#include "../Math.hpp"
+#include "../System/UefiSystem.hpp"
+#include "../System/Math.hpp"
 #include "Screen.hpp"
 
 double Point::distanceFrom(const Point pos) const

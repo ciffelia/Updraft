@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Graphics/Circle.hpp"
-#include "Graphics/Color.hpp"
-#include "Graphics/Point.hpp"
-#include "Graphics/Rect.hpp"
-#include "Graphics/Size.hpp"
+#include "../Graphics/Circle.hpp"
+#include "../Graphics/Color.hpp"
+#include "../Graphics/Point.hpp"
+#include "../Graphics/Rect.hpp"
+#include "../Graphics/Size.hpp"
 
 // Library/UefiLib.h にある Print() のラッパー
 // Siv3Dの Print(), Println(), ClearPrint() と同様の動作をする (https://goo.gl/vG3ZB7)

@@ -1,6 +1,6 @@
 #include "Screen.hpp"
 
-#include "../UefiSystem.hpp"
+#include "../System/UefiSystem.hpp"
 
 Size Screen::size()
 {

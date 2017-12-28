@@ -8,9 +8,9 @@
 
 [Sources]
   Main.cpp
-  Math.cpp
-  UefiSystem.cpp
-  Logger.cpp
+  System/Math.cpp
+  System/UefiSystem.cpp
+  System/Logger.cpp
   Graphics/Point.cpp
   Graphics/Circle.cpp
   Graphics/Rect.cpp

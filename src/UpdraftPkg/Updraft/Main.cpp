@@ -6,7 +6,7 @@ extern "C" {
 #include "System/Logger.hpp"
 #include "Graphics/Graphics.hpp"
 
-EFI_STATUS UefiMain(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
+EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
 {
   UefiSystem::initialize(SystemTable);
   Logger::Println_("Hello, UEFI World!");

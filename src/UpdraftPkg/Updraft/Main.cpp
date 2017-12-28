@@ -20,7 +20,7 @@ EFI_STATUS UefiMain(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
 
   while(UefiSystem::update())
   {
-    Logger::Println_("Timer!", UefiSystem::frameCount);
+    Logger::Println_("Timer!", UefiSystem::getFrameCount());
   }
 
   //return EFI_SUCCESS;

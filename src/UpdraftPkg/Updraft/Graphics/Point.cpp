@@ -18,10 +18,10 @@ void Point::draw(const Color color) const
 {
   const uint32 width = Screen::width();
 
-  auto *frameBufferBase = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)UefiSystem::GraphicsOutputProtocol->Mode->FrameBufferBase;
+  auto *frameBufferBase = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)UefiSystem::getGraphicsOutputProtocol()->Mode->FrameBufferBase;
   auto *pixel = frameBufferBase + (width * y) + x;
 
-  const auto pixelFormat = UefiSystem::GraphicsOutputProtocol->Mode->Info->PixelFormat;
+  const auto pixelFormat = UefiSystem::getGraphicsOutputProtocol()->Mode->Info->PixelFormat;
   switch(pixelFormat) {
     case PixelBlueGreenRedReserved8BitPerColor:
       *pixel = {color.b, color.g, color.r, 0xff};

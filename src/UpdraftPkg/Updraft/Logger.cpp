@@ -130,5 +130,5 @@ void Logger::Print_(const Size value)
 
 void Logger::ClearPrint()
 {
-  UefiSystem::SystemTable->ConOut->ClearScreen(UefiSystem::SystemTable->ConOut);
+  UefiSystem::getSystemTable()->ConOut->ClearScreen(UefiSystem::getSystemTable()->ConOut);
 }

@@ -141,6 +141,31 @@ bool UefiSystem::update()
   return true;
 }
 
+EFI_SYSTEM_TABLE* UefiSystem::getSystemTable()
+{
+  return SystemTable;
+}
+
+EFI_GRAPHICS_OUTPUT_PROTOCOL* UefiSystem::getGraphicsOutputProtocol()
+{
+  return GraphicsOutputProtocol;
+}
+
+uint8 UefiSystem::getFPS()
+{
+  return fps;
+}
+
+void UefiSystem::setFPS(const uint8 _fps)
+{
+  fps = _fps;
+}
+
+uint32 UefiSystem::getFrameCount()
+{
+  return frameCount;
+}
+
 void UefiSystem::sleepForever()
 {
   while(true) CpuSleep();

@@ -28,7 +28,7 @@ void UefiSystem::releaseWatchdogTimer()
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on UEFI initialization.");
-    loopForever();
+    sleepForever();
   }
 }
 
@@ -39,7 +39,7 @@ void UefiSystem::locateGOP()
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on locate EFI Graphics Output Protocol.");
-    UefiSystem::loopForever();
+    UefiSystem::sleepForever();
   }
 }
 
@@ -49,7 +49,7 @@ void UefiSystem::checkPixelFormat()
   if(pixelFormat != PixelRedGreenBlueReserved8BitPerColor && pixelFormat != PixelBlueGreenRedReserved8BitPerColor)
   {
     Logger::Println_("Error: Not supported pixel format.");
-    UefiSystem::loopForever();
+    UefiSystem::sleepForever();
   }
 }
 
@@ -70,7 +70,7 @@ uint32 UefiSystem::getProperGraphicsMode(const uint32 horizontalResolution, cons
     if(EFI_ERROR(status))
     {
       Logger::Println_("Error: ", status, " on query video mode.");
-      UefiSystem::loopForever();
+      UefiSystem::sleepForever();
     }
     else if(isProperGraphicsMode(modeInfo, horizontalResolution, verticalResolution))
     {
@@ -87,7 +87,7 @@ void UefiSystem::setVideoMode(const uint32 mode)
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on set video mode.");
-    UefiSystem::loopForever();
+    UefiSystem::sleepForever();
   }
 
   Logger::ClearPrint();
@@ -99,7 +99,7 @@ void UefiSystem::setupTimerEvent()
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on timer event setup.");
-    UefiSystem::loopForever();
+    UefiSystem::sleepForever();
   }
 
   eventList[0] = timerEvent;
@@ -126,14 +126,14 @@ bool UefiSystem::update()
   if(EFI_ERROR(status1))
   {
     Logger::Println_("Error: ", status1, " on update.");
-    UefiSystem::loopForever();
+    UefiSystem::sleepForever();
   }
 
   const auto status2 = SystemTable->BootServices->WaitForEvent(1, eventList, &eventIndex);
   if(EFI_ERROR(status2))
   {
     Logger::Println_("Error: ", status2, " on update.");
-    UefiSystem::loopForever();
+    UefiSystem::sleepForever();
   }
 
   frameCount++;
@@ -141,7 +141,7 @@ bool UefiSystem::update()
   return true;
 }
 
-void UefiSystem::loopForever()
+void UefiSystem::sleepForever()
 {
   while(true) CpuSleep();
 }

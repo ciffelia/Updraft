@@ -41,5 +41,5 @@ public:
 
   static bool update();
 
-  static void loopForever();
+  static void sleepForever();
 };

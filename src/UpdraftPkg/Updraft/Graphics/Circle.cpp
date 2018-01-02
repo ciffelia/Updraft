@@ -1,6 +1,6 @@
 #include "Circle.hpp"
 
-#include "../System/Math.hpp"
+#include "../Utils/Math.hpp"
 
 void Circle::draw(const Color color) const
 {

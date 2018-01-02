@@ -8,7 +8,7 @@
 
 [Sources]
   Main.cpp
-  System/Math.cpp
+  Utils/Math.cpp
   System/UefiSystem.cpp
   System/Lifecycle.cpp
   System/Logger.cpp

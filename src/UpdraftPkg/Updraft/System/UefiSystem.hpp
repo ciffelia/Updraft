@@ -5,7 +5,7 @@ extern "C" {
 #include <Protocol/GraphicsOutput.h>
 }
 
-#include "Types.hpp"
+#include "../Utils/Types.hpp"
 
 class UefiSystem {
   static EFI_SYSTEM_TABLE *SystemTable;

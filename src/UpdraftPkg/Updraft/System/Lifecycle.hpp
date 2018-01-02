@@ -2,7 +2,7 @@ extern "C" {
 #include <Uefi.h>
 }
 
-#include "Types.hpp"
+#include "../Utils/Types.hpp"
 
 class Lifecycle {
   static uint8 fps;

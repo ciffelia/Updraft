@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../System/Types.hpp"
+#include "../Utils/Types.hpp"
 #include "Color.hpp"
 #include "Point.hpp"
 #include "Size.hpp"

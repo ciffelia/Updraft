@@ -6,7 +6,7 @@ extern "C" {
 }
 
 #include "../System/UefiSystem.hpp"
-#include "../System/Math.hpp"
+#include "../Utils/Math.hpp"
 #include "Screen.hpp"
 
 double Point::distanceFrom(const Point pos) const

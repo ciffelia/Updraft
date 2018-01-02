@@ -63,10 +63,10 @@ void Logger::Print_(const uint32 value)
   ::Print((CHAR16*)u"%u", value);
 }
 
-void Logger::Print_(const uint64 value)
-{
-  ::Print((CHAR16*)u"%Lu", value);
-}
+// void Logger::Print_(const uint64 value)
+// {
+//   ::Print((CHAR16*)u"%Lu", value);
+// }
 
 void Logger::Print_(const void *value)
 {
@@ -93,10 +93,10 @@ void Logger::Print_(const EFI_TIME *value)
   ::Print((CHAR16*)u"%s", value);
 }
 
-// void Logger::Print_(const RETURN_STATUS value)
-// {
-//   ::Print((CHAR16*)u"%r", value);
-// }
+void Logger::Print_(const RETURN_STATUS value)
+{
+  ::Print((CHAR16*)u"%r", value);
+}
 
 void Logger::Print_(const bool value)
 {

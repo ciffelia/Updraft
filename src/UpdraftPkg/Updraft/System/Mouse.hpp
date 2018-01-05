@@ -1,3 +1,5 @@
+#pragma once
+
 extern "C" {
 #include <Uefi.h>
 #include <Protocol/SimplePointer.h>

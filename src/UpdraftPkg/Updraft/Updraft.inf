@@ -12,6 +12,7 @@
   System/UefiSystem.cpp
   System/Lifecycle.cpp
   System/Logger.cpp
+  System/Mouse.cpp
   Graphics/Point.cpp
   Graphics/Circle.cpp
   Graphics/Rect.cpp
@@ -31,3 +32,4 @@
 
 [Protocols]
   gEfiGraphicsOutputProtocolGuid
+  gEfiSimplePointerProtocolGuid

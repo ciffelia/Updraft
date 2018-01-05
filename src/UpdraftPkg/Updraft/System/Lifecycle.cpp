@@ -16,7 +16,7 @@ uint32 Lifecycle::s_frameCount = 0;
 void Lifecycle::ResetTimer()
 {
   {
-    const auto status = UefiSystem::SystemTable()->BootServices->SetTimer(s_timerEvent, TimerCancel, 0);
+    const auto status = UefiSystem::SystemTable()->BootServices->SetTimer(s_timerEvent, ::TimerCancel, 0);
     if(EFI_ERROR(status))
     {
       Logger::Println_("Error: ", status, " on reset timer.");
@@ -25,7 +25,7 @@ void Lifecycle::ResetTimer()
   }
 
   {
-    const auto status = UefiSystem::SystemTable()->BootServices->SetTimer(s_timerEvent, TimerPeriodic, 10000000 / s_fps);
+    const auto status = UefiSystem::SystemTable()->BootServices->SetTimer(s_timerEvent, ::TimerPeriodic, 10000000 / s_fps);
     if(EFI_ERROR(status))
     {
       Logger::Println_("Error: ", status, " on reset timer.");

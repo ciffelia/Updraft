@@ -15,6 +15,8 @@ class Lifecycle {
 
   static uintn s_eventIndex;
 
+  static void ResetTimer();
+
 public:
   static void Initialize();
 

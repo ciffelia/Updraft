@@ -6,9 +6,13 @@ extern "C" {
 }
 
 #include "../Utils/Types.hpp"
+#include "Color.hpp"
+#include "ColorPalette.hpp"
 
 class Graphics {
   static EFI_GRAPHICS_OUTPUT_PROTOCOL *s_GraphicsOutputProtocol;
+
+  static Color s_backgroundColor;
 
   static void LocateGOP();
 
@@ -21,7 +25,13 @@ class Graphics {
   static void SetVideoMode(const uint32 mode);
 
 public:
-  static void Initialize();
+  static void Initialize(const Color backgroundColor = Palette::Navy);
+
+  static void Update();
 
   static EFI_GRAPHICS_OUTPUT_PROTOCOL* GraphicsOutputProtocol();
+
+  static void BackgroundColor(const Color backgroundColor);
+
+  static Color BackgroundColor();
 };

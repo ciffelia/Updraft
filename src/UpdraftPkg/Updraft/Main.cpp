@@ -18,22 +18,14 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   Graphics::Initialize();
   Lifecycle::Initialize();
   Mouse::Initialize();
-  Logger::Println_("Hello, UEFI World!");
-
-  // Check screen resolution
-  Logger::Println_("Screen resolution: ", Screen::Size());
-
-  // Graphics test
-  Rect(300, 200, 120, 230).draw(Palette::Orange);
-  Circle(200, 300, 125).draw(Palette::Skyblue);
 
   while(Lifecycle::Update())
   {
-    Circle(Mouse::Pos(), 8).draw(Palette::Black);
-
+    Graphics::Update();
     Mouse::Update();
 
-    Circle(Mouse::Pos(), 8).draw(Mouse::Pressed() ? Palette::Red : Palette::Orange);
+    Rect(300, 200, 120, 230).draw(Palette::Orange);
+    Circle(Mouse::Pos(), 15).draw(Mouse::Pressed() ? Palette::Red : Palette::Orange);
   }
 
   //return EFI_SUCCESS;

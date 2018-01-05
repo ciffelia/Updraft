@@ -2,8 +2,11 @@
 
 #include "UefiSystem.hpp"
 #include "Logger.hpp"
+#include "Screen.hpp"
 
 EFI_GRAPHICS_OUTPUT_PROTOCOL *Graphics::s_GraphicsOutputProtocol = nullptr;
+
+Color Graphics::s_backgroundColor;
 
 void Graphics::LocateGOP()
 {
@@ -66,16 +69,34 @@ void Graphics::SetVideoMode(const uint32 mode)
   Logger::ClearPrint();
 }
 
-void Graphics::Initialize()
+void Graphics::Initialize(const Color backgroundColor)
 {
   LocateGOP();
 
   CheckPixelFormat();
 
   SetVideoMode(GetProperGraphicsMode(800, 600));
+
+  s_backgroundColor = backgroundColor;
+}
+
+void Graphics::Update()
+{
+  Logger::ClearPrint();
+  Screen::Rect().draw(s_backgroundColor);
 }
 
 EFI_GRAPHICS_OUTPUT_PROTOCOL* Graphics::GraphicsOutputProtocol()
 {
   return s_GraphicsOutputProtocol;
+}
+
+void Graphics::BackgroundColor(const Color backgroundColor)
+{
+  s_backgroundColor = backgroundColor;
+}
+
+Color Graphics::BackgroundColor()
+{
+  return s_backgroundColor;
 }

@@ -8,21 +8,21 @@ extern "C" {
 #include "../Utils/Types.hpp"
 
 class UefiSystem {
-  static EFI_SYSTEM_TABLE *SystemTable;
+  static EFI_SYSTEM_TABLE *s_SystemTable;
 
-  static EFI_GRAPHICS_OUTPUT_PROTOCOL *GraphicsOutputProtocol;
+  static EFI_GRAPHICS_OUTPUT_PROTOCOL *s_GraphicsOutputProtocol;
 
-  static void releaseWatchdogTimer();
+  static void ReleaseWatchdogTimer();
 
-  static void locateGOP();
+  static void LocateGOP();
 
-  static void checkPixelFormat();
+  static void CheckPixelFormat();
 
-  static bool isProperGraphicsMode(const EFI_GRAPHICS_OUTPUT_MODE_INFORMATION *modeInfo, const uint32 horizontalResolution, const uint32 verticalResolution);
+  static bool IsProperGraphicsMode(const EFI_GRAPHICS_OUTPUT_MODE_INFORMATION *modeInfo, const uint32 horizontalResolution, const uint32 verticalResolution);
 
-  static uint32 getProperGraphicsMode(const uint32 horizontalResolution, const uint32 verticalResolution);
+  static uint32 GetProperGraphicsMode(const uint32 horizontalResolution, const uint32 verticalResolution);
 
-  static void setVideoMode(const uint32 mode);
+  static void SetVideoMode(const uint32 mode);
 
 public:
   static void initialize(EFI_SYSTEM_TABLE *ST);

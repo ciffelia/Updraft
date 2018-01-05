@@ -6,15 +6,15 @@ extern "C" {
 
 #include "Logger.hpp"
 
-EFI_SYSTEM_TABLE *UefiSystem::SystemTable = nullptr;
+EFI_SYSTEM_TABLE *UefiSystem::s_SystemTable = nullptr;
 
-EFI_GRAPHICS_OUTPUT_PROTOCOL *UefiSystem::GraphicsOutputProtocol = nullptr;
+EFI_GRAPHICS_OUTPUT_PROTOCOL *UefiSystem::s_GraphicsOutputProtocol = nullptr;
 
 // ウォッチドッグタイマを解除
 // これをやらないと起動後5分で再起動するらしい
-void UefiSystem::releaseWatchdogTimer()
+void UefiSystem::ReleaseWatchdogTimer()
 {
-  const EFI_STATUS status = SystemTable->BootServices->SetWatchdogTimer(0, 0, 0, nullptr);
+  const EFI_STATUS status = s_SystemTable->BootServices->SetWatchdogTimer(0, 0, 0, nullptr);
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on UEFI initialization.");
@@ -22,10 +22,10 @@ void UefiSystem::releaseWatchdogTimer()
   }
 }
 
-void UefiSystem::locateGOP()
+void UefiSystem::LocateGOP()
 {
   const auto status =
-    SystemTable->BootServices->LocateProtocol(&gEfiGraphicsOutputProtocolGuid, nullptr, (void **)&GraphicsOutputProtocol);
+    s_SystemTable->BootServices->LocateProtocol(&gEfiGraphicsOutputProtocolGuid, nullptr, (void **)&s_GraphicsOutputProtocol);
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on locate EFI Graphics Output Protocol.");
@@ -33,9 +33,9 @@ void UefiSystem::locateGOP()
   }
 }
 
-void UefiSystem::checkPixelFormat()
+void UefiSystem::CheckPixelFormat()
 {
-  const auto pixelFormat = GraphicsOutputProtocol->Mode->Info->PixelFormat;
+  const auto pixelFormat = s_GraphicsOutputProtocol->Mode->Info->PixelFormat;
   if(pixelFormat != PixelRedGreenBlueReserved8BitPerColor && pixelFormat != PixelBlueGreenRedReserved8BitPerColor)
   {
     Logger::Println_("Error: Not supported pixel format.");
@@ -43,26 +43,26 @@ void UefiSystem::checkPixelFormat()
   }
 }
 
-bool UefiSystem::isProperGraphicsMode(const EFI_GRAPHICS_OUTPUT_MODE_INFORMATION *modeInfo, const uint32 horizontalResolution, const uint32 verticalResolution)
+bool UefiSystem::IsProperGraphicsMode(const EFI_GRAPHICS_OUTPUT_MODE_INFORMATION *modeInfo, const uint32 horizontalResolution, const uint32 verticalResolution)
 {
   return (modeInfo->PixelFormat == PixelBlueGreenRedReserved8BitPerColor || modeInfo->PixelFormat == PixelRedGreenBlueReserved8BitPerColor) &&
     modeInfo->HorizontalResolution == horizontalResolution &&
     modeInfo->VerticalResolution == verticalResolution;
 }
 
-uint32 UefiSystem::getProperGraphicsMode(const uint32 horizontalResolution, const uint32 verticalResolution)
+uint32 UefiSystem::GetProperGraphicsMode(const uint32 horizontalResolution, const uint32 verticalResolution)
 {
-  for(uint32 i = 0; i < GraphicsOutputProtocol->Mode->MaxMode; i++){
+  for(uint32 i = 0; i < s_GraphicsOutputProtocol->Mode->MaxMode; i++){
     EFI_GRAPHICS_OUTPUT_MODE_INFORMATION *modeInfo;
     uintn sizeOfModeInfo;
 
-    const auto status = GraphicsOutputProtocol->QueryMode(GraphicsOutputProtocol, i, &sizeOfModeInfo, &modeInfo);
+    const auto status = s_GraphicsOutputProtocol->QueryMode(s_GraphicsOutputProtocol, i, &sizeOfModeInfo, &modeInfo);
     if(EFI_ERROR(status))
     {
       Logger::Println_("Error: ", status, " on query video mode.");
       UefiSystem::sleepForever();
     }
-    else if(isProperGraphicsMode(modeInfo, horizontalResolution, verticalResolution))
+    else if(IsProperGraphicsMode(modeInfo, horizontalResolution, verticalResolution))
     {
       return i;
     }
@@ -71,9 +71,9 @@ uint32 UefiSystem::getProperGraphicsMode(const uint32 horizontalResolution, cons
   return 0;
 }
 
-void UefiSystem::setVideoMode(const uint32 mode)
+void UefiSystem::SetVideoMode(const uint32 mode)
 {
-  const auto status = GraphicsOutputProtocol->SetMode(GraphicsOutputProtocol, mode);
+  const auto status = s_GraphicsOutputProtocol->SetMode(s_GraphicsOutputProtocol, mode);
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on set video mode.");
@@ -83,27 +83,27 @@ void UefiSystem::setVideoMode(const uint32 mode)
   Logger::ClearPrint();
 }
 
-void UefiSystem::initialize(EFI_SYSTEM_TABLE *ST)
+void UefiSystem::initialize(EFI_SYSTEM_TABLE *SystemTable)
 {
-  SystemTable = ST;
+  s_SystemTable = SystemTable;
 
-  locateGOP();
+  LocateGOP();
 
-  checkPixelFormat();
+  CheckPixelFormat();
 
-  setVideoMode(getProperGraphicsMode(800, 600));
+  SetVideoMode(GetProperGraphicsMode(800, 600));
 
-  releaseWatchdogTimer();
+  ReleaseWatchdogTimer();
 }
 
 EFI_SYSTEM_TABLE* UefiSystem::getSystemTable()
 {
-  return SystemTable;
+  return s_SystemTable;
 }
 
 EFI_GRAPHICS_OUTPUT_PROTOCOL* UefiSystem::getGraphicsOutputProtocol()
 {
-  return GraphicsOutputProtocol;
+  return s_GraphicsOutputProtocol;
 }
 
 void UefiSystem::sleepForever()

@@ -1,18 +1,10 @@
 ARCH=X64
 BUILD_TARGET=RELEASE
 BUILD_TOOLS=VS2015
-OVMF_BUILD_TOOLS=VS2015x86
-QEMU_BIN=qemu-system-x86_64
 
-all: build copy run
+all: build copy
 
-build: build-code build-ovmf
-
-copy: copy-code copy-ovmf
-
-clean: clean-code clean-ovmf
-
-build-code:
+build:
 	-rmdir /s /q edk2\UpdraftPkg
 	xcopy /e /q src\UpdraftPkg "edk2\UpdraftPkg\"
 	cd edk2 && \
@@ -23,38 +15,13 @@ build-code:
 		--tagname $(BUILD_TOOLS) \
 		-n $(NUMBER_OF_PROCESSORS)
 
-copy-code:
+copy:
 	-rmdir /s /q dist\image
 	-mkdir dist
 	mkdir dist\image && mkdir dist\image\EFI && mkdir dist\image\EFI\BOOT
 	copy edk2\Build\UpdraftPkg$(ARCH)\$(BUILD_TARGET)_$(BUILD_TOOLS)\$(ARCH)\Updraft.efi dist\image\EFI\BOOT\BOOT$(ARCH).efi
 
-clean-code:
+clean:
 	-rmdir /s /q edk2\UpdraftPkg
 	-rmdir /s /q edk2\build\UpdraftPkg$(ARCH)
 	-rmdir /s /q dist\image
-
-build-ovmf:
-	cd edk2 && \
-	Edk2Setup.bat > nul && \
-	build --arch=$(ARCH) \
-		--platform=OvmfPkg/OvmfPkg$(ARCH).dsc \
-		--buildtarget=$(BUILD_TARGET) \
-		--tagname $(OVMF_BUILD_TOOLS) \
-		-n $(NUMBER_OF_PROCESSORS)
-
-copy-ovmf:
-	-del /q dist\OVMF_CODE.fd dist\OVMF_VARS.fd
-	-mkdir dist
-	copy edk2\Build\Ovmf$(ARCH)\$(BUILD_TARGET)_$(OVMF_BUILD_TOOLS)\FV\OVMF_CODE.fd dist\OVMF_CODE.fd
-	copy edk2\Build\Ovmf$(ARCH)\$(BUILD_TARGET)_$(OVMF_BUILD_TOOLS)\FV\OVMF_VARS.fd dist\OVMF_VARS.fd
-
-clean-ovmf:
-	-rmdir /s /q edk2\build\Ovmf$(ARCH)
-	-del /q dist\OVMF_CODE.fd dist\OVMF_VARS.fd
-
-run:
-	$(QEMU_BIN) \
-		-drive if=pflash,format=raw,readonly,file=dist\OVMF_CODE.fd \
-		-drive if=pflash,format=raw,file=dist\OVMF_VARS.fd \
-		-drive if=ide,format=raw,file=fat:rw:dist\image,index=0,media=disk

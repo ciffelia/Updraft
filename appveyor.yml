@@ -107,10 +107,12 @@ install:
   - '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64'
 
 build_script:
-  - nmake -f Makefile.win32 build-code copy-code
-  - cd dist\image && 7z a ../../UpDraft.zip
+  - nmake -f Makefile.win32 build copy
+  - pushd dist\image && 7z a ../../UpDraft.zip && popd
+  - CreateVdisk.bat && copy dist\Updraft.vhd Updraft.vhd
 
 artifacts:
   - path: UpDraft.zip
+  - path: UpDraft.vhd
 
 test: off

@@ -15,11 +15,11 @@ uint32 Lifecycle::frameCount = 0;
 
 void Lifecycle::initialize()
 {
-  const auto status = UefiSystem::getSystemTable()->BootServices->CreateEvent(EVT_TIMER, 0, nullptr, nullptr, &timerEvent);
+  const auto status = UefiSystem::SystemTable()->BootServices->CreateEvent(EVT_TIMER, 0, nullptr, nullptr, &timerEvent);
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on timer event setup.");
-    UefiSystem::sleepForever();
+    UefiSystem::SleepForever();
   }
 
   eventList[0] = timerEvent;
@@ -27,18 +27,18 @@ void Lifecycle::initialize()
 
 bool Lifecycle::update()
 {
-  const auto status1 = UefiSystem::getSystemTable()->BootServices->SetTimer(timerEvent, TimerRelative, 10000000 / fps);
+  const auto status1 = UefiSystem::SystemTable()->BootServices->SetTimer(timerEvent, TimerRelative, 10000000 / fps);
   if(EFI_ERROR(status1))
   {
     Logger::Println_("Error: ", status1, " on update.");
-    UefiSystem::sleepForever();
+    UefiSystem::SleepForever();
   }
 
-  const auto status2 = UefiSystem::getSystemTable()->BootServices->WaitForEvent(1, eventList, &eventIndex);
+  const auto status2 = UefiSystem::SystemTable()->BootServices->WaitForEvent(1, eventList, &eventIndex);
   if(EFI_ERROR(status2))
   {
     Logger::Println_("Error: ", status2, " on update.");
-    UefiSystem::sleepForever();
+    UefiSystem::SleepForever();
   }
 
   frameCount++;

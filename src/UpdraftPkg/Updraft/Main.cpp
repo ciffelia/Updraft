@@ -10,7 +10,7 @@ extern "C" {
 
 EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
 {
-  UefiSystem::initialize(SystemTable);
+  UefiSystem::Initialize(SystemTable);
   Lifecycle::initialize();
   Mouse::Initialize();
   Logger::Println_("Hello, UEFI World!");

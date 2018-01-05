@@ -19,10 +19,10 @@ Rect Screen::rect()
 
 uint32 Screen::width()
 {
-  return UefiSystem::getGraphicsOutputProtocol()->Mode->Info->HorizontalResolution;
+  return UefiSystem::GraphicsOutputProtocol()->Mode->Info->HorizontalResolution;
 }
 
 uint32 Screen::height()
 {
-  return UefiSystem::getGraphicsOutputProtocol()->Mode->Info->VerticalResolution;
+  return UefiSystem::GraphicsOutputProtocol()->Mode->Info->VerticalResolution;
 }

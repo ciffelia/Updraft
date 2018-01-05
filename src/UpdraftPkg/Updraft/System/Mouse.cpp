@@ -17,11 +17,11 @@ bool Mouse::s_rightPressed, Mouse::s_leftPressed;
 void Mouse::LocateSimplePointerProtocol()
 {
   const auto status =
-    UefiSystem::getSystemTable()->BootServices->LocateProtocol(&gEfiSimplePointerProtocolGuid, nullptr, (void **)&s_SimplePointerProtocol);
+    UefiSystem::SystemTable()->BootServices->LocateProtocol(&gEfiSimplePointerProtocolGuid, nullptr, (void **)&s_SimplePointerProtocol);
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on locate EFI Simple Pointer Protocol.");
-    UefiSystem::sleepForever();
+    UefiSystem::SleepForever();
   }
 }
 
@@ -39,7 +39,7 @@ void Mouse::CheckPointerDevice()
   if(s_resolutionX == 0 || s_resolutionY == 0 || !mode->LeftButton || !mode->RightButton)
   {
     Logger::Println_("Error: The pointer device not available.");
-    UefiSystem::sleepForever();
+    UefiSystem::SleepForever();
   }
 }
 
@@ -75,7 +75,7 @@ void Mouse::Update()
       break;
     default:
       Logger::Println_("Error: ", status, " on mouse update.");
-      UefiSystem::sleepForever();
+      UefiSystem::SleepForever();
   }
 }
 

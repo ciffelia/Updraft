@@ -18,7 +18,7 @@ void UefiSystem::ReleaseWatchdogTimer()
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on UEFI initialization.");
-    sleepForever();
+    SleepForever();
   }
 }
 
@@ -29,7 +29,7 @@ void UefiSystem::LocateGOP()
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on locate EFI Graphics Output Protocol.");
-    UefiSystem::sleepForever();
+    SleepForever();
   }
 }
 
@@ -39,7 +39,7 @@ void UefiSystem::CheckPixelFormat()
   if(pixelFormat != PixelRedGreenBlueReserved8BitPerColor && pixelFormat != PixelBlueGreenRedReserved8BitPerColor)
   {
     Logger::Println_("Error: Not supported pixel format.");
-    UefiSystem::sleepForever();
+    SleepForever();
   }
 }
 
@@ -60,7 +60,7 @@ uint32 UefiSystem::GetProperGraphicsMode(const uint32 horizontalResolution, cons
     if(EFI_ERROR(status))
     {
       Logger::Println_("Error: ", status, " on query video mode.");
-      UefiSystem::sleepForever();
+      SleepForever();
     }
     else if(IsProperGraphicsMode(modeInfo, horizontalResolution, verticalResolution))
     {
@@ -77,13 +77,13 @@ void UefiSystem::SetVideoMode(const uint32 mode)
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on set video mode.");
-    UefiSystem::sleepForever();
+    SleepForever();
   }
 
   Logger::ClearPrint();
 }
 
-void UefiSystem::initialize(EFI_SYSTEM_TABLE *SystemTable)
+void UefiSystem::Initialize(EFI_SYSTEM_TABLE *SystemTable)
 {
   s_SystemTable = SystemTable;
 
@@ -96,17 +96,17 @@ void UefiSystem::initialize(EFI_SYSTEM_TABLE *SystemTable)
   ReleaseWatchdogTimer();
 }
 
-EFI_SYSTEM_TABLE* UefiSystem::getSystemTable()
+EFI_SYSTEM_TABLE* UefiSystem::SystemTable()
 {
   return s_SystemTable;
 }
 
-EFI_GRAPHICS_OUTPUT_PROTOCOL* UefiSystem::getGraphicsOutputProtocol()
+EFI_GRAPHICS_OUTPUT_PROTOCOL* UefiSystem::GraphicsOutputProtocol()
 {
   return s_GraphicsOutputProtocol;
 }
 
-void UefiSystem::sleepForever()
+void UefiSystem::SleepForever()
 {
   while(true) CpuSleep();
 }

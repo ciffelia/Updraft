@@ -25,11 +25,11 @@ class UefiSystem {
   static void SetVideoMode(const uint32 mode);
 
 public:
-  static void initialize(EFI_SYSTEM_TABLE *ST);
+  static void Initialize(EFI_SYSTEM_TABLE *ST);
 
-  static EFI_SYSTEM_TABLE* getSystemTable();
+  static EFI_SYSTEM_TABLE* SystemTable();
 
-  static EFI_GRAPHICS_OUTPUT_PROTOCOL* getGraphicsOutputProtocol();
+  static EFI_GRAPHICS_OUTPUT_PROTOCOL* GraphicsOutputProtocol();
 
-  static void sleepForever();
+  static void SleepForever();
 };

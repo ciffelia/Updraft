@@ -13,6 +13,7 @@
   System/Lifecycle.cpp
   System/Logger.cpp
   System/Mouse.cpp
+  Graphics/Graphics.cpp
   Graphics/Point.cpp
   Graphics/Circle.cpp
   Graphics/Rect.cpp

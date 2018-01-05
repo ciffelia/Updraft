@@ -1,6 +1,6 @@
 #include "Screen.hpp"
 
-#include "../System/UefiSystem.hpp"
+#include "../Graphics/Graphics.hpp"
 
 Size Screen::Size()
 {
@@ -19,10 +19,10 @@ Rect Screen::Rect()
 
 uint32 Screen::Width()
 {
-  return UefiSystem::GraphicsOutputProtocol()->Mode->Info->HorizontalResolution;
+  return Graphics::GraphicsOutputProtocol()->Mode->Info->HorizontalResolution;
 }
 
 uint32 Screen::Height()
 {
-  return UefiSystem::GraphicsOutputProtocol()->Mode->Info->VerticalResolution;
+  return Graphics::GraphicsOutputProtocol()->Mode->Info->VerticalResolution;
 }

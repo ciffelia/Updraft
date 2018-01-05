@@ -5,7 +5,7 @@ BUILD_TOOLS=VS2015
 all: build copy
 
 build:
-	-rmdir /s /q edk2\UpdraftPkg
+	if exist edk2\UpdraftPkg rmdir /s /q edk2\UpdraftPkg
 	xcopy /e /q src\UpdraftPkg "edk2\UpdraftPkg\"
 	cd edk2 && \
 	Edk2Setup.bat > nul && \
@@ -14,14 +14,15 @@ build:
 		--buildtarget=$(BUILD_TARGET) \
 		--tagname $(BUILD_TOOLS) \
 		-n $(NUMBER_OF_PROCESSORS)
+	rmdir /s /q edk2\UpdraftPkg
 
 copy:
-	-rmdir /s /q dist\image
-	-mkdir dist
+	if exist dist\image rmdir /s /q dist\image
+	if not exist dist mkdir dist
 	mkdir dist\image && mkdir dist\image\EFI && mkdir dist\image\EFI\BOOT
 	copy edk2\Build\UpdraftPkg$(ARCH)\$(BUILD_TARGET)_$(BUILD_TOOLS)\$(ARCH)\Updraft.efi dist\image\EFI\BOOT\BOOT$(ARCH).efi
 
 clean:
-	-rmdir /s /q edk2\UpdraftPkg
-	-rmdir /s /q edk2\build\UpdraftPkg$(ARCH)
-	-rmdir /s /q dist\image
+	if exist edk2\UpdraftPkg rmdir /s /q edk2\UpdraftPkg
+	if exist edk2\build\UpdraftPkg$(ARCH) rmdir /s /q edk2\build\UpdraftPkg$(ARCH)
+	if exist dist\image rmdir /s /q dist\image

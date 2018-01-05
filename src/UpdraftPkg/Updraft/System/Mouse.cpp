@@ -51,7 +51,7 @@ void Mouse::Initialize()
 
   CheckPointerDevice();
 
-  s_pos = Screen::center();
+  s_pos = Screen::Center();
 
   s_leftPressed = s_rightPressed = false;
 

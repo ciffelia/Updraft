@@ -2,27 +2,27 @@
 
 #include "../System/UefiSystem.hpp"
 
-Size Screen::size()
+Size Screen::Size()
 {
-  return {width(), height()};
+  return {Width(), Height()};
 }
 
-Point Screen::center()
+Point Screen::Center()
 {
-  return {(int32)width() / 2, (int32)height() / 2};
+  return {(int32)Width() / 2, (int32)Height() / 2};
 }
 
-Rect Screen::rect()
+Rect Screen::Rect()
 {
-  return Rect({0, 0}, size());
+  return Rect::Rect({0, 0}, Size());
 }
 
-uint32 Screen::width()
+uint32 Screen::Width()
 {
   return UefiSystem::GraphicsOutputProtocol()->Mode->Info->HorizontalResolution;
 }
 
-uint32 Screen::height()
+uint32 Screen::Height()
 {
   return UefiSystem::GraphicsOutputProtocol()->Mode->Info->VerticalResolution;
 }

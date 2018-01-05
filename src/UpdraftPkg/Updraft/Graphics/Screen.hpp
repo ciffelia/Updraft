@@ -6,12 +6,12 @@
 #include "Size.hpp"
 
 namespace Screen {
-  Size size();
+  Size Size();
 
-  Point center();
+  Point Center();
 
-  Rect rect();
+  Rect Rect();
 
-  uint32 width();
-  uint32 height();
+  uint32 Width();
+  uint32 Height();
 };

@@ -16,7 +16,7 @@ double Point::distanceFrom(const Point pos) const
 
 void Point::draw(const Color color) const
 {
-  const uint32 width = Screen::width();
+  const uint32 width = Screen::Width();
 
   auto *frameBufferBase = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)UefiSystem::GraphicsOutputProtocol()->Mode->FrameBufferBase;
   auto *pixel = frameBufferBase + (width * y) + x;

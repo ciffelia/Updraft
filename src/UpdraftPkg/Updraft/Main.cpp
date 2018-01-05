@@ -16,7 +16,7 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   Logger::Println_("Hello, UEFI World!");
 
   // Check screen resolution
-  Logger::Println_("Screen resolution: ", Screen::size());
+  Logger::Println_("Screen resolution: ", Screen::Size());
 
   // Graphics test
   Rect(300, 200, 120, 230).draw(Palette::Orange);

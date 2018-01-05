@@ -6,7 +6,10 @@ extern "C" {
 #include "System/Lifecycle.hpp"
 #include "System/Mouse.hpp"
 #include "System/Logger.hpp"
-#include "Graphics/Graphics.hpp"
+#include "Graphics/Rect.hpp"
+#include "Graphics/Circle.hpp"
+#include "Graphics/Screen.hpp"
+#include "Graphics/ColorPalette.hpp"
 
 EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
 {

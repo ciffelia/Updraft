@@ -108,5 +108,5 @@ EFI_GRAPHICS_OUTPUT_PROTOCOL* UefiSystem::GraphicsOutputProtocol()
 
 void UefiSystem::SleepForever()
 {
-  while(true) CpuSleep();
+  while(true) ::CpuSleep();
 }

@@ -3,60 +3,60 @@
 #include "UefiSystem.hpp"
 #include "Logger.hpp"
 
-EFI_EVENT Lifecycle::timerEvent = nullptr;
+EFI_EVENT Lifecycle::s_timerEvent = nullptr;
 
-EFI_EVENT Lifecycle::eventList[];
+EFI_EVENT Lifecycle::s_eventList[];
 
-uintn Lifecycle::eventIndex = 0;
+uintn Lifecycle::s_eventIndex = 0;
 
-uint8 Lifecycle::fps = 60;
+uint8 Lifecycle::s_fps = 60;
 
-uint32 Lifecycle::frameCount = 0;
+uint32 Lifecycle::s_frameCount = 0;
 
-void Lifecycle::initialize()
+void Lifecycle::Initialize()
 {
-  const auto status = UefiSystem::SystemTable()->BootServices->CreateEvent(EVT_TIMER, 0, nullptr, nullptr, &timerEvent);
+  const auto status = UefiSystem::SystemTable()->BootServices->CreateEvent(EVT_TIMER, 0, nullptr, nullptr, &s_timerEvent);
   if(EFI_ERROR(status))
   {
     Logger::Println_("Error: ", status, " on timer event setup.");
     UefiSystem::SleepForever();
   }
 
-  eventList[0] = timerEvent;
+  s_eventList[0] = s_timerEvent;
 }
 
-bool Lifecycle::update()
+bool Lifecycle::Update()
 {
-  const auto status1 = UefiSystem::SystemTable()->BootServices->SetTimer(timerEvent, TimerRelative, 10000000 / fps);
+  const auto status1 = UefiSystem::SystemTable()->BootServices->SetTimer(s_timerEvent, TimerRelative, 10000000 / s_fps);
   if(EFI_ERROR(status1))
   {
     Logger::Println_("Error: ", status1, " on update.");
     UefiSystem::SleepForever();
   }
 
-  const auto status2 = UefiSystem::SystemTable()->BootServices->WaitForEvent(1, eventList, &eventIndex);
+  const auto status2 = UefiSystem::SystemTable()->BootServices->WaitForEvent(1, s_eventList, &s_eventIndex);
   if(EFI_ERROR(status2))
   {
     Logger::Println_("Error: ", status2, " on update.");
     UefiSystem::SleepForever();
   }
 
-  frameCount++;
+  s_frameCount++;
 
   return true;
 }
 
-uint8 Lifecycle::getFPS()
+uint8 Lifecycle::FPS()
 {
-  return fps;
+  return s_fps;
 }
 
-void Lifecycle::setFPS(const uint8 _fps)
+void Lifecycle::FPS(const uint8 _fps)
 {
-  fps = _fps;
+  s_fps = _fps;
 }
 
-uint32 Lifecycle::getFrameCount()
+uint32 Lifecycle::FrameCount()
 {
-  return frameCount;
+  return s_frameCount;
 }

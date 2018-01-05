@@ -5,24 +5,24 @@ extern "C" {
 #include "../Utils/Types.hpp"
 
 class Lifecycle {
-  static uint8 fps;
+  static uint8 s_fps;
 
-  static uint32 frameCount;
+  static uint32 s_frameCount;
 
-  static EFI_EVENT timerEvent;
+  static EFI_EVENT s_timerEvent;
 
-  static EFI_EVENT eventList[1];
+  static EFI_EVENT s_eventList[1];
 
-  static uintn eventIndex;
+  static uintn s_eventIndex;
 
 public:
-  static void initialize();
+  static void Initialize();
 
-  static bool update();
+  static bool Update();
 
-  static uint8 getFPS();
+  static uint8 FPS();
 
-  static void setFPS(const uint8 _fps);
+  static void FPS(const uint8 _fps);
 
-  static uint32 getFrameCount();
+  static uint32 FrameCount();
 };

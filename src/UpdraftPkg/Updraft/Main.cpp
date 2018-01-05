@@ -11,7 +11,7 @@ extern "C" {
 EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
 {
   UefiSystem::Initialize(SystemTable);
-  Lifecycle::initialize();
+  Lifecycle::Initialize();
   Mouse::Initialize();
   Logger::Println_("Hello, UEFI World!");
 
@@ -22,7 +22,7 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   Rect(300, 200, 120, 230).draw(Palette::Orange);
   Circle(200, 300, 125).draw(Palette::Skyblue);
 
-  while(Lifecycle::update())
+  while(Lifecycle::Update())
   {
     Circle(Mouse::Pos(), 8).draw(Palette::Black);
 

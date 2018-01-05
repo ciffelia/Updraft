@@ -4,12 +4,12 @@
 
 Size Screen::Size()
 {
-  return {Width(), Height()};
+  return { Width(), Height() };
 }
 
 Point Screen::Center()
 {
-  return {(int32)Width() / 2, (int32)Height() / 2};
+  return { (int32)Width() / 2, (int32)Height() / 2 };
 }
 
 Rect Screen::Rect()

@@ -1,3 +1,9 @@
+#pragma once
+
+extern "C" {
+#include <Uefi.h>
+}
+
 using int8 = INT8;
 using int16 = INT16;
 using int32 = INT32;

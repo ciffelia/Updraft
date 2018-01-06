@@ -27,6 +27,7 @@
   UefiLib
   UefiApplicationEntryPoint
   BaseCpuLib
+  MemoryAllocationLib
   LibC
   LibStdio
   LibMath

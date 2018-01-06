@@ -12,6 +12,8 @@ extern "C" {
 class Graphics {
   static EFI_GRAPHICS_OUTPUT_PROTOCOL *s_GraphicsOutputProtocol;
 
+  static EFI_GRAPHICS_OUTPUT_BLT_PIXEL *s_bltBuffer;
+
   static Color s_backgroundColor;
 
   static void LocateGOP();
@@ -24,12 +26,18 @@ class Graphics {
 
   static void SetVideoMode(const uint32 mode);
 
+  static void AllocateBltBuffer();
+
+  static void ClearScreen();
+
 public:
   static void Initialize(const Color backgroundColor = Palette::Navy);
 
   static void Update();
 
   static EFI_GRAPHICS_OUTPUT_PROTOCOL* GraphicsOutputProtocol();
+
+  static EFI_GRAPHICS_OUTPUT_BLT_PIXEL* BltBuffer();
 
   static void BackgroundColor(const Color backgroundColor);
 

@@ -21,11 +21,12 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
 
   while(Lifecycle::Update())
   {
-    Graphics::Update();
     Mouse::Update();
 
     Rect(300, 200, 120, 230).draw(Palette::Orange);
     Circle(Mouse::Pos(), 15).draw(Mouse::Pressed() ? Palette::Deeppink : Palette::Limegreen);
+
+    Graphics::Update();
   }
 
   //return EFI_SUCCESS;

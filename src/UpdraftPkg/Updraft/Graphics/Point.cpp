@@ -18,7 +18,7 @@ void Point::draw(const Color color) const
 {
   const uint32 width = Screen::Width();
 
-  auto *frameBufferBase = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL *)Graphics::GraphicsOutputProtocol()->Mode->FrameBufferBase;
+  auto *frameBufferBase = Graphics::BltBuffer();
   auto *pixel = frameBufferBase + (width * y) + x;
 
   const auto pixelFormat = Graphics::GraphicsOutputProtocol()->Mode->Info->PixelFormat;

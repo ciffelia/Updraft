@@ -1,10 +1,17 @@
 #include "Graphics.hpp"
 
+extern "C" {
+#include <Library/MemoryAllocationLib.h>
+}
+
 #include "../System/UefiSystem.hpp"
+#include "../System/Lifecycle.hpp"
 #include "../System/Logger.hpp"
 #include "Screen.hpp"
 
 EFI_GRAPHICS_OUTPUT_PROTOCOL *Graphics::s_GraphicsOutputProtocol = nullptr;
+
+EFI_GRAPHICS_OUTPUT_BLT_PIXEL *Graphics::s_bltBuffer = nullptr;
 
 Color Graphics::s_backgroundColor;
 
@@ -69,6 +76,20 @@ void Graphics::SetVideoMode(const uint32 mode)
   Logger::ClearPrint();
 }
 
+void Graphics::AllocateBltBuffer()
+{
+  s_bltBuffer = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)AllocateZeroPool(Screen::Width() * Screen::Height() * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  if(s_bltBuffer == nullptr) {
+    Logger::Println_("Error: Failed to allocate Blt buffer.");
+    UefiSystem::SleepForever();
+  }
+}
+
+void Graphics::ClearScreen()
+{
+  Screen::Rect().draw(s_backgroundColor);
+}
+
 void Graphics::Initialize(const Color backgroundColor)
 {
   LocateGOP();
@@ -77,18 +98,31 @@ void Graphics::Initialize(const Color backgroundColor)
 
   SetVideoMode(GetProperGraphicsMode(800, 600));
 
+  AllocateBltBuffer();
+
   s_backgroundColor = backgroundColor;
 }
 
 void Graphics::Update()
 {
-  Logger::ClearPrint();
-  Screen::Rect().draw(s_backgroundColor);
+  const auto status = s_GraphicsOutputProtocol->Blt(s_GraphicsOutputProtocol, s_bltBuffer, ::EfiBltBufferToVideo, 0, 0, 0, 0, Screen::Width(), Screen::Height(), 0);
+  if (EFI_ERROR(status))
+  {
+    Logger::Println_("Error: ", status, "on Block Transfer.");
+    UefiSystem::SleepForever();
+  }
+
+  ClearScreen();
 }
 
 EFI_GRAPHICS_OUTPUT_PROTOCOL* Graphics::GraphicsOutputProtocol()
 {
   return s_GraphicsOutputProtocol;
+}
+
+EFI_GRAPHICS_OUTPUT_BLT_PIXEL* Graphics::BltBuffer()
+{
+  return s_bltBuffer;
 }
 
 void Graphics::BackgroundColor(const Color backgroundColor)

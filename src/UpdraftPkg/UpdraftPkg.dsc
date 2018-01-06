@@ -42,4 +42,4 @@
 !include StdLib/StdLib.inc
 
 [BuildOptions]
-  MSFT:*_*_*_CC_FLAGS = /W4 /WX- /Zc:wchar_t-
+  MSFT:*_*_*_CC_FLAGS = /WX- /W4 /wd4804 /wd4164 /wd4117 /Zc:wchar_t-

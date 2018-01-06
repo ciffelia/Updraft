@@ -1,7 +1,7 @@
 #include "Graphics.hpp"
 
-#include "UefiSystem.hpp"
-#include "Logger.hpp"
+#include "../System/UefiSystem.hpp"
+#include "../System/Logger.hpp"
 #include "Screen.hpp"
 
 EFI_GRAPHICS_OUTPUT_PROTOCOL *Graphics::s_GraphicsOutputProtocol = nullptr;

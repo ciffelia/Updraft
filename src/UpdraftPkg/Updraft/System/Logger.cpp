@@ -100,27 +100,27 @@ void Logger::Print_(const Vec2 value)
 
 void Logger::Print_(const Circle value)
 {
-  Print_('(', value.center.x, ',', value.center.y, ',', value.r, ')');
+  Print_("(", value.center.x, ",", value.center.y, ",", value.r, ")");
 }
 
 void Logger::Print_(const Color value)
 {
-  Print_('(', value.r, ',', value.g, ',', value.b, ')');
+  Print_("(", value.r, ",", value.g, ",", value.b, ")");
 }
 
 void Logger::Print_(const Point value)
 {
-  Print_('(', value.x, ',', value.y, ')');
+  Print_("(", value.x, ",", value.y, ")");
 }
 
 void Logger::Print_(const Rect value)
 {
-  Print_('(', value.pos.x, ',', value.pos.y, ',', value.size.width, ',', value.size.height, ')');
+  Print_("(", value.pos.x, ",", value.pos.y, ",", value.size.width, ",", value.size.height, ")");
 }
 
 void Logger::Print_(const Size value)
 {
-  Print_('(', value.width, ',', value.height, ')');
+  Print_("(", value.width, ",", value.height, ")");
 }
 
 void Logger::ClearPrint()

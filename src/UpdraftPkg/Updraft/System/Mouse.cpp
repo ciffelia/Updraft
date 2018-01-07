@@ -20,7 +20,7 @@ void Mouse::LocateSimplePointerProtocol()
     UefiSystem::SystemTable()->BootServices->LocateProtocol(&gEfiSimplePointerProtocolGuid, nullptr, (void **)&s_SimplePointerProtocol);
   if(EFI_ERROR(status))
   {
-    Logger::Println_("Error: ", status, " on locate EFI Simple Pointer Protocol.");
+    Logger::Println_("Error: ", PrintEfiStatus(status), " on locate EFI Simple Pointer Protocol.");
     UefiSystem::SleepForever();
   }
 }
@@ -74,7 +74,7 @@ void Mouse::Update()
     case EFI_NOT_READY:
       break;
     default:
-      Logger::Println_("Error: ", status, " on mouse update.");
+      Logger::Println_("Error: ", PrintEfiStatus(status), " on mouse update.");
       UefiSystem::SleepForever();
   }
 }

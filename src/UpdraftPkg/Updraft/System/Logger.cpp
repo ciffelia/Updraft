@@ -11,16 +11,6 @@ extern "C" {
 void Logger::Print_()
 { }
 
-void Logger::Print_(const CHAR8 value)
-{
-  ::Print((CHAR16*)u"%c", (CHAR16)value);
-}
-
-// void Logger::Print_(const CHAR16 value)
-// {
-//   ::Print((CHAR16*)u"%c", value);
-// }
-
 void Logger::Print_(const int8 value)
 {
   ::Print((CHAR16*)u"%d", value);
@@ -63,10 +53,10 @@ void Logger::Print_(const uint32 value)
   ::Print((CHAR16*)u"%u", value);
 }
 
-// void Logger::Print_(const uint64 value)
-// {
-//   ::Print((CHAR16*)u"%Lu", value);
-// }
+void Logger::Print_(const uint64 value)
+{
+  ::Print((CHAR16*)u"%Lu", value);
+}
 
 void Logger::Print_(const void *value)
 {
@@ -93,9 +83,9 @@ void Logger::Print_(const EFI_TIME *value)
   ::Print((CHAR16*)u"%s", value);
 }
 
-void Logger::Print_(const RETURN_STATUS value)
+void Logger::Print_(const PrintEfiStatus value)
 {
-  ::Print((CHAR16*)u"%r", value);
+  ::Print((CHAR16*)u"%r", value.m_returnStatus);
 }
 
 void Logger::Print_(const bool value)

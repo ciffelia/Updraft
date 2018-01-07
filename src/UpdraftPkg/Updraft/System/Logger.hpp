@@ -1,5 +1,6 @@
 #pragma once
 
+#include "PrintEfiStatus.hpp"
 #include "../Graphics/Circle.hpp"
 #include "../Graphics/Color.hpp"
 #include "../Graphics/Point.hpp"
@@ -10,10 +11,6 @@
 // Siv3Dの Print(), Println(), ClearPrint() と同様の動作をする (https://goo.gl/vG3ZB7)
 namespace Logger {
   void Print_();
-
-  void Print_(const CHAR8 value);
-
-  // void Print_(const CHAR16 value);
 
   void Print_(const int8 value);
 
@@ -43,7 +40,7 @@ namespace Logger {
 
   void Print_(const EFI_TIME *value);
 
-  // void Print_(const RETURN_STATUS value);
+  void Print_(const PrintEfiStatus value);
 
   void Print_(const bool value);
 

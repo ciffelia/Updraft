@@ -19,7 +19,7 @@ void Lifecycle::ResetTimer()
     const auto status = UefiSystem::SystemTable()->BootServices->SetTimer(s_timerEvent, ::TimerCancel, 0);
     if(EFI_ERROR(status))
     {
-      Logger::Println_("Error: ", status, " on reset timer.");
+      Logger::Println_("Error: ", PrintEfiStatus(status), " on reset timer.");
       UefiSystem::SleepForever();
     }
   }
@@ -28,7 +28,7 @@ void Lifecycle::ResetTimer()
     const auto status = UefiSystem::SystemTable()->BootServices->SetTimer(s_timerEvent, ::TimerPeriodic, 10000000 / s_fps);
     if(EFI_ERROR(status))
     {
-      Logger::Println_("Error: ", status, " on reset timer.");
+      Logger::Println_("Error: ", PrintEfiStatus(status), " on reset timer.");
       UefiSystem::SleepForever();
     }
   }
@@ -39,7 +39,7 @@ void Lifecycle::Initialize()
   const auto status = UefiSystem::SystemTable()->BootServices->CreateEvent(EVT_TIMER, 0, nullptr, nullptr, &s_timerEvent);
   if(EFI_ERROR(status))
   {
-    Logger::Println_("Error: ", status, " on timer event setup.");
+    Logger::Println_("Error: ", PrintEfiStatus(status), " on timer event setup.");
     UefiSystem::SleepForever();
   }
 
@@ -53,7 +53,7 @@ bool Lifecycle::Update()
   const auto status = UefiSystem::SystemTable()->BootServices->WaitForEvent(1, s_eventList, &s_eventIndex);
   if(EFI_ERROR(status))
   {
-    Logger::Println_("Error: ", status, " on update.");
+    Logger::Println_("Error: ", PrintEfiStatus(status), " on update.");
     UefiSystem::SleepForever();
   }
 

@@ -15,7 +15,7 @@ void UefiSystem::ReleaseWatchdogTimer()
   const EFI_STATUS status = s_SystemTable->BootServices->SetWatchdogTimer(0, 0, 0, nullptr);
   if(EFI_ERROR(status))
   {
-    Logger::Println_("Error: ", status, " on UEFI initialization.");
+    Logger::Println_("Error: ", PrintEfiStatus(status), " on UEFI initialization.");
     SleepForever();
   }
 }

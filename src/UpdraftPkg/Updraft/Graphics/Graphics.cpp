@@ -21,7 +21,7 @@ void Graphics::LocateGOP()
     UefiSystem::SystemTable()->BootServices->LocateProtocol(&gEfiGraphicsOutputProtocolGuid, nullptr, (void **)&s_GraphicsOutputProtocol);
   if(EFI_ERROR(status))
   {
-    Logger::Println_("Error: ", status, " on locate EFI Graphics Output Protocol.");
+    Logger::Println_("Error: ", PrintEfiStatus(status), " on locate EFI Graphics Output Protocol.");
     UefiSystem::SleepForever();
   }
 }
@@ -52,7 +52,7 @@ uint32 Graphics::GetProperGraphicsMode(const uint32 horizontalResolution, const 
     const auto status = s_GraphicsOutputProtocol->QueryMode(s_GraphicsOutputProtocol, i, &sizeOfModeInfo, &modeInfo);
     if(EFI_ERROR(status))
     {
-      Logger::Println_("Error: ", status, " on query video mode.");
+      Logger::Println_("Error: ", PrintEfiStatus(status), " on query video mode.");
       UefiSystem::SleepForever();
     }
     else if(IsProperGraphicsMode(modeInfo, horizontalResolution, verticalResolution))
@@ -69,7 +69,7 @@ void Graphics::SetVideoMode(const uint32 mode)
   const auto status = s_GraphicsOutputProtocol->SetMode(s_GraphicsOutputProtocol, mode);
   if(EFI_ERROR(status))
   {
-    Logger::Println_("Error: ", status, " on set video mode.");
+    Logger::Println_("Error: ", PrintEfiStatus(status), " on set video mode.");
     UefiSystem::SleepForever();
   }
 
@@ -108,7 +108,7 @@ void Graphics::Update()
   const auto status = s_GraphicsOutputProtocol->Blt(s_GraphicsOutputProtocol, s_bltBuffer, ::EfiBltBufferToVideo, 0, 0, 0, 0, Screen::Width(), Screen::Height(), 0);
   if (EFI_ERROR(status))
   {
-    Logger::Println_("Error: ", status, "on Block Transfer.");
+    Logger::Println_("Error: ", PrintEfiStatus(status), "on Block Transfer.");
     UefiSystem::SleepForever();
   }
 

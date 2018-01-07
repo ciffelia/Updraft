@@ -2,12 +2,11 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/gdgm3pft3gcovlrh?svg=true)](https://ci.appveyor.com/project/prince0203/updraft)
 
-## Building Updraft
+## Building Updraft on Windows
 
-### Windows
+### Requirements
 
-#### Requirements
-
+* [Visual Studio 2015](https://www.microsoft.com/ja-jp/dev/products/visual-studio-2015.aspx) with C++ support **or** [Visual C++ 2015 Build Tools](https://landinghub.visualstudio.com/visual-cpp-build-tools)
 * [Nasm](http://www.nasm.us/)
   * Install and configure `NASM_PREFIX` env to point `C:\path\to\nasm\`. **(Don't forget the trailing backslash character!)**
 * [ASL Compiler](https://acpica.org/downloads/binary-tools)
@@ -21,7 +20,3 @@
 > git submodule update
 > nmake -f Makefile.win32
 ```
-
-### Linux/Unix
-
-**TBD**

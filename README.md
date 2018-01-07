@@ -20,3 +20,9 @@
 > git submodule update
 > nmake -f Makefile.win32
 ```
+
+## License information
+
+Following file contains codes from [Vec2 クラスを作る（モダンな C++ クラスデザインのためのチュートリアル） - Qiita](https://qiita.com/Reputeless/items/96226cfe1282a014b147) (Public domain).
+
+- [Vec2.hpp](Utils/Vec2.hpp)

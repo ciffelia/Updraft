@@ -98,6 +98,11 @@ void Logger::Print_(const Vec2 value)
   Print_("(", value.x, ",", value.y, ")");
 }
 
+void Logger::Print_(const Circular value)
+{
+  Print_("(", value.r, ",", value.theta, ")");
+}
+
 void Logger::Print_(const Circle value)
 {
   Print_("(", value.center.x, ",", value.center.y, ",", value.r, ")");

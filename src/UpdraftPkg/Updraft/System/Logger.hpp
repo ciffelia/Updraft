@@ -2,6 +2,7 @@
 
 #include "PrintEfiStatus.hpp"
 #include "../Utils/Vec2.hpp"
+#include "../Utils/Circular.hpp"
 #include "../Graphics/Circle.hpp"
 #include "../Graphics/Color.hpp"
 #include "../Graphics/Point.hpp"
@@ -46,6 +47,8 @@ namespace Logger {
   void Print_(const bool value);
 
   void Print_(const Vec2 value);
+
+  void Print_(const Circular value);
 
   void Print_(const Circle value);
 

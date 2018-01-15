@@ -43,6 +43,24 @@ void Mouse::CheckPointerDevice()
   }
 }
 
+void Mouse::UpdateState(const EFI_SIMPLE_POINTER_STATE pointerState)
+{
+  s_pos.x += (int32)((pointerState.RelativeMovementX / s_resolutionX) * s_mouseSpeed);
+  s_pos.y += (int32)((pointerState.RelativeMovementY / s_resolutionY) * s_mouseSpeed);
+
+  if (s_pos.x < 0)
+    s_pos.x = 0;
+  if (s_pos.x >= Screen::Width())
+    s_pos.x = Screen::Width() - 1;
+  if (s_pos.y < 0)
+    s_pos.y = 0;
+  if (s_pos.y >= Screen::Height())
+    s_pos.y = Screen::Height() - 1;
+
+  s_leftPressed = pointerState.LeftButton == TRUE;
+  s_rightPressed = pointerState.RightButton == TRUE;
+}
+
 void Mouse::Initialize()
 {
   LocateSimplePointerProtocol();
@@ -66,10 +84,7 @@ void Mouse::Update()
   switch(status)
   {
     case EFI_SUCCESS:
-      s_pos.x += (int32)((pointerState.RelativeMovementX / s_resolutionX) * s_mouseSpeed);
-      s_pos.y += (int32)((pointerState.RelativeMovementY / s_resolutionY) * s_mouseSpeed);
-      s_leftPressed = pointerState.LeftButton == TRUE;
-      s_rightPressed = pointerState.RightButton == TRUE;
+      UpdateState(pointerState);
       break;
     case EFI_NOT_READY:
       break;

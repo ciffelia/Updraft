@@ -24,6 +24,8 @@ class Mouse {
 
   static void CheckPointerDevice();
 
+  static void UpdateState(const EFI_SIMPLE_POINTER_STATE pointerState);
+
 public:
   static void Initialize();
 

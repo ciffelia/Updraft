@@ -6,6 +6,7 @@ extern "C" {
 #include "System/Lifecycle.hpp"
 #include "System/Mouse.hpp"
 #include "System/Logger.hpp"
+#include "System/FileSystem.hpp"
 #include "Utils/Vec2.hpp"
 #include "Utils/Circular.hpp"
 #include "Graphics/Graphics.hpp"
@@ -20,6 +21,7 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   Graphics::Initialize();
   Lifecycle::Initialize();
   Mouse::Initialize();
+  FileSystem::Initialize();
 
   while(Lifecycle::Update())
   {

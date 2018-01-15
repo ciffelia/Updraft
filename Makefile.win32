@@ -22,6 +22,7 @@ copy:
 	if not exist dist mkdir dist
 	mkdir dist\image && mkdir dist\image\EFI && mkdir dist\image\EFI\BOOT
 	copy edk2\Build\UpdraftPkg$(ARCH)\$(BUILD_TARGET)_$(BUILD_TOOLS)\$(ARCH)\Updraft.efi dist\image\EFI\BOOT\BOOT$(ARCH).efi
+	xcopy /e /q Assets dist\image\
 
 clean:
 	if exist edk2\UpdraftPkg $(RMDIR) edk2\UpdraftPkg

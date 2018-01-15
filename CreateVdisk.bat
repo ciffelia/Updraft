@@ -29,8 +29,8 @@ setlocal
   echo exit
   ) | diskpart
 
-  REM Copy EFI files to vdisk
-  xcopy /e /q dist\image\EFI %VDISK_ASSIGN_LETTER%:\EFI\
+  REM Copy files to vdisk
+  xcopy /e /q dist\image\* %VDISK_ASSIGN_LETTER%:\
 
   REM Unmount vdisk
   (

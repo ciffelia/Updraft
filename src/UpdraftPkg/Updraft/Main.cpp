@@ -42,6 +42,3 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
 
   //return EFI_SUCCESS;
 }
-
-// Required to use LibC
-int main() {}

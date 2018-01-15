@@ -108,7 +108,7 @@ struct Vec2
 
   constexpr Point asPoint() const
   {
-    return Point(x, y);
+    return Point(static_cast<int32>(x), static_cast<int32>(y));
   }
 };
 

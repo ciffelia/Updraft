@@ -50,12 +50,12 @@ void Mouse::UpdateState(const EFI_SIMPLE_POINTER_STATE pointerState)
 
   if (s_pos.x < 0)
     s_pos.x = 0;
-  if (s_pos.x >= Screen::Width())
-    s_pos.x = Screen::Width() - 1;
+  if (s_pos.x >= static_cast<int32>(Screen::Width()))
+    s_pos.x = static_cast<int32>(Screen::Width()) - 1;
   if (s_pos.y < 0)
     s_pos.y = 0;
-  if (s_pos.y >= Screen::Height())
-    s_pos.y = Screen::Height() - 1;
+  if (s_pos.y >= static_cast<int32>(Screen::Height()))
+    s_pos.y = static_cast<int32>(Screen::Height()) - 1;
 
   s_leftPressed = pointerState.LeftButton == TRUE;
   s_rightPressed = pointerState.RightButton == TRUE;

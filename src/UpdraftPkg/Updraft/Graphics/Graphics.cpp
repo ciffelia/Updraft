@@ -1,9 +1,5 @@
 #include "Graphics.hpp"
 
-extern "C" {
-#include <Library/MemoryAllocationLib.h>
-}
-
 #include "../System/UefiSystem.hpp"
 #include "../System/Lifecycle.hpp"
 #include "../System/Logger.hpp"
@@ -78,7 +74,7 @@ void Graphics::SetVideoMode(const uint32 mode)
 
 void Graphics::AllocateBltBuffer()
 {
-  s_bltBuffer = (EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)AllocateZeroPool(Screen::Width() * Screen::Height() * sizeof(EFI_GRAPHICS_OUTPUT_BLT_PIXEL));
+  s_bltBuffer = new EFI_GRAPHICS_OUTPUT_BLT_PIXEL[Screen::Width() * Screen::Height()];
   if(s_bltBuffer == nullptr) {
     Logger::Println_("Error: Failed to allocate Blt buffer.");
     UefiSystem::SleepForever();

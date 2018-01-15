@@ -1,9 +1,5 @@
 #include "Font.hpp"
 
-extern "C" {
-#include <Library/MemoryAllocationLib.h>
-}
-
 #include "../System/UefiSystem.hpp"
 #include "../System/Logger.hpp"
 #include "../System/FileSystem.hpp"
@@ -37,7 +33,7 @@ void Font::drawGlyph(const char ch, const Point pos) const
 Font::Font(CHAR16 *fileName)
 {
   uintn bufSize = 4 + 1024 * ('~' - ' ' + 1);
-  m_data = (uint8 *)AllocateZeroPool(bufSize);
+  m_data = new uint8[bufSize];
 
   FileSystem::Read(fileName, &bufSize, (void *)m_data);
 
@@ -52,7 +48,7 @@ Font::Font(CHAR16 *fileName)
 
 Font::~Font()
 {
-  FreePool(m_data);
+  delete[] m_data;
 }
 
 void Font::draw(const CHAR8 *str, const Point pos) const

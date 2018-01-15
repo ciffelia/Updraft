@@ -14,6 +14,7 @@ extern "C" {
 #include "Graphics/Circle.hpp"
 #include "Graphics/Screen.hpp"
 #include "Graphics/ColorPalette.hpp"
+#include "Graphics/Font.hpp"
 
 EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
 {
@@ -23,6 +24,8 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   Mouse::Initialize();
   FileSystem::Initialize();
 
+  const Font font(L"Font.dat");
+
   while(Lifecycle::Update())
   {
     Mouse::Update();
@@ -31,6 +34,8 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
     Circle(circularPos.asPoint(), 15).draw(Palette::Orange);
 
     Circle(Mouse::Pos(), 15).draw(Mouse::Pressed() ? Palette::Deeppink : Palette::Limegreen);
+
+    font.draw(Mouse::Pressed() ? "Hello,\r\nworld!" : "Hello, world!", Mouse::Pos());
 
     Graphics::Update();
   }

@@ -19,6 +19,7 @@
   Graphics/Circle.cpp
   Graphics/Rect.cpp
   Graphics/Screen.cpp
+  Graphics/Font.cpp
 
 [Packages]
   MdePkg/MdePkg.dec

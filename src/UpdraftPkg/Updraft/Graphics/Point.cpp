@@ -16,7 +16,10 @@ double Point::distanceFrom(const Point pos) const
 
 void Point::draw(const Color color) const
 {
-  const uint32 width = Screen::Width();
+  const uint32 width = Screen::Width(), height = Screen::Height();
+
+  if (x < 0 || x >= width || y < 0 || y >= height)
+    return;
 
   auto *frameBufferBase = Graphics::BltBuffer();
   auto *pixel = frameBufferBase + (width * y) + x;

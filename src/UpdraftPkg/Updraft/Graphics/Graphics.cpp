@@ -1,8 +1,8 @@
 #include "Graphics.hpp"
 
 #include "../System/UefiSystem.hpp"
-#include "../System/Lifecycle.hpp"
 #include "../System/Logger.hpp"
+#include "../System/Assert.hpp"
 #include "Screen.hpp"
 
 EFI_GRAPHICS_OUTPUT_PROTOCOL *Graphics::s_GraphicsOutputProtocol = nullptr;
@@ -15,21 +15,13 @@ void Graphics::LocateGOP()
 {
   const auto status =
     UefiSystem::SystemTable()->BootServices->LocateProtocol(&gEfiGraphicsOutputProtocolGuid, nullptr, (void **)&s_GraphicsOutputProtocol);
-  if(EFI_ERROR(status))
-  {
-    Logger::Println_("Error: ", PrintEfiStatus(status), " on locate EFI Graphics Output Protocol.");
-    UefiSystem::SleepForever();
-  }
+  AssertEfiStatus(status, "Failed to locate EFI Graphics Output Protocol.");
 }
 
 void Graphics::CheckPixelFormat()
 {
   const auto pixelFormat = s_GraphicsOutputProtocol->Mode->Info->PixelFormat;
-  if(pixelFormat != PixelRedGreenBlueReserved8BitPerColor && pixelFormat != PixelBlueGreenRedReserved8BitPerColor)
-  {
-    Logger::Println_("Error: Not supported pixel format.");
-    UefiSystem::SleepForever();
-  }
+  Assert(pixelFormat == PixelRedGreenBlueReserved8BitPerColor || pixelFormat == PixelBlueGreenRedReserved8BitPerColor, "Not supported pixel format.");
 }
 
 bool Graphics::IsProperGraphicsMode(const EFI_GRAPHICS_OUTPUT_MODE_INFORMATION *modeInfo, const uint32 horizontalResolution, const uint32 verticalResolution)
@@ -46,12 +38,9 @@ uint32 Graphics::GetProperGraphicsMode(const uint32 horizontalResolution, const 
     uintn sizeOfModeInfo;
 
     const auto status = s_GraphicsOutputProtocol->QueryMode(s_GraphicsOutputProtocol, i, &sizeOfModeInfo, &modeInfo);
-    if(EFI_ERROR(status))
-    {
-      Logger::Println_("Error: ", PrintEfiStatus(status), " on query video mode.");
-      UefiSystem::SleepForever();
-    }
-    else if(IsProperGraphicsMode(modeInfo, horizontalResolution, verticalResolution))
+    AssertEfiStatus(status, "Failed to query video mode.");
+
+    if(IsProperGraphicsMode(modeInfo, horizontalResolution, verticalResolution))
     {
       return i;
     }
@@ -63,11 +52,7 @@ uint32 Graphics::GetProperGraphicsMode(const uint32 horizontalResolution, const 
 void Graphics::SetVideoMode(const uint32 mode)
 {
   const auto status = s_GraphicsOutputProtocol->SetMode(s_GraphicsOutputProtocol, mode);
-  if(EFI_ERROR(status))
-  {
-    Logger::Println_("Error: ", PrintEfiStatus(status), " on set video mode.");
-    UefiSystem::SleepForever();
-  }
+  AssertEfiStatus(status, "Failed to set video mode.");
 
   Logger::ClearPrint();
 }
@@ -75,10 +60,7 @@ void Graphics::SetVideoMode(const uint32 mode)
 void Graphics::AllocateBltBuffer()
 {
   s_bltBuffer = new EFI_GRAPHICS_OUTPUT_BLT_PIXEL[Screen::Width() * Screen::Height()];
-  if(s_bltBuffer == nullptr) {
-    Logger::Println_("Error: Failed to allocate Blt buffer.");
-    UefiSystem::SleepForever();
-  }
+  AssertNotNullptr(s_bltBuffer, "Failed to allocate Blt buffer.");
 }
 
 void Graphics::ClearScreen()
@@ -102,11 +84,7 @@ void Graphics::Initialize(const Color backgroundColor)
 void Graphics::Update()
 {
   const auto status = s_GraphicsOutputProtocol->Blt(s_GraphicsOutputProtocol, s_bltBuffer, ::EfiBltBufferToVideo, 0, 0, 0, 0, Screen::Width(), Screen::Height(), 0);
-  if (EFI_ERROR(status))
-  {
-    Logger::Println_("Error: ", PrintEfiStatus(status), "on Block Transfer.");
-    UefiSystem::SleepForever();
-  }
+  AssertEfiStatus(status, "Block Transfer failed.");
 
   ClearScreen();
 }

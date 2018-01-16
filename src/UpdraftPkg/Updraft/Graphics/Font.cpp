@@ -1,7 +1,6 @@
 #include "Font.hpp"
 
-#include "../System/UefiSystem.hpp"
-#include "../System/Logger.hpp"
+#include "../System/Assert.hpp"
 #include "../System/FileSystem.hpp"
 #include "Color.hpp"
 
@@ -37,11 +36,7 @@ Font::Font(CHAR16 *fileName)
 
   FileSystem::Read(fileName, &bufSize, (void *)m_data);
 
-  if (m_data[0] != 'U' || m_data[1] != 'F' || m_data[2] != 'D')
-  {
-    Logger::Println_("Error: Font data is invalid.");
-    UefiSystem::SleepForever();
-  }
+  Assert(m_data[0] == 'U' && m_data[1] == 'F' && m_data[2] == 'D', "Font data is invalid.");
 
   m_height = m_data[3];
 }

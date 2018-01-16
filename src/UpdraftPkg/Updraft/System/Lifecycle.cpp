@@ -1,7 +1,7 @@
 #include "Lifecycle.hpp"
 
 #include "UefiSystem.hpp"
-#include "Logger.hpp"
+#include "Assert.hpp"
 
 EFI_EVENT Lifecycle::s_timerEvent = nullptr;
 
@@ -17,31 +17,19 @@ void Lifecycle::ResetTimer()
 {
   {
     const auto status = UefiSystem::SystemTable()->BootServices->SetTimer(s_timerEvent, ::TimerCancel, 0);
-    if(EFI_ERROR(status))
-    {
-      Logger::Println_("Error: ", PrintEfiStatus(status), " on reset timer.");
-      UefiSystem::SleepForever();
-    }
+    AssertEfiStatus(status, "Failed to reset timer.");
   }
 
   {
     const auto status = UefiSystem::SystemTable()->BootServices->SetTimer(s_timerEvent, ::TimerPeriodic, 10000000 / s_fps);
-    if(EFI_ERROR(status))
-    {
-      Logger::Println_("Error: ", PrintEfiStatus(status), " on reset timer.");
-      UefiSystem::SleepForever();
-    }
+    AssertEfiStatus(status, "Failed to reset timer.");
   }
 }
 
 void Lifecycle::Initialize()
 {
   const auto status = UefiSystem::SystemTable()->BootServices->CreateEvent(EVT_TIMER, 0, nullptr, nullptr, &s_timerEvent);
-  if(EFI_ERROR(status))
-  {
-    Logger::Println_("Error: ", PrintEfiStatus(status), " on timer event setup.");
-    UefiSystem::SleepForever();
-  }
+  AssertEfiStatus(status, "Failed to setup timer event.");
 
   s_eventList[0] = s_timerEvent;
 
@@ -51,11 +39,7 @@ void Lifecycle::Initialize()
 bool Lifecycle::Update()
 {
   const auto status = UefiSystem::SystemTable()->BootServices->WaitForEvent(1, s_eventList, &s_eventIndex);
-  if(EFI_ERROR(status))
-  {
-    Logger::Println_("Error: ", PrintEfiStatus(status), " on update.");
-    UefiSystem::SleepForever();
-  }
+  AssertEfiStatus(status, "Failed to update.");
 
   s_frameCount++;
 

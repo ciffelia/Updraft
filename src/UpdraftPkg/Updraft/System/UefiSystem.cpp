@@ -4,7 +4,7 @@ extern "C" {
 #include <Library/CpuLib.h>
 }
 
-#include "Logger.hpp"
+#include "Assert.hpp"
 
 EFI_SYSTEM_TABLE *UefiSystem::s_SystemTable = nullptr;
 
@@ -13,11 +13,7 @@ EFI_SYSTEM_TABLE *UefiSystem::s_SystemTable = nullptr;
 void UefiSystem::ReleaseWatchdogTimer()
 {
   const EFI_STATUS status = s_SystemTable->BootServices->SetWatchdogTimer(0, 0, 0, nullptr);
-  if(EFI_ERROR(status))
-  {
-    Logger::Println_("Error: ", PrintEfiStatus(status), " on UEFI initialization.");
-    SleepForever();
-  }
+  AssertEfiStatus(status, "Failed to release watchdog timer.");
 }
 
 void UefiSystem::Initialize(EFI_SYSTEM_TABLE *SystemTable)

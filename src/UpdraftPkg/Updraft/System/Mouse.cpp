@@ -2,6 +2,7 @@
 
 #include "UefiSystem.hpp"
 #include "Logger.hpp"
+#include "Assert.hpp"
 #include "../Graphics/Screen.hpp"
 
 EFI_SIMPLE_POINTER_PROTOCOL *Mouse::s_SimplePointerProtocol;
@@ -18,11 +19,7 @@ void Mouse::LocateSimplePointerProtocol()
 {
   const auto status =
     UefiSystem::SystemTable()->BootServices->LocateProtocol(&gEfiSimplePointerProtocolGuid, nullptr, (void **)&s_SimplePointerProtocol);
-  if(EFI_ERROR(status))
-  {
-    Logger::Println_("Error: ", PrintEfiStatus(status), " on locate EFI Simple Pointer Protocol.");
-    UefiSystem::SleepForever();
-  }
+  AssertEfiStatus(status, "Failed to locate EFI Simple Pointer Protocol.");
 }
 
 void Mouse::ResetPointerDevice()
@@ -36,11 +33,7 @@ void Mouse::CheckPointerDevice()
   s_resolutionX = mode->ResolutionX;
   s_resolutionY = mode->ResolutionY;
 
-  if(s_resolutionX == 0 || s_resolutionY == 0 || !mode->LeftButton || !mode->RightButton)
-  {
-    Logger::Println_("Error: The pointer device not available.");
-    UefiSystem::SleepForever();
-  }
+  Assert(s_resolutionX != 0 && s_resolutionY != 0 && mode->LeftButton && mode->RightButton, "The pointer device not available.");
 }
 
 void Mouse::UpdateState(const EFI_SIMPLE_POINTER_STATE pointerState)

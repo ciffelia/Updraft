@@ -15,6 +15,7 @@
   System/Logger.cpp
   System/Mouse.cpp
   System/FileSystem.cpp
+  System/Assert.cpp
   Graphics/Graphics.cpp
   Graphics/Point.cpp
   Graphics/Circle.cpp

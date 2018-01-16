@@ -5,7 +5,7 @@
 #include "Assert.hpp"
 #include "../Graphics/Screen.hpp"
 
-EFI_SIMPLE_POINTER_PROTOCOL *Mouse::s_SimplePointerProtocol;
+EFI_SIMPLE_POINTER_PROTOCOL *Mouse::s_SimplePointerProtocol = nullptr;
 
 uint64 Mouse::s_resolutionX, Mouse::s_resolutionY;
 

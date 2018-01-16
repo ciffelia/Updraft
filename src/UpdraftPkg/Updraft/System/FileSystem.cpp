@@ -7,9 +7,9 @@ extern "C" {
 #include "UefiSystem.hpp"
 #include "Assert.hpp"
 
-EFI_SIMPLE_FILE_SYSTEM_PROTOCOL *FileSystem::s_SimpleFileSystemProtocol;
+EFI_SIMPLE_FILE_SYSTEM_PROTOCOL *FileSystem::s_SimpleFileSystemProtocol = nullptr;
 
-EFI_FILE_PROTOCOL *FileSystem::s_root;
+EFI_FILE_PROTOCOL *FileSystem::s_root = nullptr;
 
 void FileSystem::LocateSimpleFileSystemProtocol()
 {
@@ -26,6 +26,7 @@ void FileSystem::OpenVolume()
 
 void FileSystem::OpenFile(CHAR16 *fileName, EFI_FILE_PROTOCOL **file)
 {
+  AssertNotNullptr(s_root, "FileSystem::s_root is nullptr.");
   const auto status = s_root->Open(s_root, file, fileName, EFI_FILE_MODE_READ, 0);
   AssertEfiStatus(status, "Failed to open file.");
 }

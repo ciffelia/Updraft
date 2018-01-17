@@ -10,4 +10,8 @@ struct Color {
   constexpr Color(const uint8 _r, const uint8 _g, const uint8 _b)
     : r(_r), g(_g), b(_b)
   { }
+
+  constexpr Color(const uint8 rgb)
+      : r(rgb), g(rgb), b(rgb)
+  { }
 };

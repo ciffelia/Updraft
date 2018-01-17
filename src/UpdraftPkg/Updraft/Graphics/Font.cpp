@@ -24,7 +24,7 @@ void Font::drawGlyph(const char ch, const Point pos) const
     for (int x = 0; x < width; x++)
     {
       const uint8 grayScale = glyph[width * y + x];
-      Point(pos.x + x, pos.y + y).draw(Color(grayScale, grayScale, grayScale));
+      Point(pos.x + x, pos.y + y).draw(Color(grayScale));
     }
   }
 }

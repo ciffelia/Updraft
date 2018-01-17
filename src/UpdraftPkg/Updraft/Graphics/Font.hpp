@@ -6,6 +6,8 @@ extern "C" {
 
 #include "../Utils/Types.hpp"
 #include "Point.hpp"
+#include "Color.hpp"
+#include "ColorPalette.hpp"
 
 class Font
 {
@@ -17,12 +19,12 @@ class Font
 
   uint8 *getGlyphDataPtr(const char ch) const;
 
-  void drawGlyph(const char ch, const Point pos) const;
+  void drawGlyph(const char ch, const Point pos, const Color color) const;
 
 public:
   Font(CHAR16 *fileName);
 
   ~Font();
 
-  void draw(const CHAR8 *str, const Point pos) const;
+  void draw(const CHAR8 *str, const Point pos, const Color color = Palette::Black) const;
 };

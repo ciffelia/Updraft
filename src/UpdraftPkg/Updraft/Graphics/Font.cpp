@@ -2,7 +2,6 @@
 
 #include "../System/Assert.hpp"
 #include "../System/FileSystem.hpp"
-#include "Color.hpp"
 
 uint8 Font::getGlyphWidth(const char ch) const
 {
@@ -14,7 +13,7 @@ uint8 *Font::getGlyphDataPtr(const char ch) const
   return &m_data[4 + 1024 * (ch - ' ') + 1];
 }
 
-void Font::drawGlyph(const char ch, const Point pos) const
+void Font::drawGlyph(const char ch, const Point pos, const Color color) const
 {
   const uint8 width = getGlyphWidth(ch);
   const uint8 *glyph = getGlyphDataPtr(ch);
@@ -23,8 +22,8 @@ void Font::drawGlyph(const char ch, const Point pos) const
   {
     for (int x = 0; x < width; x++)
     {
-      const uint8 grayScale = glyph[width * y + x];
-      Point(pos.x + x, pos.y + y).draw(Color(grayScale));
+      const uint8 alpha = glyph[width * y + x];
+      Point(pos.x + x, pos.y + y).draw(Color(color, (1 - alpha / 255.0) * (color.a / 255.0) * 255));
     }
   }
 }
@@ -46,7 +45,7 @@ Font::~Font()
   delete[] m_data;
 }
 
-void Font::draw(const CHAR8 *str, const Point pos) const
+void Font::draw(const CHAR8 *str, const Point pos, const Color color) const
 {
   Point currentPos = pos;
 
@@ -71,7 +70,7 @@ void Font::draw(const CHAR8 *str, const Point pos) const
       continue;
     }
 
-    drawGlyph(str[i], currentPos);
+    drawGlyph(str[i], currentPos, color);
 
     currentPos.x += getGlyphWidth(str[i]);
   }

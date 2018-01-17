@@ -11,6 +11,7 @@ extern "C" {
 #include "UefiSystem.hpp"
 #include "Lifecycle.hpp"
 #include "Assert.hpp"
+#include "../Graphics/ColorPalette.hpp"
 
 const Font *Logger::s_font = nullptr;
 
@@ -49,7 +50,8 @@ void Logger::Initialize()
 void Logger::Update()
 {
   AssertNotNullptr(s_font, "Logger::s_font is nullptr.");
-  s_font->draw(s_log, {0, 0});
+  s_font->draw(s_log, {1, 1}, Palette::Black);
+  s_font->draw(s_log, {0, 0}, Palette::White);
 }
 
 void Logger::Print_()

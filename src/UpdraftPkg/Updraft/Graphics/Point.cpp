@@ -21,16 +21,30 @@ void Point::draw(const Color color) const
   if (x < 0 || x >= static_cast<int32>(width) || y < 0 || y >= static_cast<int32>(height))
     return;
 
+  const auto blend = [&](const uint8 dest, const uint8 src, const uint8 alpha) {
+    return static_cast<uint8>(dest * (1 - alpha / 255.0) + src * alpha / 255.0);
+  };
+
   auto *frameBufferBase = Graphics::BltBuffer();
   auto *pixel = frameBufferBase + (width * y) + x;
 
   const auto pixelFormat = Graphics::GraphicsOutputProtocol()->Mode->Info->PixelFormat;
   switch(pixelFormat) {
     case PixelBlueGreenRedReserved8BitPerColor:
-      *pixel = {color.b, color.g, color.r, 0xff};
+      *pixel = {
+        blend(pixel->Blue, color.b, color.a),
+        blend(pixel->Green, color.g, color.a),
+        blend(pixel->Red, color.r, color.a),
+        0xff
+      };
       break;
     case PixelRedGreenBlueReserved8BitPerColor:
-      *pixel = {color.r, color.g, color.b, 0xff};
+      *pixel = {
+        blend(pixel->Blue, color.r, color.a),
+        blend(pixel->Green, color.g, color.a),
+        blend(pixel->Red, color.b, color.a),
+        0xff
+      };
       break;
   }
 }

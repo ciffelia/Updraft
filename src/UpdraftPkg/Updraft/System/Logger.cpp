@@ -232,7 +232,7 @@ void Logger::Print_(const Circle value)
 
 void Logger::Print_(const Color value)
 {
-  Print_("(", value.r, ",", value.g, ",", value.b, ")");
+  Print_("(", value.r, ",", value.g, ",", value.b, ",", value.a, ")");
 }
 
 void Logger::Print_(const Point value)

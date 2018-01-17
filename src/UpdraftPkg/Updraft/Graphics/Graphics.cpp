@@ -1,7 +1,6 @@
 #include "Graphics.hpp"
 
 #include "../System/UefiSystem.hpp"
-#include "../System/Logger.hpp"
 #include "../System/Assert.hpp"
 #include "Screen.hpp"
 
@@ -53,8 +52,6 @@ void Graphics::SetVideoMode(const uint32 mode)
 {
   const auto status = s_GraphicsOutputProtocol->SetMode(s_GraphicsOutputProtocol, mode);
   AssertEfiStatus(status, "Failed to set video mode.");
-
-  Logger::ClearPrint();
 }
 
 void Graphics::AllocateBltBuffer()

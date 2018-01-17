@@ -23,6 +23,7 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   Lifecycle::Initialize();
   Mouse::Initialize();
   FileSystem::Initialize();
+  Logger::Initialize();
 
   const Font font(L"Font.dat");
 
@@ -36,6 +37,8 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
     Circle(Mouse::Pos(), 15).draw(Mouse::Pressed() ? Palette::Deeppink : Palette::Limegreen);
 
     font.draw(Mouse::Pressed() ? "Hello,\r\nworld!" : "Hello, world!", Mouse::Pos());
+
+    Logger::Update();
 
     Graphics::Update();
   }

@@ -8,70 +8,96 @@
 #include "../Graphics/Point.hpp"
 #include "../Graphics/Rect.hpp"
 #include "../Graphics/Size.hpp"
+#include "../Graphics/Font.hpp"
+
+#include <stdio.h>
 
 // Library/UefiLib.h にある Print() のラッパー
 // Siv3Dの Print(), Println(), ClearPrint() と同様の動作をする (https://goo.gl/vG3ZB7)
-namespace Logger {
-  void Print_();
+class Logger
+{
+  static const Font *s_font;
 
-  void Print_(const int8 value);
+  static char s_log[512];
+  static uint16 s_caret;
 
-  void Print_(const int16 value);
+  static void PrintChar(const char ch);
 
-  void Print_(const int32 value);
+  static void PrintString(const char *str);
 
-  void Print_(const int64 value);
+public:
+  static void Initialize();
 
-  void Print_(const double value);
+  static void Update();
 
-  void Print_(const uint8 value);
+  template <class... Args>
+  static void Printf(const char *format, const Args &... args)
+  {
+    const int bufSize = snprintf(nullptr, 0, format, args...) + 1;
 
-  void Print_(const uint16 value);
+    char *buf = new char[bufSize];
 
-  void Print_(const uint32 value);
+    sprintf(buf, format, args...);
 
-  void Print_(const uint64 value);
+    PrintString(buf);
 
-  void Print_(const void *value);
+    delete[] buf;
+  }
 
-  void Print_(const CHAR8 *value);
+  static void Print_();
 
-  void Print_(const CHAR16 *value);
+  static void Print_(const int8 value);
 
-  void Print_(const GUID *value);
+  static void Print_(const int16 value);
 
-  void Print_(const EFI_TIME *value);
+  static void Print_(const int32 value);
 
-  void Print_(const PrintEfiStatus value);
+  static void Print_(const int64 value);
 
-  void Print_(const bool value);
+  static void Print_(const double value);
 
-  void Print_(const Vec2 value);
+  static void Print_(const uint8 value);
 
-  void Print_(const Circular value);
+  static void Print_(const uint16 value);
 
-  void Print_(const Circle value);
+  static void Print_(const uint32 value);
 
-  void Print_(const Color value);
+  static void Print_(const uint64 value);
 
-  void Print_(const Point value);
+  static void Print_(const CHAR8 *value);
 
-  void Print_(const Rect value);
+  static void Print_(const CHAR16 *value);
 
-  void Print_(const Size value);
+  static void Print_(const bool value);
 
-  template <class Type, class ... Args>
-  void Print_(const Type& value, const Args& ... args)
+  static void Print_(const PrintEfiStatus value);
+
+  static void Print_(const Vec2 value);
+
+  static void Print_(const Circular value);
+
+  static void Print_(const Circle value);
+
+  static void Print_(const Color value);
+
+  static void Print_(const Point value);
+
+  static void Print_(const Rect value);
+
+  static void Print_(const Size value);
+
+  template <class Type, class... Args>
+  static void Print_(const Type &value, const Args &... args)
   {
     Print_(value);
     Print_(args...);
   }
 
-  template <class ... Args>
-  void Println_(const Args& ... args)
+  template <class... Args>
+  static void Println_(const Args &... args)
   {
     Print_(args..., "\r\n");
   }
 
-  void ClearPrint();
+  static void ClearPrint();
 };

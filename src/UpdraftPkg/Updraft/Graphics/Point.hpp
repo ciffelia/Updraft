@@ -3,7 +3,10 @@
 #include "../Utils/Types.hpp"
 #include "Color.hpp"
 
-struct Point {
+class Point {
+  uint8 blend(const uint8 dest, const uint8 src, const uint8 alpha) const;
+
+public:
   int32 x, y;
 
   constexpr Point() = default;

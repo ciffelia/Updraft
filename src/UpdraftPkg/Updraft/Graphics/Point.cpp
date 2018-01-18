@@ -9,6 +9,13 @@ extern "C" {
 #include "../Utils/Math.hpp"
 #include "Screen.hpp"
 
+uint8 Point::blend(const uint8 dest, const uint8 src, const uint8 alpha) const
+{
+  return (alpha == 255)
+    ? src
+    : static_cast<uint8>(dest * (1 - alpha / 255.0) + src * alpha / 255.0);
+}
+
 double Point::distanceFrom(const Point pos) const
 {
   return Math::Sqrt(Math::Square(pos.x - x) + Math::Square(pos.y - y));
@@ -21,12 +28,7 @@ void Point::draw(const Color color) const
   if (x < 0 || x >= static_cast<int32>(width) || y < 0 || y >= static_cast<int32>(height))
     return;
 
-  const auto blend = [&](const uint8 dest, const uint8 src, const uint8 alpha) {
-    return static_cast<uint8>(dest * (1 - alpha / 255.0) + src * alpha / 255.0);
-  };
-
-  auto *frameBufferBase = Graphics::BltBuffer();
-  auto *pixel = frameBufferBase + (width * y) + x;
+  auto *pixel = Graphics::BltBuffer() + (width * y) + x;
 
   const auto pixelFormat = Graphics::GraphicsOutputProtocol()->Mode->Info->PixelFormat;
   switch(pixelFormat) {

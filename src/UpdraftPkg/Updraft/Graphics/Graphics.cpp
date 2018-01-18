@@ -62,7 +62,22 @@ void Graphics::AllocateBltBuffer()
 
 void Graphics::ClearScreen()
 {
-  Screen::Rect().draw(s_backgroundColor);
+  const int32 bufSize = static_cast<int32>(Screen::Width() * Screen::Height());
+  EFI_GRAPHICS_OUTPUT_BLT_PIXEL pixel;
+
+  const auto pixelFormat = Graphics::GraphicsOutputProtocol()->Mode->Info->PixelFormat;
+  switch (pixelFormat)
+  {
+  case PixelBlueGreenRedReserved8BitPerColor:
+    pixel = {s_backgroundColor.b, s_backgroundColor.g, s_backgroundColor.r, 0xFF};
+    break;
+  case PixelRedGreenBlueReserved8BitPerColor:
+    pixel = {s_backgroundColor.r, s_backgroundColor.g, s_backgroundColor.b, 0xFF};
+    break;
+  }
+
+  for (int i = 0; i < bufSize; i++)
+    s_bltBuffer[i] = pixel;
 }
 
 void Graphics::Initialize(const Color backgroundColor)

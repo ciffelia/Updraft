@@ -33,6 +33,8 @@ public:
 
   static Point Pos();
 
+  static void Pos(const Point &pos);
+
   static Point Delta();
 
   static bool Pressed();

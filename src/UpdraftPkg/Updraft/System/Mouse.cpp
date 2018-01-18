@@ -104,6 +104,11 @@ Point Mouse::Pos()
   return s_pos;
 }
 
+void Mouse::Pos(const Point &pos)
+{
+  s_pos = pos;
+}
+
 Point Mouse::Delta()
 {
   return s_delta;

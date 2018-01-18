@@ -15,4 +15,30 @@ struct Point {
   double distanceFrom(const Point pos) const;
 
   void draw(const Color color) const;
+
+  constexpr Point operator+() const;
+
+  constexpr Point operator-() const;
+
+  constexpr Point operator+(const Point &other) const;
+
+  constexpr Point operator-(const Point &other) const;
+
+  constexpr Point operator*(const double s) const;
+
+  constexpr Point operator/(const double s) const;
+
+  Point &operator+=(const Point &other);
+
+  Point &operator-=(const Point &other);
+
+  Point &operator*=(const double s);
+
+  Point &operator/=(const double s);
+
+  constexpr bool operator==(const Point &other) const;
+
+  constexpr bool operator!=(const Point &other) const;
 };
+
+constexpr Point operator*(double s, const Point &p);

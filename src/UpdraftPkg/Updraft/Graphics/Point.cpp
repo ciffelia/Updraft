@@ -48,3 +48,72 @@ void Point::draw(const Color color) const
       break;
   }
 }
+
+constexpr Point Point::operator+() const
+{
+  return *this;
+}
+
+constexpr Point Point::operator-() const
+{
+  return {-x, -y};
+}
+
+constexpr Point Point::operator+(const Point &other) const
+{
+  return {x + other.x, y + other.y};
+}
+
+constexpr Point Point::operator-(const Point &other) const
+{
+  return *this + (-other);
+}
+
+constexpr Point Point::operator*(const double s) const
+{
+  return {static_cast<int32>(x * s), static_cast<int32>(y * s)};
+}
+
+constexpr Point Point::operator/(const double s) const
+{
+  return *this * (1 / s);
+}
+
+Point &Point::operator+=(const Point &other)
+{
+  *this = *this + other;
+  return *this;
+}
+
+Point &Point::operator-=(const Point &other)
+{
+  *this = *this - other;
+  return *this;
+}
+
+Point &Point::operator*=(const double s)
+{
+  *this = *this * s;
+  return *this;
+}
+
+Point &Point::operator/=(const double s)
+{
+  *this = *this / s;
+  return *this;
+}
+
+constexpr bool Point::operator==(const Point &other) const
+{
+  return x == other.x && y == other.y;
+}
+
+constexpr bool Point::operator!=(const Point &other) const
+{
+  return !(*this == other);
+}
+
+constexpr Point operator*(double s, const Point &p)
+{
+  return {static_cast<int32>(s * p.x), static_cast<int32>(s * p.y)};
+}

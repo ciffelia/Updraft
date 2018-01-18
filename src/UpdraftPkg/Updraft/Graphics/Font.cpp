@@ -22,8 +22,9 @@ void Font::drawGlyph(const char ch, const Point pos, const Color color) const
   {
     for (int x = 0; x < width; x++)
     {
-      const uint8 alpha = glyph[width * y + x];
-      Point(pos.x + x, pos.y + y).draw(Color(color, (1 - alpha / 255.0) * (color.a / 255.0) * 255));
+      const double fontAlpha = 1 - glyph[width * y + x] / 255.0;
+      const double alpha = fontAlpha * (color.a / 255.0);
+      Point(pos.x + x, pos.y + y).draw(Color(color, static_cast<uint8>(alpha * 255)));
     }
   }
 }

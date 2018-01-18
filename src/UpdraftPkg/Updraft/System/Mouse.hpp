@@ -14,7 +14,7 @@ class Mouse {
 
   static uint8 s_mouseSpeed;
 
-  static Point s_pos;
+  static Point s_pos, s_delta;
 
   static bool s_leftPressed, s_rightPressed;
 
@@ -24,7 +24,7 @@ class Mouse {
 
   static void CheckPointerDevice();
 
-  static void UpdateState(const EFI_SIMPLE_POINTER_STATE pointerState);
+  static void UpdateState(const EFI_SIMPLE_POINTER_STATE* pointerState = nullptr);
 
 public:
   static void Initialize();
@@ -32,6 +32,8 @@ public:
   static void Update();
 
   static Point Pos();
+
+  static Point Delta();
 
   static bool Pressed();
 

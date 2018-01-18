@@ -11,7 +11,7 @@ uint64 Mouse::s_resolutionX, Mouse::s_resolutionY;
 
 uint8 Mouse::s_mouseSpeed;
 
-Point Mouse::s_pos;
+Point Mouse::s_pos, Mouse::s_delta;
 
 bool Mouse::s_rightPressed, Mouse::s_leftPressed;
 
@@ -36,22 +36,33 @@ void Mouse::CheckPointerDevice()
   Assert(s_resolutionX != 0 && s_resolutionY != 0 && mode->LeftButton && mode->RightButton, "The pointer device not available.");
 }
 
-void Mouse::UpdateState(const EFI_SIMPLE_POINTER_STATE pointerState)
+void Mouse::UpdateState(const EFI_SIMPLE_POINTER_STATE *pointerState)
 {
-  s_pos.x += (int32)((pointerState.RelativeMovementX / s_resolutionX) * s_mouseSpeed);
-  s_pos.y += (int32)((pointerState.RelativeMovementY / s_resolutionY) * s_mouseSpeed);
+  if(pointerState == nullptr)
+  {
+    s_delta = {0, 0};
+    return;
+  }
 
-  if (s_pos.x < 0)
-    s_pos.x = 0;
-  if (s_pos.x >= static_cast<int32>(Screen::Width()))
-    s_pos.x = static_cast<int32>(Screen::Width()) - 1;
-  if (s_pos.y < 0)
-    s_pos.y = 0;
-  if (s_pos.y >= static_cast<int32>(Screen::Height()))
-    s_pos.y = static_cast<int32>(Screen::Height()) - 1;
+  Point newPos;
 
-  s_leftPressed = pointerState.LeftButton == TRUE;
-  s_rightPressed = pointerState.RightButton == TRUE;
+  newPos.x = s_pos.x + (int32)((pointerState->RelativeMovementX / s_resolutionX) * s_mouseSpeed);
+  newPos.y = s_pos.y + (int32)((pointerState->RelativeMovementY / s_resolutionY) * s_mouseSpeed);
+
+  if (newPos.x < 0)
+    newPos.x = 0;
+  if (newPos.x >= static_cast<int32>(Screen::Width()))
+    newPos.x = static_cast<int32>(Screen::Width()) - 1;
+  if (newPos.y < 0)
+    newPos.y = 0;
+  if (newPos.y >= static_cast<int32>(Screen::Height()))
+    newPos.y = static_cast<int32>(Screen::Height()) - 1;
+
+  s_delta = newPos - s_pos;
+  s_pos = newPos;
+
+  s_leftPressed = pointerState->LeftButton == TRUE;
+  s_rightPressed = pointerState->RightButton == TRUE;
 }
 
 void Mouse::Initialize()
@@ -77,9 +88,10 @@ void Mouse::Update()
   switch(status)
   {
     case EFI_SUCCESS:
-      UpdateState(pointerState);
+      UpdateState(&pointerState);
       break;
     case EFI_NOT_READY:
+      UpdateState(nullptr);
       break;
     default:
       Logger::Println_("Error: ", PrintEfiStatus(status), " on mouse update.");
@@ -90,6 +102,11 @@ void Mouse::Update()
 Point Mouse::Pos()
 {
   return s_pos;
+}
+
+Point Mouse::Delta()
+{
+  return s_delta;
 }
 
 bool Mouse::Pressed()

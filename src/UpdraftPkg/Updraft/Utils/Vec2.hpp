@@ -15,8 +15,11 @@ struct Vec2
 
   Vec2() = default;
 
-  constexpr Vec2(double _x, double _y)
+  constexpr Vec2(const double _x, const double _y)
       : x(_x), y(_y) {}
+
+  constexpr Vec2(const Point point)
+      : x(point.x), y(point.y) {}
 
   double length() const
   {
@@ -68,12 +71,12 @@ struct Vec2
     return {x - other.x, y - other.y};
   }
 
-  constexpr Vec2 operator*(double s) const
+  constexpr Vec2 operator*(const double s) const
   {
     return {x * s, y * s};
   }
 
-  constexpr Vec2 operator/(double s) const
+  constexpr Vec2 operator/(const double s) const
   {
     return {x / s, y / s};
   }
@@ -92,14 +95,14 @@ struct Vec2
     return *this;
   }
 
-  Vec2 &operator*=(double s)
+  Vec2 &operator*=(const double s)
   {
     x *= s;
     y *= s;
     return *this;
   }
 
-  Vec2 &operator/=(double s)
+  Vec2 &operator/=(const double s)
   {
     x /= s;
     y /= s;
@@ -112,7 +115,7 @@ struct Vec2
   }
 };
 
-inline constexpr Vec2 operator*(double s, const Vec2 &v)
+inline constexpr Vec2 operator*(const double s, const Vec2 &v)
 {
   return {s * v.x, s * v.y};
 }

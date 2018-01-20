@@ -30,6 +30,8 @@ public:
 
   static void Update();
 
+  static void Dispose();
+
   template <class... Args>
   static void Printf(const char *format, const Args &... args)
   {

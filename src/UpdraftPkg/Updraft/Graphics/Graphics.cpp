@@ -101,6 +101,11 @@ void Graphics::Update()
   ClearScreen();
 }
 
+void Graphics::Dispose()
+{
+  delete[] s_bltBuffer;
+}
+
 EFI_GRAPHICS_OUTPUT_PROTOCOL* Graphics::GraphicsOutputProtocol()
 {
   return s_GraphicsOutputProtocol;

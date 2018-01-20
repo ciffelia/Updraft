@@ -35,6 +35,8 @@ public:
 
   static void Update();
 
+  static void Dispose();
+
   static EFI_GRAPHICS_OUTPUT_PROTOCOL* GraphicsOutputProtocol();
 
   static EFI_GRAPHICS_OUTPUT_BLT_PIXEL* BltBuffer();

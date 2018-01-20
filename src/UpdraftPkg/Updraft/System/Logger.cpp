@@ -54,6 +54,11 @@ void Logger::Update()
   s_font->draw(s_log, {0, 0}, Palette::White);
 }
 
+void Logger::Dispose()
+{
+  delete s_font;
+}
+
 void Logger::Print_()
 { }
 

@@ -44,5 +44,8 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
     Graphics::Update();
   }
 
+  Logger::Dispose();
+  Graphics::Dispose();
+
   UefiSystem::Shutdown();
 }

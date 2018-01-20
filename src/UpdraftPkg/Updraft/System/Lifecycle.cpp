@@ -91,12 +91,12 @@ void Lifecycle::Initialize()
 
 bool Lifecycle::Update()
 {
-  if (ExitKeyPressed())
-    return false;
-
   WaitForTimerEvent();
 
   s_frameCount++;
+
+  if (ExitKeyPressed())
+    return false;
 
   return true;
 }

@@ -9,6 +9,7 @@
 [Sources]
   Main.cpp
   Player.cpp
+  Stage.cpp
   Utils/Math.cpp
   Utils/Misc.cpp
   System/UefiSystem.cpp

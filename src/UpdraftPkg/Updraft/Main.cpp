@@ -15,7 +15,7 @@ extern "C" {
 #include "Graphics/Screen.hpp"
 #include "Graphics/ColorPalette.hpp"
 #include "Graphics/Font.hpp"
-#include "Player.hpp"
+#include "Stage.hpp"
 
 EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
 {
@@ -29,7 +29,7 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   // const Font font(L"Font.dat");
 
   const PlayerParams playerParams = {{0.1, 0.2}, {6.0, 3.0}, {-6.0, -6.0}};
-  Player player(Screen::Center(), playerParams);
+  Stage stage(playerParams);
 
   while(Lifecycle::Update())
   {
@@ -42,9 +42,8 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
     // const Color color = Mouse::Pressed() ? Color(Palette::Lightgrey) : Color(Palette::Lightgrey, 128);
     // font.draw(str, Mouse::Pos(), color);
 
-    player.update();
-
-    player.draw();
+    stage.update();
+    stage.draw();
 
     Logger::Update();
 

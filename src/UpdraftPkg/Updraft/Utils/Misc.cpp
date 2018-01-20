@@ -23,5 +23,15 @@ void operator delete[](void *buf)
   FreePool(buf);
 }
 
+void operator delete(void *buf, const size_t size)
+{
+  FreePool(buf);
+}
+
+void operator delete[](void *buf, const size_t size)
+{
+  FreePool(buf);
+}
+
 // Required to use LibC
 int main() {}

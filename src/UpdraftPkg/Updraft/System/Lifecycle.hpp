@@ -25,7 +25,15 @@ class Lifecycle
 
   static bool ExitKeyPressed();
 
+  static void CreateTimerEvent();
+
+  static void SetTimer();
+
+  static void CancelTimer();
+
   static void ResetTimer();
+
+  static void WaitForTimerEvent();
 
 public:
   static void Initialize();

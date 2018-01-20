@@ -48,29 +48,45 @@ bool Lifecycle::ExitKeyPressed()
   return false;
 }
 
+void Lifecycle::CreateTimerEvent()
+{
+  const auto status = UefiSystem::SystemTable()->BootServices->CreateEvent(EVT_TIMER, 0, nullptr, nullptr, &s_timerEvent);
+  AssertEfiStatus(status, "Failed to setup timer event.");
+
+  s_eventList[0] = s_timerEvent;
+}
+
+void Lifecycle::SetTimer()
+{
+  const auto status = UefiSystem::SystemTable()->BootServices->SetTimer(s_timerEvent, ::TimerPeriodic, 10000000 / s_fps);
+  AssertEfiStatus(status, "Failed to reset timer.");
+}
+
+void Lifecycle::CancelTimer()
+{
+  const auto status = UefiSystem::SystemTable()->BootServices->SetTimer(s_timerEvent, ::TimerCancel, 0);
+  AssertEfiStatus(status, "Failed to reset timer.");
+}
+
 void Lifecycle::ResetTimer()
 {
-  {
-    const auto status = UefiSystem::SystemTable()->BootServices->SetTimer(s_timerEvent, ::TimerCancel, 0);
-    AssertEfiStatus(status, "Failed to reset timer.");
-  }
+  CancelTimer();
+  SetTimer();
+}
 
-  {
-    const auto status = UefiSystem::SystemTable()->BootServices->SetTimer(s_timerEvent, ::TimerPeriodic, 10000000 / s_fps);
-    AssertEfiStatus(status, "Failed to reset timer.");
-  }
+void Lifecycle::WaitForTimerEvent()
+{
+  const auto status = UefiSystem::SystemTable()->BootServices->WaitForEvent(1, s_eventList, &s_eventIndex);
+  AssertEfiStatus(status, "Failed to update.");
 }
 
 void Lifecycle::Initialize()
 {
   LocateSimpleTextInputProtocol();
 
-  const auto status = UefiSystem::SystemTable()->BootServices->CreateEvent(EVT_TIMER, 0, nullptr, nullptr, &s_timerEvent);
-  AssertEfiStatus(status, "Failed to setup timer event.");
+  CreateTimerEvent();
 
-  s_eventList[0] = s_timerEvent;
-
-  ResetTimer();
+  SetTimer();
 }
 
 bool Lifecycle::Update()
@@ -78,8 +94,7 @@ bool Lifecycle::Update()
   if (ExitKeyPressed())
     return false;
 
-  const auto status = UefiSystem::SystemTable()->BootServices->WaitForEvent(1, s_eventList, &s_eventIndex);
-  AssertEfiStatus(status, "Failed to update.");
+  WaitForTimerEvent();
 
   s_frameCount++;
 

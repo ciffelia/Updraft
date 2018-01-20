@@ -109,6 +109,16 @@ struct Vec2
     return *this;
   }
 
+  constexpr bool operator==(const Vec2 &v) const
+  {
+    return v.x == x && v.y == y;
+  }
+
+  constexpr bool operator!=(const Vec2 &v) const
+  {
+    return !(*this == v);
+  }
+
   constexpr Point asPoint() const
   {
     return { static_cast<int32>(x), static_cast<int32>(y) };

@@ -32,3 +32,8 @@ void UefiSystem::SleepForever()
 {
   while(true) ::CpuSleep();
 }
+
+void UefiSystem::Shutdown()
+{
+  s_SystemTable->RuntimeServices->ResetSystem(EfiResetShutdown, EFI_SUCCESS, 0, nullptr);
+}

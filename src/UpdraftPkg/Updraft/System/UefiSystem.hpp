@@ -15,4 +15,6 @@ public:
   static EFI_SYSTEM_TABLE* SystemTable();
 
   static void SleepForever();
+
+  static void Shutdown();
 };

@@ -39,7 +39,7 @@ void Logger::PrintString(const char* str)
 
 void Logger::Initialize()
 {
-  s_font = new Font(L"Font.dat");
+  s_font = new Font(L"Fonts\\Logger.fnt");
 
   for (int i = 0; i < 512; i++)
   {

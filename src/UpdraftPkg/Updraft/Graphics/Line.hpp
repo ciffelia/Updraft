@@ -49,10 +49,17 @@ struct Line
 
   double distanceFrom(const Vec2 &p) const
   {
-    const Vec2 ap = (p - begin);
     const Vec2 ab = vector();
+    const Vec2 ap = (p - begin);
+    const Vec2 bp = (p - end);
 
-    const double cross = (p - begin).cross(vector());
+    if (ab.dot(ap) <= 0)
+      return ap.length();
+    
+    if (ab.dot(bp) >= 0)
+      return bp.length();
+
+    const double cross = ap.cross(vector());
 
     return Math::Abs(cross) / length();
   }

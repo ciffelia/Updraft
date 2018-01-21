@@ -15,6 +15,12 @@ namespace Math {
 
   double Sqrt(const double x);
 
+  template <typename Type>
+  constexpr Type Abs(const Type x)
+  {
+    return x >= Type(0) ? x : -x;
+  }
+
   double Sin(const double x);
 
   double Cos(const double x);

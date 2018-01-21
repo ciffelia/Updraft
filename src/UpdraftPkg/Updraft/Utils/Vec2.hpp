@@ -36,6 +36,11 @@ struct Vec2
     return x * other.x + y * other.y;
   }
 
+  constexpr double cross(const Vec2 &other) const
+  {
+    return x * other.y - y * other.x;
+  }
+
   double distanceFrom(const Vec2 &other) const
   {
     return (other - *this).length();

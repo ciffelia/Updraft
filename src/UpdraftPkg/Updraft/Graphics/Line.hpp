@@ -55,7 +55,7 @@ struct Line
 
     if (ab.dot(ap) <= 0)
       return ap.length();
-    
+
     if (ab.dot(bp) >= 0)
       return bp.length();
 

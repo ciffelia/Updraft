@@ -7,8 +7,8 @@ class Stage
 {
   const Font m_font;
 
-  const Vec2 m_stageSize = {800, 600};
-  const Vec2 m_playerInitialPos = m_stageSize / 2;
+  const Vec2 m_stageSize;
+  const Vec2 m_playerInitialPos;
 
   const PlayerParams m_playerParams;
 

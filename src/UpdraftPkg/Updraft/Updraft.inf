@@ -21,6 +21,7 @@
   System/Assert.cpp
   Graphics/Graphics.cpp
   Graphics/Point.cpp
+  Graphics/Line.cpp
   Graphics/Circle.cpp
   Graphics/Rect.cpp
   Graphics/Screen.cpp

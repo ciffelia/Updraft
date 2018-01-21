@@ -7,7 +7,11 @@ namespace Math {
 
   double Pow(const double x, const double y);
 
-  double Square(const double x);
+  template <typename Type>
+  constexpr Type Square(const Type x)
+  {
+    return x * x;
+  }
 
   double Sqrt(const double x);
 

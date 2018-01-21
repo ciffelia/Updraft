@@ -19,6 +19,7 @@
   System/Mouse.cpp
   System/FileSystem.cpp
   System/Assert.cpp
+  Utils/Format.cpp
   Graphics/Graphics.cpp
   Graphics/Point.cpp
   Graphics/Line.cpp

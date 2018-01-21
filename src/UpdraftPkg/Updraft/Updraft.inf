@@ -12,6 +12,7 @@
   Stage.cpp
   Utils/Math.cpp
   Utils/Misc.cpp
+  Utils/Utility.cpp
   System/UefiSystem.cpp
   System/Lifecycle.cpp
   System/Logger.cpp

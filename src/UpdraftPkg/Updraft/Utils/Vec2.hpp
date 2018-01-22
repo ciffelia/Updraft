@@ -51,6 +51,18 @@ struct Vec2
     return *this / length();
   }
 
+  Vec2 rotated(const double angle) const
+  {
+    const double s = Math::Sin(angle);
+    const double c = Math::Cos(angle);
+    return {x * c - y * s, x * s + y * c};
+  }
+
+  Vec2 &rotate(const double angle)
+  {
+    return *this = rotated(angle);
+  }
+
   constexpr bool isZero() const
   {
     return x == 0.0 && y == 0.0;

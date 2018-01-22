@@ -5,8 +5,9 @@
 struct PlayerParams
 {
   Vec2 acceleration;
-  Vec2 maxSpeed;
-  Vec2 minSpeed;
+  double maxFallSpeed;
+  double maxSlideSpeed;
+  double walkSpeed;
 };
 
 struct Player

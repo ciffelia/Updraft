@@ -7,31 +7,66 @@
 
 Vec2 Stage::clampPlayerSpeed(const Vec2 speed)
 {
+  if (m_line.distanceFrom(m_player.pos) <= m_player.r)
+  {
+    return {
+      Clamp(speed.x, -m_playerParams.walkSpeed, m_playerParams.walkSpeed),
+      speed.y
+    };
+  }
+  
   return {
-    Clamp(speed.x, m_playerParams.minSpeed.x, m_playerParams.maxSpeed.x),
-    Clamp(speed.y, m_playerParams.minSpeed.y, m_playerParams.maxSpeed.y)
+    Clamp(speed.x, -m_playerParams.maxSlideSpeed, m_playerParams.maxSlideSpeed),
+    Max(speed.y, m_playerParams.maxFallSpeed)
   };
 }
 
 void Stage::processPlayerInput()
 {
-  m_player.speed.x += m_playerParams.acceleration.x * Mouse::Delta().x;
-  m_player.speed.y += m_playerParams.acceleration.y;
-
-  if (m_player.speed.x > 0)
-  {
-    m_player.speed.x -= m_playerParams.acceleration.x;
-    m_player.speed.x = Max(0.0, m_player.speed.x);
-  }
-  else if (m_player.speed.x < 0)
+  if (Mouse::RightPressed())
   {
     m_player.speed.x += m_playerParams.acceleration.x;
-    m_player.speed.x = Min(0.0, m_player.speed.x);
+  }
+  if (Mouse::LeftPressed())
+  {
+    m_player.speed.x -= m_playerParams.acceleration.x;
+  }
+  if (!Mouse::RightPressed() && !Mouse::LeftPressed())
+  {
+    if (m_player.speed.x > 0)
+    {
+      m_player.speed.x -= m_playerParams.acceleration.x;
+      m_player.speed.x = Max(0.0, m_player.speed.x);
+    }
+    else if (m_player.speed.x < 0)
+    {
+      m_player.speed.x += m_playerParams.acceleration.x;
+      m_player.speed.x = Min(0.0, m_player.speed.x);
+    }
+  }
+
+  if (m_line.distanceFrom(m_player.pos) <= m_player.r)
+  {
+    m_player.speed.y = 0;
+  }
+  else
+  {
+    m_player.speed.y += m_playerParams.acceleration.y;
   }
 
   m_player.speed = clampPlayerSpeed(m_player.speed);
+}
 
-  Mouse::Pos(Screen::Center());
+void Stage::processCollision()
+{
+  const double distance = m_line.distanceFrom(m_player.pos);
+  if (distance <= m_player.r)
+  {
+    const Vec2 normalizedVec = m_line.vector().normalized();
+    const double angle = (m_line.begin.x < m_line.end.x) ? Math::Pi * 3 / 2 : Math::Pi / 2;
+
+    m_player.pos += normalizedVec.rotated(angle) * (m_player.r - distance);
+  }
 }
 
 void Stage::movePlayer()
@@ -39,6 +74,8 @@ void Stage::movePlayer()
   processPlayerInput();
 
   m_player.pos += m_player.speed;
+
+  processCollision();
 }
 
 bool Stage::isPlayerInStage()
@@ -65,9 +102,7 @@ void Stage::update()
 
 void Stage::draw() const
 {
-  m_player.draw();
+  m_line.draw(Palette::Deeppink);
 
-  const char *buf = Format(m_player.pos);
-  m_font.draw(buf, m_player.pos.asPoint(), Palette::White);
-  delete[] buf;
+  m_player.draw();
 }

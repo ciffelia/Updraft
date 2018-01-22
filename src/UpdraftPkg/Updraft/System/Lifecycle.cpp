@@ -84,6 +84,8 @@ void Lifecycle::Initialize()
 {
   LocateSimpleTextInputProtocol();
 
+  ResetInputDevice();
+
   CreateTimerEvent();
 
   SetTimer();

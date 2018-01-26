@@ -7,8 +7,6 @@ extern "C" {
 
 class Lifecycle
 {
-  static EFI_SIMPLE_TEXT_INPUT_PROTOCOL *s_SimpleTextInputProtocol;
-
   static uint8 s_fps;
 
   static uint32 s_frameCount;
@@ -18,12 +16,6 @@ class Lifecycle
   static EFI_EVENT s_eventList[1];
 
   static uintn s_eventIndex;
-
-  static void LocateSimpleTextInputProtocol();
-
-  static void ResetInputDevice();
-
-  static bool ExitKeyPressed();
 
   static void CreateTimerEvent();
 

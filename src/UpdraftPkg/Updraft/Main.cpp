@@ -7,6 +7,7 @@ extern "C" {
 #include "System/Mouse.hpp"
 #include "System/Logger.hpp"
 #include "System/FileSystem.hpp"
+#include "System/Input.hpp"
 #include "Utils/Vec2.hpp"
 #include "Utils/Circular.hpp"
 #include "Graphics/Graphics.hpp"
@@ -25,6 +26,7 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   Mouse::Initialize();
   FileSystem::Initialize();
   Logger::Initialize();
+  UsbKeyboard::Initialize();
 
   const PlayerParams playerParams = {{0.1, 0.2}, 3.0, 6.0, 3.0};
   Stage stage(playerParams);

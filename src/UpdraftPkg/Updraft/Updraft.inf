@@ -19,6 +19,7 @@
   System/Mouse.cpp
   System/FileSystem.cpp
   System/Assert.cpp
+  System/UsbKeyboard.cpp
   Utils/Format.cpp
   Graphics/Graphics.cpp
   Graphics/Point.cpp
@@ -35,6 +36,7 @@
 [LibraryClasses]
   UefiLib
   UefiApplicationEntryPoint
+  UefiUsbLib
   BaseCpuLib
   MemoryAllocationLib
   LibC
@@ -44,3 +46,4 @@
 [Protocols]
   gEfiGraphicsOutputProtocolGuid
   gEfiSimplePointerProtocolGuid
+  gEfiUsbIoProtocolGuid

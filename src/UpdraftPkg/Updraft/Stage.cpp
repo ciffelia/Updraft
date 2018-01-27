@@ -1,78 +1,71 @@
 #include "Stage.hpp"
 
 #include "Graphics/Screen.hpp"
-#include "System/Mouse.hpp"
+#include "System/Input.hpp"
+#include "System/Logger.hpp"
 #include "Utils/Format.hpp"
 #include "Utils/Utility.hpp"
 
 Vec2 Stage::clampPlayerSpeed(const Vec2 speed)
 {
-  if (m_line.distanceFrom(m_player.pos) <= m_player.r)
-  {
-    return {
-      Clamp(speed.x, -m_playerParams.walkSpeed, m_playerParams.walkSpeed),
-      speed.y
-    };
-  }
-  
   return {
-    Clamp(speed.x, -m_playerParams.maxSlideSpeed, m_playerParams.maxSlideSpeed),
-    Max(speed.y, m_playerParams.maxFallSpeed)
+    Clamp(speed.x, m_playerParams.minGlideSpeed.x, m_playerParams.maxGlideSpeed.x),
+    Clamp(speed.y, m_playerParams.minGlideSpeed.y, m_playerParams.maxGlideSpeed.y)
   };
 }
 
-void Stage::processPlayerInput()
+void Stage::processWalkingPlayerInput()
 {
-  if (Mouse::RightPressed())
+  m_player.speed = {0, 0};
+  
+  if (Input::KeyRight.pressed())
   {
-    m_player.speed.x += m_playerParams.acceleration.x;
+    m_player.speed.x += m_playerParams.walkSpeed;
   }
-  if (Mouse::LeftPressed())
+  if (Input::KeyLeft.pressed())
   {
-    m_player.speed.x -= m_playerParams.acceleration.x;
+    m_player.speed.x -= m_playerParams.walkSpeed;
   }
-  if (!Mouse::RightPressed() && !Mouse::LeftPressed())
+}
+
+void Stage::processGlidingPlayerInput()
+{
+  if (Input::KeyRight.pressed())
   {
-    if (m_player.speed.x > 0)
-    {
-      m_player.speed.x -= m_playerParams.acceleration.x;
-      m_player.speed.x = Max(0.0, m_player.speed.x);
-    }
-    else if (m_player.speed.x < 0)
-    {
-      m_player.speed.x += m_playerParams.acceleration.x;
-      m_player.speed.x = Min(0.0, m_player.speed.x);
-    }
+    m_player.speed.x += m_playerParams.glideAcceleration.x;
+  }
+  if (Input::KeyLeft.pressed())
+  {
+    m_player.speed.x -= m_playerParams.glideAcceleration.x;
   }
 
-  if (m_line.distanceFrom(m_player.pos) <= m_player.r)
-  {
-    m_player.speed.y = 0;
-  }
-  else
-  {
-    m_player.speed.y += m_playerParams.acceleration.y;
-  }
+  m_player.speed.y += m_playerParams.glideAcceleration.y;
 
   m_player.speed = clampPlayerSpeed(m_player.speed);
 }
 
 void Stage::processCollision()
 {
-  const double distance = m_line.distanceFrom(m_player.pos);
-  if (distance <= m_player.r)
+  const double distance = m_line.distanceFrom(m_player.pos) - m_player.r;
+
+  if (distance <= m_playerParams.walkSpeed)
   {
     const Vec2 normalizedVec = m_line.vector().normalized();
     const double angle = (m_line.begin.x < m_line.end.x) ? Math::Pi * 3 / 2 : Math::Pi / 2;
 
-    m_player.pos += normalizedVec.rotated(angle) * (m_player.r - distance);
+    m_player.pos += normalizedVec.rotated(angle) * -distance;
   }
 }
 
 void Stage::movePlayer()
 {
-  processPlayerInput();
+  const double distance = m_line.distanceFrom(m_player.pos) - m_player.r;
 
+  if (distance <= 0)
+    processWalkingPlayerInput();
+  else
+    processGlidingPlayerInput();
+  
   m_player.pos += m_player.speed;
 
   processCollision();
@@ -102,7 +95,13 @@ void Stage::update()
 
 void Stage::draw() const
 {
+  const double distance = m_line.distanceFrom(m_player.pos) - m_player.r;
+
   m_line.draw(Palette::Deeppink);
 
   m_player.draw();
+
+  const char *buf = Format("d: ", distance, ", walking: ", distance <= 0, ", v: ", m_player.speed);
+  m_font.draw(buf, m_player.pos.asPoint(), Palette::White);
+  delete[] buf;
 }

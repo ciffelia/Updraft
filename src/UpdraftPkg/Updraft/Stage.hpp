@@ -19,7 +19,9 @@ class Stage
 
   Vec2 clampPlayerSpeed(const Vec2 speed);
 
-  void processPlayerInput();
+  void processWalkingPlayerInput();
+
+  void processGlidingPlayerInput();
 
   void processCollision();
 

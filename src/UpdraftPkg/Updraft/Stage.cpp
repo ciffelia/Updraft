@@ -26,6 +26,10 @@ void Stage::processWalkingPlayerInput()
   {
     m_player.speed.x -= m_playerParams.walkSpeed;
   }
+  if (Input::KeySpace.pressed())
+  {
+    m_player.speed.y = m_playerParams.jumpSpeed;
+  }
 }
 
 void Stage::processGlidingPlayerInput()

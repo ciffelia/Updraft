@@ -27,8 +27,9 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   UsbKeyboard::Initialize();
 
   const PlayerParams playerParams = {
-    {0.1, 0.2}, {-6.0, 0.0}, {6.0, 3.0},
-    3.0
+    {0.1, 0.2}, {-6.0, -5.0}, {6.0, 3.0},
+    3.0,
+    -5.0
   };
   Stage stage(playerParams);
 

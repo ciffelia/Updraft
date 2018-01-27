@@ -9,6 +9,7 @@ struct PlayerParams
   Vec2 maxGlideSpeed;
 
   double walkSpeed;
+  double jumpSpeed;
 };
 
 struct Player

@@ -13,12 +13,13 @@
   * Download and extract zip to `C:\ASL`.
 * [edk2-BaseTools-win32](https://github.com/tianocore/edk2-BaseTools-win32)
   * Clone the repository and configure `EDK_TOOLS_BIN` env to point `C:\path\to\edk2-BaseTools-win32`.
+* [QEMU](https://www.qemu.org/)
 
 ```shell
 # VS2015 command prompt
 > git submodule init
 > git submodule update
-> nmake -f Makefile.win32
+> nmake -f Makefile.win32 build copy run
 ```
 
 ## License information

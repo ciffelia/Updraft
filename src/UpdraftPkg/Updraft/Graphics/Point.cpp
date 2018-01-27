@@ -28,6 +28,9 @@ void Point::draw(const Color color) const
   if (x < 0 || x >= static_cast<int32>(width) || y < 0 || y >= static_cast<int32>(height))
     return;
 
+  if (color.a == 0)
+    return;
+
   auto *pixel = Graphics::BltBuffer() + (width * y) + x;
 
   const auto pixelFormat = Graphics::GraphicsOutputProtocol()->Mode->Info->PixelFormat;

@@ -4,7 +4,6 @@ extern "C" {
 
 #include "System/UefiSystem.hpp"
 #include "System/Lifecycle.hpp"
-#include "System/Mouse.hpp"
 #include "System/Logger.hpp"
 #include "System/FileSystem.hpp"
 #include "System/Input.hpp"
@@ -23,7 +22,6 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   UefiSystem::Initialize(SystemTable);
   Graphics::Initialize();
   Lifecycle::Initialize();
-  Mouse::Initialize();
   FileSystem::Initialize();
   Logger::Initialize();
   UsbKeyboard::Initialize();
@@ -36,8 +34,6 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
 
   while (Lifecycle::Update())
   {
-    Mouse::Update();
-
     const Vec2 circularPos = Vec2(200, 200) + Circular(100, Math::TwoPi * Lifecycle::FrameCount() / 180);
     Circle(circularPos.asPoint(), 15).draw(Palette::Orange);
 

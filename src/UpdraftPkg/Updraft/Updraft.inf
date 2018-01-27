@@ -16,7 +16,6 @@
   System/UefiSystem.cpp
   System/Lifecycle.cpp
   System/Logger.cpp
-  System/Mouse.cpp
   System/FileSystem.cpp
   System/Assert.cpp
   System/UsbKeyboard.cpp

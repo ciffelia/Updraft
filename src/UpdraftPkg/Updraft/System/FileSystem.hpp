@@ -17,14 +17,14 @@ struct FileSystem
 
   static void OpenVolume();
 
-  static void OpenFile(CHAR16 *fileName, EFI_FILE_PROTOCOL **file);
+  static void OpenFile(wchar_t *fileName, EFI_FILE_PROTOCOL **file);
 
   static void CloseFile(EFI_FILE_PROTOCOL *file);
 
 public:
   static void Initialize();
 
-  static uint64 GetSize(CHAR16 *fileName);
+  static uint64 GetSize(wchar_t *fileName);
 
-  static void Read(CHAR16 *fileName, uintn *bufSize, void *buf);
+  static void Read(wchar_t *fileName, uintn *bufSize, void *buf);
 };

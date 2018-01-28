@@ -50,4 +50,6 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   Graphics::Dispose();
 
   UefiSystem::Shutdown();
+
+  return EFI_SUCCESS;
 }

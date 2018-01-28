@@ -18,4 +18,6 @@ using uint32 = UINT32;
 using uint64 = UINT64;
 using uintn = UINTN;
 
+#ifdef _MSC_VER
 using wchar_t = _EFI_WCHAR_T;
+#endif

@@ -1,6 +1,6 @@
-ARCH=X64
-BUILD_TARGET=RELEASE
-BUILD_TOOLS=VS2015
+UPDRAFT_ARCH=X64
+UPDRAFT_BUILD_TARGET=RELEASE
+UPDRAFT_BUILD_TOOLS=VS2015
 OVMF_BUILD_TOOLS=VS2015x86
 QEMU_BIN=qemu-system-x86_64
 RMDIR=cmd /c rmdir /s /q
@@ -18,10 +18,10 @@ build-code:
 	xcopy /e /q src\UpdraftPkg "edk2\UpdraftPkg\"
 	cd edk2 && \
 	Edk2Setup.bat > nul && \
-	build --arch $(ARCH) \
+	build --arch $(UPDRAFT_ARCH) \
 		--platform UpdraftPkg/UpdraftPkg.dsc \
-		--buildtarget $(BUILD_TARGET) \
-		--tagname $(BUILD_TOOLS) \
+		--buildtarget $(UPDRAFT_BUILD_TARGET) \
+		--tagname $(UPDRAFT_BUILD_TOOLS) \
 		-n $(NUMBER_OF_PROCESSORS)
 	$(RMDIR) edk2\UpdraftPkg
 
@@ -29,20 +29,20 @@ copy-code:
 	if exist dist\image $(RMDIR) dist\image
 	if not exist dist mkdir dist
 	mkdir dist\image && mkdir dist\image\EFI && mkdir dist\image\EFI\BOOT
-	copy edk2\Build\UpdraftPkg$(ARCH)\$(BUILD_TARGET)_$(BUILD_TOOLS)\$(ARCH)\Updraft.efi dist\image\EFI\BOOT\BOOT$(ARCH).efi
+	copy edk2\Build\UpdraftPkg$(UPDRAFT_ARCH)\$(UPDRAFT_BUILD_TARGET)_$(UPDRAFT_BUILD_TOOLS)\$(UPDRAFT_ARCH)\Updraft.efi dist\image\EFI\BOOT\BOOT$(UPDRAFT_ARCH).efi
 	xcopy /e /q Assets dist\image\
 
 clean-code:
 	if exist edk2\UpdraftPkg $(RMDIR) edk2\UpdraftPkg
-	if exist edk2\build\UpdraftPkg$(ARCH) $(RMDIR) edk2\build\UpdraftPkg$(ARCH)
+	if exist edk2\build\UpdraftPkg$(UPDRAFT_ARCH) $(RMDIR) edk2\build\UpdraftPkg$(UPDRAFT_ARCH)
 	if exist dist\image $(RMDIR) dist\image
 
 build-ovmf:
 	cd edk2 && \
 	Edk2Setup.bat > nul && \
-	build --arch $(ARCH) \
-		--platform OvmfPkg/OvmfPkg$(ARCH).dsc \
-		--buildtarget $(BUILD_TARGET) \
+	build --arch $(UPDRAFT_ARCH) \
+		--platform OvmfPkg/OvmfPkg$(UPDRAFT_ARCH).dsc \
+		--buildtarget $(UPDRAFT_BUILD_TARGET) \
 		--tagname $(OVMF_BUILD_TOOLS) \
 		-n $(NUMBER_OF_PROCESSORS)
 
@@ -50,11 +50,11 @@ copy-ovmf:
 	if exist dist\OVMF $(RMDIR) dist\OVMF
 	if not exist dist mkdir dist
 	mkdir dist\OVMF
-	copy edk2\Build\Ovmf$(ARCH)\$(BUILD_TARGET)_$(OVMF_BUILD_TOOLS)\FV\OVMF_CODE.fd dist\OVMF\OVMF_CODE.fd
-	copy edk2\Build\Ovmf$(ARCH)\$(BUILD_TARGET)_$(OVMF_BUILD_TOOLS)\FV\OVMF_VARS.fd dist\OVMF\OVMF_VARS.fd
+	copy edk2\Build\Ovmf$(UPDRAFT_ARCH)\$(UPDRAFT_BUILD_TARGET)_$(OVMF_BUILD_TOOLS)\FV\OVMF_CODE.fd dist\OVMF\OVMF_CODE.fd
+	copy edk2\Build\Ovmf$(UPDRAFT_ARCH)\$(UPDRAFT_BUILD_TARGET)_$(OVMF_BUILD_TOOLS)\FV\OVMF_VARS.fd dist\OVMF\OVMF_VARS.fd
 
 clean-ovmf:
-	if exist edk2\build\Ovmf$(ARCH) $(RMDIR) edk2\build\Ovmf$(ARCH)
+	if exist edk2\build\Ovmf$(UPDRAFT_ARCH) $(RMDIR) edk2\build\Ovmf$(UPDRAFT_ARCH)
 	if exist dist\OVMF $(RMDIR) dist\OVMF
 
 run:

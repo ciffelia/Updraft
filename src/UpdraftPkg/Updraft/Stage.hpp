@@ -32,7 +32,7 @@ class Stage
   void killPlayer();
 
 public:
-  constexpr Stage(const PlayerParams playerParams)
+  Stage(const PlayerParams playerParams)
     : m_font(L"Fonts\\Logger.fnt")
     , m_stageSize(800, 600)
     , m_playerInitialPos(400, 100)

@@ -113,7 +113,7 @@ void UsbKeyboard::SetupKeyboardHandler()
     true,
     s_interruptEndpointDescriptor.Interval,
     s_interruptEndpointDescriptor.MaxPacketSize,
-    KeyboardHandler,
+    (EFI_ASYNC_USB_TRANSFER_CALLBACK)KeyboardHandler,
     nullptr);
 
   AssertEfiStatus(status, "UsbAsyncInterruptTransfer failed.");

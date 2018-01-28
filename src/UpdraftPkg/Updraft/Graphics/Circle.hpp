@@ -8,7 +8,7 @@ struct Circle {
   Point center;
   uint32 r;
 
-  constexpr Circle() = default;
+  Circle() = default;
 
   constexpr Circle(const Point _center, const uint32 _r)
     : center(_center)

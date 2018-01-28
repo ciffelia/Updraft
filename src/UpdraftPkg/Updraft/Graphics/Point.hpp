@@ -9,7 +9,7 @@ class Point {
 public:
   int32 x, y;
 
-  constexpr Point() = default;
+  Point() = default;
 
   constexpr Point(const int32 _x, const int32 _y)
     : x(_x), y(_y)

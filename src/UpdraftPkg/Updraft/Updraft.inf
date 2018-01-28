@@ -46,3 +46,6 @@
   gEfiGraphicsOutputProtocolGuid
   gEfiSimplePointerProtocolGuid
   gEfiUsbIoProtocolGuid
+
+[BuildOptions]
+  GCC:*_*_*_CC_FLAGS = -Wextra -Wno-error -std=c++14 -fno-exceptions

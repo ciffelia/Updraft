@@ -3,6 +3,8 @@ extern "C" {
 #include <Library/MemoryAllocationLib.h>
 }
 
+#include <stddef.h>
+
 void *operator new(const size_t size)
 {
   return AllocateZeroPool(size);

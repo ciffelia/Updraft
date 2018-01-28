@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stddef.h>
+
 void _Swap(void *a, void *b, const size_t size);
 
 template <typename Type>

@@ -119,7 +119,7 @@ void UsbKeyboard::SetupKeyboardHandler()
   AssertEfiStatus(status, "UsbAsyncInterruptTransfer failed.");
 }
 
-EFI_STATUS UsbKeyboard::KeyboardHandler(void *data, const uintn dataLength, void *context, const uint32 status)
+EFI_STATUS UsbKeyboard::KeyboardHandler(void *data, const uintn dataLength, void *, const uint32 status)
 {
   Assert(status == EFI_USB_NOERROR, "KeyboardHandler: status suggests error.");
 

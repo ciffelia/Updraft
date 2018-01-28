@@ -51,7 +51,7 @@ void UsbKeyboard::LocateUsbKeyboard()
   uintn handleBufCount;
   GetUsbIoProtocolHandles(&handleBuf, &handleBufCount);
 
-  for (int i = 0; i < handleBufCount; i++)
+  for (int i = 0; i < (int)handleBufCount; i++)
   {
     EFI_USB_IO_PROTOCOL *usbIoProtocol = nullptr;
     GetUsbIoProtocolFromHandle(&usbIoProtocol, handleBuf[i]);

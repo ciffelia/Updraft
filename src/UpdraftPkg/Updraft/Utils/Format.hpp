@@ -84,7 +84,8 @@ char* Format(const Type &value, const Args &... args)
   AssertEfiStatus(::AsciiStrCpyS(res, size, a), "Failed to copy string.");
   AssertEfiStatus(::AsciiStrCatS(res, size, b), "Failed to concat string.");
 
-  delete[] a, b;
+  delete[] a;
+  delete[] b;
 
   return res;
 }

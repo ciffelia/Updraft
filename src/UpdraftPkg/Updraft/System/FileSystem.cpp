@@ -24,7 +24,7 @@ void FileSystem::OpenVolume()
   AssertEfiStatus(status, "Failed to open volume.");
 }
 
-void FileSystem::OpenFile(wchar_t *fileName, EFI_FILE_PROTOCOL **file)
+void FileSystem::OpenFile(const wchar_t *fileName, EFI_FILE_PROTOCOL **file)
 {
   AssertNotNullptr(s_root, "FileSystem::s_root is nullptr.");
   const auto status = s_root->Open(s_root, file, (CHAR16 *)fileName, EFI_FILE_MODE_READ, 0);
@@ -42,7 +42,7 @@ void FileSystem::Initialize()
   OpenVolume();
 }
 
-uint64 FileSystem::GetSize(wchar_t *fileName)
+uint64 FileSystem::GetSize(const wchar_t *fileName)
 {
   EFI_FILE_PROTOCOL *file;
   OpenFile(fileName, &file);
@@ -58,7 +58,7 @@ uint64 FileSystem::GetSize(wchar_t *fileName)
   return ((EFI_FILE_INFO *)buf)->FileSize;
 }
 
-void FileSystem::Read(wchar_t *fileName, uintn *bufSize, void *buf)
+void FileSystem::Read(const wchar_t *fileName, uintn *bufSize, void *buf)
 {
   EFI_FILE_PROTOCOL *file;
   OpenFile(fileName, &file);

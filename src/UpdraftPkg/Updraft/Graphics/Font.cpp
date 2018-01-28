@@ -29,7 +29,7 @@ void Font::drawGlyph(const char ch, const Point pos, const Color color) const
   }
 }
 
-Font::Font(wchar_t *fileName)
+Font::Font(const wchar_t *fileName)
 {
   uintn bufSize = 4 + 1024 * ('~' - ' ' + 1);
   m_data = new uint8[bufSize];

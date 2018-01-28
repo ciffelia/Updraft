@@ -22,7 +22,7 @@ class Font
   void drawGlyph(const char ch, const Point pos, const Color color) const;
 
 public:
-  Font(wchar_t *fileName);
+  Font(const wchar_t *fileName);
 
   ~Font();
 

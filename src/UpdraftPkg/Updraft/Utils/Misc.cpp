@@ -25,12 +25,12 @@ void operator delete[](void *buf)
   FreePool(buf);
 }
 
-void operator delete(void *buf, const size_t size)
+void operator delete(void *buf, const size_t)
 {
   FreePool(buf);
 }
 
-void operator delete[](void *buf, const size_t size)
+void operator delete[](void *buf, const size_t)
 {
   FreePool(buf);
 }

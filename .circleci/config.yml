@@ -1,0 +1,100 @@
+version: 2
+
+references:
+  container_config: &container_config
+    docker:
+      - image: buildpack-deps:xenial
+    working_directory: /tmp/Updraft
+  install_dependencies_step: &install_dependencies_step
+    run: >-
+      apt-get update -y &&
+      apt-get install -y build-essential uuid-dev iasl git gcc-5 nasm python
+  build_steps: &build_steps
+    steps:
+      - <<: *install_dependencies_step
+      - attach_workspace:
+          at: /tmp
+      - run: >-
+          cd edk2 &&
+          . edksetup.sh &&
+          build --arch $UPDRAFT_ARCH --platform UpdraftPkg/UpdraftPkg.dsc --buildtarget $UPDRAFT_BUILD_TARGET --tagname $UPDRAFT_BUILD_TOOLS
+
+jobs:
+  setup_environmetnt:
+    <<: *container_config
+    steps:
+      - <<: *install_dependencies_step
+      - checkout
+      - run: git submodule update --init --recursive
+      - run: make -C edk2/BaseTools
+      - run: cp -r src/UpdraftPkg edk2/
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - Updraft
+  build_ia32_debug:
+    <<: *container_config
+    environment:
+      UPDRAFT_ARCH: IA32
+      UPDRAFT_BUILD_TARGET: DEBUG
+      UPDRAFT_BUILD_TOOLS: GCC5
+    <<: *build_steps
+  build_ia32_release:
+    <<: *container_config
+    environment:
+      UPDRAFT_ARCH: IA32
+      UPDRAFT_BUILD_TARGET: RELEASE
+      UPDRAFT_BUILD_TOOLS: GCC5
+    <<: *build_steps
+  build_ia32_noopt:
+    <<: *container_config
+    environment:
+      UPDRAFT_ARCH: IA32
+      UPDRAFT_BUILD_TARGET: NOOPT
+      UPDRAFT_BUILD_TOOLS: GCC5
+    <<: *build_steps
+  build_x64_debug:
+    <<: *container_config
+    environment:
+      UPDRAFT_ARCH: X64
+      UPDRAFT_BUILD_TARGET: DEBUG
+      UPDRAFT_BUILD_TOOLS: GCC5
+    <<: *build_steps
+  build_x64_release:
+    <<: *container_config
+    environment:
+      UPDRAFT_ARCH: X64
+      UPDRAFT_BUILD_TARGET: RELEASE
+      UPDRAFT_BUILD_TOOLS: GCC5
+    <<: *build_steps
+  build_x64_noopt:
+    <<: *container_config
+    environment:
+      UPDRAFT_ARCH: X64
+      UPDRAFT_BUILD_TARGET: NOOPT
+      UPDRAFT_BUILD_TOOLS: GCC5
+    <<: *build_steps
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - setup_environmetnt
+      - build_ia32_debug:
+          requires:
+            - setup_environmetnt
+      - build_ia32_release:
+          requires:
+            - setup_environmetnt
+      - build_ia32_noopt:
+          requires:
+            - setup_environmetnt
+      - build_x64_debug:
+          requires:
+            - setup_environmetnt
+      - build_x64_release:
+          requires:
+            - setup_environmetnt
+      - build_x64_noopt:
+          requires:
+            - setup_environmetnt

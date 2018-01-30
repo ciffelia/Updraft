@@ -21,6 +21,7 @@
   System/UsbKeyboard.cpp
   Utils/Format.cpp
   Graphics/Graphics.cpp
+  Graphics/Geometry.cpp
   Graphics/Point.cpp
   Graphics/Line.cpp
   Graphics/Circle.cpp

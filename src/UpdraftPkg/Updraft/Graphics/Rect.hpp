@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Utils/Types.hpp"
+#include "Geometry.hpp"
 #include "Color.hpp"
 #include "Point.hpp"
 #include "Size.hpp"
@@ -20,6 +21,12 @@ struct Rect {
     : pos(x, y)
     , size(width, height)
   { }
+
+  template <class Shape>
+  constexpr bool contains(const Shape shape) const
+  {
+    return Geometry::Contains(*this, shape);
+  }
 
   void draw(const Color color) const;
 };

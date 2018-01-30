@@ -10,6 +10,7 @@ struct PlayerParams
 
   double walkSpeed;
   double jumpSpeed;
+  double updraftAcceleration;
 };
 
 struct Player

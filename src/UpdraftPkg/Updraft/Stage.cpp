@@ -45,6 +45,9 @@ void Stage::processGlidingPlayerInput()
 
   m_player.speed.y += m_playerParams.glideAcceleration.y;
 
+  if (m_updraft.contains(m_player.pos))
+    m_player.speed.y += m_playerParams.updraftAcceleration;
+
   m_player.speed = clampPlayerSpeed(m_player.speed);
 }
 
@@ -100,6 +103,8 @@ void Stage::update()
 void Stage::draw() const
 {
   const double distance = m_line.distanceFrom(m_player.pos) - m_player.r;
+
+  m_updraft.draw(m_updraft.contains(m_player.pos) ? Palette::Deepskyblue : Palette::Skyblue);
 
   m_line.draw(Palette::Deeppink);
 

@@ -32,20 +32,20 @@ jobs:
           root: /tmp
           paths:
             - Updraft
-  build_ia32_debug:
-    <<: *container_config
-    environment:
-      UPDRAFT_ARCH: IA32
-      UPDRAFT_BUILD_TARGET: DEBUG
-      UPDRAFT_BUILD_TOOLS: GCC5
-    <<: *build_steps
-  build_ia32_release:
-    <<: *container_config
-    environment:
-      UPDRAFT_ARCH: IA32
-      UPDRAFT_BUILD_TARGET: RELEASE
-      UPDRAFT_BUILD_TOOLS: GCC5
-    <<: *build_steps
+  # build_ia32_debug:
+  #   <<: *container_config
+  #   environment:
+  #     UPDRAFT_ARCH: IA32
+  #     UPDRAFT_BUILD_TARGET: DEBUG
+  #     UPDRAFT_BUILD_TOOLS: GCC5
+  #   <<: *build_steps
+  # build_ia32_release:
+  #   <<: *container_config
+  #   environment:
+  #     UPDRAFT_ARCH: IA32
+  #     UPDRAFT_BUILD_TARGET: RELEASE
+  #     UPDRAFT_BUILD_TOOLS: GCC5
+  #   <<: *build_steps
   build_ia32_noopt:
     <<: *container_config
     environment:
@@ -80,12 +80,12 @@ workflows:
   build:
     jobs:
       - setup_environmetnt
-      - build_ia32_debug:
-          requires:
-            - setup_environmetnt
-      - build_ia32_release:
-          requires:
-            - setup_environmetnt
+      # - build_ia32_debug:
+      #     requires:
+      #       - setup_environmetnt
+      # - build_ia32_release:
+      #     requires:
+      #       - setup_environmetnt
       - build_ia32_noopt:
           requires:
             - setup_environmetnt

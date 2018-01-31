@@ -27,8 +27,8 @@
 
 Following file contains codes from [Vec2 クラスを作る（モダンな C++ クラスデザインのためのチュートリアル） - Qiita](https://qiita.com/Reputeless/items/96226cfe1282a014b147) (Public domain).
 
-- [Vec2.hpp](Utils/Vec2.hpp)
+* [Vec2.hpp](Utils/Vec2.hpp)
 
 Following file contains codes from [OpenSiv3D](https://github.com/Siv3D/OpenSiv3D) [(MIT License)](https://github.com/Siv3D/OpenSiv3D/blob/master/LICENSE).
 
-- [Circular.hpp](Utils/Circular.hpp)
+* [Circular.hpp](Utils/Circular.hpp)

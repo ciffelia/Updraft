@@ -20,12 +20,12 @@ void Graphics::LocateGOP()
 void Graphics::CheckPixelFormat()
 {
   const auto pixelFormat = s_GraphicsOutputProtocol->Mode->Info->PixelFormat;
-  Assert(pixelFormat == PixelRedGreenBlueReserved8BitPerColor || pixelFormat == PixelBlueGreenRedReserved8BitPerColor, "Not supported pixel format.");
+  Assert(pixelFormat == PixelBlueGreenRedReserved8BitPerColor, "Unsupported pixel format.");
 }
 
 bool Graphics::IsProperGraphicsMode(const EFI_GRAPHICS_OUTPUT_MODE_INFORMATION *modeInfo, const uint32 horizontalResolution, const uint32 verticalResolution)
 {
-  return (modeInfo->PixelFormat == PixelBlueGreenRedReserved8BitPerColor || modeInfo->PixelFormat == PixelRedGreenBlueReserved8BitPerColor) &&
+  return modeInfo->PixelFormat == PixelBlueGreenRedReserved8BitPerColor &&
     modeInfo->HorizontalResolution == horizontalResolution &&
     modeInfo->VerticalResolution == verticalResolution;
 }
@@ -63,21 +63,9 @@ void Graphics::AllocateBltBuffer()
 void Graphics::ClearScreen()
 {
   const int32 bufSize = static_cast<int32>(Screen::Width() * Screen::Height());
-  EFI_GRAPHICS_OUTPUT_BLT_PIXEL pixel;
-
-  const auto pixelFormat = Graphics::GraphicsOutputProtocol()->Mode->Info->PixelFormat;
-  switch (pixelFormat)
-  {
-  case PixelBlueGreenRedReserved8BitPerColor:
-    pixel = {s_backgroundColor.b, s_backgroundColor.g, s_backgroundColor.r, 0xFF};
-    break;
-  case PixelRedGreenBlueReserved8BitPerColor:
-    pixel = {s_backgroundColor.r, s_backgroundColor.g, s_backgroundColor.b, 0xFF};
-    break;
-  }
 
   for (int i = 0; i < bufSize; i++)
-    s_bltBuffer[i] = pixel;
+    s_bltBuffer[i] = {s_backgroundColor.b, s_backgroundColor.g, s_backgroundColor.r, 0xFF};
 }
 
 void Graphics::Initialize(const Color backgroundColor)

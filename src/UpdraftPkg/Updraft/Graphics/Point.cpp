@@ -33,25 +33,12 @@ void Point::draw(const Color color) const
 
   auto *pixel = Graphics::BltBuffer() + (width * y) + x;
 
-  const auto pixelFormat = Graphics::GraphicsOutputProtocol()->Mode->Info->PixelFormat;
-  switch(pixelFormat) {
-    case PixelBlueGreenRedReserved8BitPerColor:
-      *pixel = {
-        blend(pixel->Blue, color.b, color.a),
-        blend(pixel->Green, color.g, color.a),
-        blend(pixel->Red, color.r, color.a),
-        0xff
-      };
-      break;
-    case PixelRedGreenBlueReserved8BitPerColor:
-      *pixel = {
-        blend(pixel->Blue, color.r, color.a),
-        blend(pixel->Green, color.g, color.a),
-        blend(pixel->Red, color.b, color.a),
-        0xff
-      };
-      break;
-  }
+  *pixel = {
+    blend(pixel->Blue, color.b, color.a),
+    blend(pixel->Green, color.g, color.a),
+    blend(pixel->Red, color.r, color.a),
+    0xff
+  };
 }
 
 constexpr Point Point::operator+() const

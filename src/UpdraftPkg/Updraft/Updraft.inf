@@ -10,6 +10,7 @@
   Main.cpp
   Player.cpp
   Stage.cpp
+  StageReader.cpp
   Utils/Math.cpp
   Utils/Misc.cpp
   Utils/Utility.cpp

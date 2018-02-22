@@ -16,6 +16,7 @@ extern "C" {
 #include "Graphics/ColorPalette.hpp"
 #include "Graphics/Font.hpp"
 #include "Stage.hpp"
+#include "StageReader.hpp"
 
 EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
 {
@@ -26,20 +27,21 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   Logger::Initialize();
   UsbKeyboard::Initialize();
 
+  Stage stage = StageReader(L"Map.ump").read();
+
   const PlayerParams playerParams = {
     {0.1, 0.2}, {-6.0, -5.0}, {6.0, 3.0},
     3.0,
     -5.0,
     -0.4
   };
-  Stage stage(playerParams);
 
   while (Lifecycle::Update())
   {
     const Vec2 circularPos = Vec2(200, 200) + Circular(100, Math::TwoPi * Lifecycle::FrameCount() / 180);
     Circle(circularPos.asPoint(), 15).draw(Palette::Orange);
 
-    stage.update();
+    stage.update(playerParams);
     stage.draw();
 
     Logger::Update();

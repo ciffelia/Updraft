@@ -14,13 +14,13 @@
   Utils/Math.cpp
   Utils/Misc.cpp
   Utils/Utility.cpp
+  Utils/Format.cpp
   System/UefiSystem.cpp
   System/Lifecycle.cpp
   System/Logger.cpp
   System/FileSystem.cpp
   System/Assert.cpp
   System/UsbKeyboard.cpp
-  Utils/Format.cpp
   Graphics/Graphics.cpp
   Graphics/Geometry.cpp
   Graphics/Point.cpp

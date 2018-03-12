@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Array.hpp"
+#include "../System/Assert.hpp"
 
 extern "C" {
 #include <Uefi.h>

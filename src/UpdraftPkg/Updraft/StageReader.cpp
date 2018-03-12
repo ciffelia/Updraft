@@ -3,36 +3,30 @@
 #include "System/Assert.hpp"
 #include "System/Logger.hpp"
 #include "System/FileSystem.hpp"
-
-void StageReader::readMapData(uint16 **mapData) const
-{
-  uint8 *mapFileData;
-
-  uintn bufSize = FileSystem::GetSize(m_fileName);
-  mapFileData = new uint8[bufSize];
-
-  FileSystem::Read(m_fileName, &bufSize, mapFileData);
-
-  Assert(mapFileData[0] == 'U' && mapFileData[1] == 'M' && mapFileData[2] == 'P', "Map magic number is invalid.");
-  Assert(bufSize >= sizeof(uint8) * 3 + sizeof(uint16) * 5, "Map data size is invalid.");
-
-  (*mapData) = (uint16 *)(&mapFileData[3]);
-}
+#include "Utils/Array.hpp"
 
 Stage StageReader::read() const
 {
-  uint16 *mapData;
+  Array<uint8> mapData = FileSystem::Read(m_fileName);
 
-  readMapData(&mapData);
+  Assert(mapData.size() >= sizeof(uint8) * 3 + sizeof(uint16) * 5, "Map data size is invalid.");
 
-  const uint16 gridSize = mapData[0];
-  const Point m_stageSize = {mapData[1], mapData[2]};
-  const uint16 lineSize = mapData[3];
-  const uint16 updraftSize = mapData[4];
+  Assert(
+    mapData.at(0) == 'U' &&
+    mapData.at(1) == 'M' &&
+    mapData.at(2) == 'P',
+    "Font data is invalid."
+  );
 
-  Stage stage(gridSize, m_stageSize, lineSize, updraftSize);
+  Array<uint16> realMapData((mapData.size() - 3) / 2);
+  realMapData.data() = (uint16 *)&mapData[3];
 
-  delete[] mapData;
+  const uint16 gridSize = realMapData[0];
+  const Point stageSize = { realMapData[1], realMapData[2] };
+  const uint16 lineSize = realMapData[3];
+  const uint16 updraftSize = realMapData[4];
+
+  Stage stage(gridSize, stageSize, lineSize, updraftSize);
 
   return stage;
 }

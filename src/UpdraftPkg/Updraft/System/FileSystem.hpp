@@ -5,6 +5,7 @@ extern "C" {
 #include <Protocol/SimpleFileSystem.h>
 }
 
+#include "../Utils/Array.hpp"
 #include "../Utils/Types.hpp"
 
 struct FileSystem
@@ -27,4 +28,6 @@ public:
   static uint64 GetSize(const wchar_t *fileName);
 
   static void Read(const wchar_t *fileName, uintn *bufSize, void *buf);
+
+  static Array<uint8> Read(const wchar_t *fileName);
 };

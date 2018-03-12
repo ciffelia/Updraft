@@ -68,3 +68,16 @@ void FileSystem::Read(const wchar_t *fileName, uintn *bufSize, void *buf)
 
   CloseFile(file);
 }
+
+Array<uint8> FileSystem::Read(const wchar_t *fileName)
+{
+  const uintn size = GetSize(fileName);
+  Array<uint8> binaryArray(size);
+
+  uintn bufSize = size;
+  Read(fileName, &bufSize, (void *)binaryArray.data());
+
+  Assert(bufSize == size, "Failed to read file.");
+
+  return binaryArray;
+}

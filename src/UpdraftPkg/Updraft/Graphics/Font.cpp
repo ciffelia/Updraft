@@ -8,7 +8,7 @@ uint8 Font::getGlyphWidth(const char ch) const
   return m_data[4 + 1024 * (ch - ' ')];
 }
 
-uint8 *Font::getGlyphDataPtr(const char ch) const
+const uint8 *Font::getGlyphDataPtr(const char ch) const
 {
   return &m_data[4 + 1024 * (ch - ' ') + 1];
 }
@@ -31,19 +31,16 @@ void Font::drawGlyph(const char ch, const Point pos, const Color color) const
 
 Font::Font(const wchar_t *fileName)
 {
-  uintn bufSize = 4 + 1024 * ('~' - ' ' + 1);
-  m_data = new uint8[bufSize];
+  m_data = FileSystem::Read(fileName);
 
-  FileSystem::Read(fileName, &bufSize, (void *)m_data);
-
-  Assert(m_data[0] == 'U' && m_data[1] == 'F' && m_data[2] == 'D', "Font data is invalid.");
+  Assert(
+    m_data.at(0) == 'U' &&
+    m_data.at(1) == 'F' &&
+    m_data.at(2) == 'D',
+    "Font data is invalid."
+  );
 
   m_height = m_data[3];
-}
-
-Font::~Font()
-{
-  delete[] m_data;
 }
 
 void Font::draw(const CHAR8 *str, const Point pos, const Color color) const

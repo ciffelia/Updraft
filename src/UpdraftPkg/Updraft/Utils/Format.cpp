@@ -164,6 +164,11 @@ char* Format(const Rect value)
   return Format("(", value.pos.x, ",", value.pos.y, ",", value.size.width, ",", value.size.height, ")");
 }
 
+char* Format(const Line value)
+{
+  return Format("(", value.begin.x, ",", value.begin.y, ",", value.end.x, ",", value.end.y, ")");
+}
+
 char* Format(const Size value)
 {
   return Format("(", value.width, ",", value.height, ")");

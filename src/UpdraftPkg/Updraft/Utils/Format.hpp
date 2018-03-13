@@ -13,6 +13,7 @@ extern "C" {
 #include "../Graphics/Color.hpp"
 #include "../Graphics/Point.hpp"
 #include "../Graphics/Rect.hpp"
+#include "../Graphics/Line.hpp"
 #include "../Graphics/Size.hpp"
 #include "Types.hpp"
 #include "Vec2.hpp"
@@ -69,6 +70,8 @@ char* Format(const Color value);
 char* Format(const Point value);
 
 char* Format(const Rect value);
+
+char* Format(const Line value);
 
 char* Format(const Size value);
 

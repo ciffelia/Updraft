@@ -47,6 +47,12 @@ public:
 
   void push(const T& item);
 
+  template <class... Args>
+  void emplace(const Args &... args)
+  {
+    push(T(args...));
+  }
+
   T& pop();
 };
 

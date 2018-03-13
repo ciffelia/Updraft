@@ -28,8 +28,27 @@ Stage StageReader::read() const
 
   Stage stage(gridSize * Vec2(stageSize));
 
-  stage.lines().emplace(200, 400, 600, 200);
-  stage.updrafts().emplace(50, 0, 100, 600);
+  for (uint16 i = 0; i < lineSize; i++)
+  {
+    const auto *lineData = &realMapData[5 + 4 * i];
+    stage.lines().emplace(
+      gridSize * lineData[0],
+      gridSize * lineData[1],
+      gridSize * lineData[2],
+      gridSize * lineData[3]
+    );
+  }
+
+  for (uint16 i = 0; i < updraftSize; i++)
+  {
+    const auto *updraftData = &realMapData[5 + 4 * lineSize + 4 * i];
+    stage.updrafts().emplace(
+      gridSize * updraftData[0],
+      gridSize * updraftData[1],
+      gridSize * updraftData[2],
+      gridSize * updraftData[3]
+    );
+  }
 
   return stage;
 }

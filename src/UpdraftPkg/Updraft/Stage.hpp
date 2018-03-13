@@ -12,16 +12,13 @@ class Stage
   const uint16 m_gridSize;
   const Point m_stageSize;
 
-  const uint16 m_lineSize;
-  const uint16 m_updraftSize;
-
   const Vec2 m_playerInitialPos;
 
   Player m_player;
 
-  const Line m_line;
+  Array<Line> m_lines;
 
-  const Rect m_updraft;
+  Array<Rect> m_updrafts;
 
   Vec2 clampPlayerSpeed(const Vec2 speed, const PlayerParams playerParams);
 
@@ -38,17 +35,21 @@ class Stage
   void killPlayer();
 
 public:
-  Stage(const uint16 gridSize, const Point stageSize, const uint16 lineSize, const uint16 updraftSize)
+  Stage(const uint16 gridSize, const Point stageSize)
     : m_font(L"Fonts\\Logger.fnt")
     , m_gridSize(gridSize)
     , m_stageSize(stageSize)
-    , m_lineSize(lineSize)
-    , m_updraftSize(updraftSize)
     , m_playerInitialPos(400, 100)
     , m_player(m_playerInitialPos)
-    , m_line(200, 400, 600, 200)
-    , m_updraft(50, 0, 100, 600)
   { }
+
+  Array<Line>& lines();
+
+  const Array<Line>& lines() const;
+
+  Array<Rect>& updrafts();
+
+  const Array<Rect>& updrafts() const;
 
   void update(const PlayerParams playerParams);
 

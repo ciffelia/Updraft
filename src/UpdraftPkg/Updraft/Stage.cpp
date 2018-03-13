@@ -1,5 +1,7 @@
 #include "Stage.hpp"
 
+#include <float.h>
+
 #include "Graphics/Screen.hpp"
 #include "System/Input.hpp"
 #include "System/Logger.hpp"
@@ -45,34 +47,45 @@ void Stage::processGlidingPlayerInput(const PlayerParams playerParams)
 
   m_player.speed.y += playerParams.glideAcceleration.y;
 
-  if (m_updraft.contains(m_player.pos))
-    m_player.speed.y += playerParams.updraftAcceleration;
+  for (const auto& updraft : m_updrafts)
+  {
+    if (updraft.contains(m_player.pos))
+      m_player.speed.y += playerParams.updraftAcceleration;
+  }
 
   m_player.speed = clampPlayerSpeed(m_player.speed, playerParams);
 }
 
 void Stage::processCollision(const PlayerParams playerParams)
 {
-  const double distance = m_line.distanceFrom(m_player.pos) - m_player.r;
-
-  if (distance <= playerParams.walkSpeed)
+  for (const auto& line : m_lines)
   {
-    const Vec2 normalizedVec = m_line.vector().normalized();
-    const double angle = (m_line.begin.x < m_line.end.x) ? Math::Pi * 3 / 2 : Math::Pi / 2;
+    const double distance = line.distanceFrom(m_player.pos) - m_player.r;
 
-    m_player.pos += normalizedVec.rotated(angle) * -distance;
+    if (distance <= playerParams.walkSpeed)
+    {
+      const Vec2 normalizedVec = line.vector().normalized();
+      const double angle = (line.begin.x < line.end.x) ? Math::Pi * 3 / 2 : Math::Pi / 2;
+
+      m_player.pos += normalizedVec.rotated(angle) * -distance;
+    }
   }
 }
 
 void Stage::movePlayer(const PlayerParams playerParams)
 {
-  const double distance = m_line.distanceFrom(m_player.pos) - m_player.r;
+  double minDistance = DBL_MAX;
 
-  if (distance <= 0)
+  for (const auto& line : m_lines)
+  {
+    minDistance = Min(minDistance, line.distanceFrom(m_player.pos) - m_player.r);
+  }
+
+  if (minDistance <= 0)
     processWalkingPlayerInput(playerParams);
   else
     processGlidingPlayerInput(playerParams);
-  
+
   m_player.pos += m_player.speed;
 
   processCollision(playerParams);
@@ -92,6 +105,26 @@ void Stage::killPlayer()
   m_player.speed = {0.0, 0.0};
 }
 
+Array<Line>& Stage::lines()
+{
+  return m_lines;
+}
+
+const Array<Line>& Stage::lines() const
+{
+  return m_lines;
+}
+
+Array<Rect>& Stage::updrafts()
+{
+  return m_updrafts;
+}
+
+const Array<Rect>& Stage::updrafts() const
+{
+  return m_updrafts;
+}
+
 void Stage::update(const PlayerParams playerParams)
 {
   movePlayer(playerParams);
@@ -102,9 +135,15 @@ void Stage::update(const PlayerParams playerParams)
 
 void Stage::draw() const
 {
-  m_updraft.draw(m_updraft.contains(m_player.pos) ? Palette::Deepskyblue : Palette::Skyblue);
+  for (const auto& updraft : m_updrafts)
+  {
+    updraft.draw(updraft.contains(m_player.pos) ? Palette::Deepskyblue : Palette::Skyblue);
+  }
 
-  m_line.draw(Palette::Deeppink);
+  for (const auto& line : m_lines)
+  {
+    line.draw(Palette::Deeppink);
+  }
 
   m_player.draw();
 

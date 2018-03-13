@@ -106,6 +106,30 @@ const T& Array<T>::operator[](const uintn pos) const
 }
 
 template <class T>
+T* Array<T>::begin()
+{
+  return &m_data[0];
+}
+
+template <class T>
+const T* Array<T>::begin() const
+{
+  return &m_data[0];
+}
+
+template <class T>
+T* Array<T>::end()
+{
+  return &m_data[m_size];
+}
+
+template <class T>
+const T* Array<T>::end() const
+{
+  return &m_data[m_size];
+}
+
+template <class T>
 void Array<T>::push(const T& item)
 {
   if (m_capacity <= m_size)

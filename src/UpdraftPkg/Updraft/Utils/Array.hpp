@@ -37,6 +37,14 @@ public:
 
   const T& operator[](const uintn pos) const;
 
+  T* begin();
+
+  const T* begin() const;
+
+  T* end();
+
+  const T* end() const;
+
   void push(const T& item);
 
   T& pop();

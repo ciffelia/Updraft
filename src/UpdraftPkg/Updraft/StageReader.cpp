@@ -26,7 +26,7 @@ Stage StageReader::read() const
   const uint16 lineSize = realMapData[3];
   const uint16 updraftSize = realMapData[4];
 
-  Stage stage(gridSize, stageSize);
+  Stage stage(gridSize * Vec2(stageSize));
 
   stage.lines().emplace(200, 400, 600, 200);
   stage.updrafts().emplace(50, 0, 100, 600);

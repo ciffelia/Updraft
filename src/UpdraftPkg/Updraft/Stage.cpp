@@ -94,9 +94,9 @@ void Stage::movePlayer(const PlayerParams playerParams)
 bool Stage::isPlayerInStage()
 {
   return 0 < m_player.pos.x &&
-         m_player.pos.x < m_stageSize.x * m_gridSize &&
+         m_player.pos.x < m_stageSize.x &&
          0 < m_player.pos.y &&
-         m_player.pos.y < m_stageSize.y * m_gridSize;
+         m_player.pos.y < m_stageSize.y;
 }
 
 void Stage::killPlayer()

@@ -9,8 +9,7 @@ class Stage
 {
   const Font m_font;
 
-  const uint16 m_gridSize;
-  const Point m_stageSize;
+  const Vec2 m_stageSize;
 
   const Vec2 m_playerInitialPos;
 
@@ -35,9 +34,8 @@ class Stage
   void killPlayer();
 
 public:
-  Stage(const uint16 gridSize, const Point stageSize)
+  Stage(const Vec2 stageSize)
     : m_font(L"Fonts\\Logger.fnt")
-    , m_gridSize(gridSize)
     , m_stageSize(stageSize)
     , m_playerInitialPos(400, 100)
     , m_player(m_playerInitialPos)

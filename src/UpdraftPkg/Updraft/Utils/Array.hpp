@@ -11,13 +11,11 @@ class Array
   uintn m_capacity;
 
 public:
-  Array();
-
+  Array(const uintn _size = 0);
+  
   Array(const Array<T> &array);
 
   Array<T>& operator=(const Array<T> &array);
-
-  Array(const uintn _size);
 
   ~Array();
 

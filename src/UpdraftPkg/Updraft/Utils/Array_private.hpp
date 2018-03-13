@@ -10,13 +10,6 @@ extern "C" {
 }
 
 template <class T>
-Array<T>::Array()
-  : m_data(nullptr)
-  , m_size(0)
-  , m_capacity(0)
-{ }
-
-template <class T>
 Array<T>::Array(const uintn _size)
   : m_data(new T[_size])
   , m_size(_size)
@@ -25,22 +18,23 @@ Array<T>::Array(const uintn _size)
 
 template <class T>
 Array<T>::Array(const Array<T> &array)
-  : m_data(nullptr)
+  : m_data(new T[array.m_size])
   , m_size(array.m_size)
   , m_capacity(array.m_size)
 {
-  ::CopyMem(m_data, array.m_data, m_size);
+  ::CopyMem(m_data, array.m_data, sizeof(T) * m_size);
 }
 
 template <class T>
 Array<T>& Array<T>::operator=(const Array<T>& array)
 {
   delete[] m_data;
+  m_data = new T[array.m_size];
 
   m_size = array.m_size;
   m_capacity = array.m_size;
 
-  ::CopyMem(m_data, array.m_data, m_size);
+  ::CopyMem(m_data, array.m_data, sizeof(T) * m_size);
 
   return *this;
 }
@@ -68,8 +62,8 @@ void Array<T>::reserve(const uintn count)
 {
   if (count <= m_capacity)
     return;
-  
-  m_data = ::ReallocatePool(m_size, count, m_data);
+
+  m_data = (T *) ::ReallocatePool(sizeof(T) * m_capacity, sizeof(T) * count, m_data);
   m_capacity = count;
 }
 
@@ -115,7 +109,7 @@ template <class T>
 void Array<T>::push(const T& item)
 {
   if (m_capacity <= m_size)
-    reserve(m_capacity * 2);
+    reserve(m_capacity == 0 ? 2 : m_capacity * 2);
 
   m_data[m_size] = item;
 

@@ -7,6 +7,8 @@ struct Line
 {
   Vec2 begin, end;
 
+  Line() = default;
+
   constexpr Line(const double x1, const double y1, const double x2, const double y2)
     : begin(x1, y1)
     , end(x2, y2)

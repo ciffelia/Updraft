@@ -49,6 +49,25 @@ struct Line
     return begin.distanceFrom(end);
   }
 
+  // http://www.zengeren.com/content/data/05/05_2DCollision.pdf
+  Vec2 closest(const Vec2 &p) const
+  {
+    const Vec2 a = begin, b = end;
+    const Vec2 ab = (b - a);
+    const Vec2 ap = (p - a);
+    const Vec2 bp = (p - b);
+
+    if (ab.dot(ap) <= 0)
+      return a;
+
+    if (ab.dot(bp) >= 0)
+      return b;
+
+    const double aq = ap.dot(ab) / ab.length();
+
+    return a + ab * (aq / ab.length());
+  }
+
   double distanceFrom(const Vec2 &p) const
   {
     const Vec2 a = begin, b = end;

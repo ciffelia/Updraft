@@ -51,9 +51,10 @@ struct Line
 
   double distanceFrom(const Vec2 &p) const
   {
-    const Vec2 ab = vector();
-    const Vec2 ap = (p - begin);
-    const Vec2 bp = (p - end);
+    const Vec2 a = begin, b = end;
+    const Vec2 ab = (b - a);
+    const Vec2 ap = (p - a);
+    const Vec2 bp = (p - b);
 
     if (ab.dot(ap) <= 0)
       return ap.length();
@@ -61,9 +62,9 @@ struct Line
     if (ab.dot(bp) >= 0)
       return bp.length();
 
-    const double cross = ap.cross(vector());
+    const double cross = ap.cross(ab);
 
-    return Math::Abs(cross) / length();
+    return Math::Abs(cross) / ab.length();
   }
 
   void draw(const Color color) const;

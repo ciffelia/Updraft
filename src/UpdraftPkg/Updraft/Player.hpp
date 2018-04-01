@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Utils/Vec2.hpp"
+#include "Graphics/Line.hpp"
 
 struct PlayerParams
 {
@@ -17,6 +18,7 @@ struct Player
 {
   Vec2 pos;
   Vec2 speed = {0.0, 0.0};
+  Line *walkingLine = nullptr;
 
   const uint8 r = 15;
 

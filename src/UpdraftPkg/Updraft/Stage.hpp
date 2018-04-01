@@ -25,7 +25,9 @@ class Stage
 
   void processGlidingPlayerInput(const PlayerParams playerParams);
 
-  void processCollision(const PlayerParams playerParams);
+  void processWalkingCollision(const PlayerParams playerParams);
+
+  void processGlidingCollision(const PlayerParams playerParams, const Vec2 oldPos);
 
   void movePlayer(const PlayerParams playerParams);
 

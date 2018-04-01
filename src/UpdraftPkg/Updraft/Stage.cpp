@@ -30,6 +30,7 @@ void Stage::processWalkingPlayerInput(const PlayerParams playerParams)
   }
   if (Input::KeySpace.pressed())
   {
+    m_player.walkingLine = nullptr;
     m_player.speed.y = playerParams.jumpSpeed;
   }
 }
@@ -56,39 +57,67 @@ void Stage::processGlidingPlayerInput(const PlayerParams playerParams)
   m_player.speed = clampPlayerSpeed(m_player.speed, playerParams);
 }
 
-void Stage::processCollision(const PlayerParams playerParams)
+void Stage::processWalkingCollision(const PlayerParams playerParams)
 {
-  for (const auto& line : m_lines)
+  const Line line = *m_player.walkingLine;
+
+  if ((m_player.pos - line.begin).dot(line.vector()) <= 0 || (m_player.pos - line.end).dot(line.vector()) >= 0)
   {
+    m_player.walkingLine = nullptr;
+    return;
+  }
+
+  const double distance = line.distanceFrom(m_player.pos) - m_player.r;
+
+  if (distance <= playerParams.walkSpeed)
+  {
+    const Vec2 normalizedVec = line.vector().normalized();
+    const double angle = (line.begin.x < line.end.x) ? Math::Pi * 3 / 2 : Math::Pi / 2;
+
+    m_player.pos += normalizedVec.rotated(angle) * -distance;
+  }
+}
+
+void Stage::processGlidingCollision(const PlayerParams playerParams, const Vec2 oldPos)
+{
+  for (auto &line : m_lines)
+  {
+    const double oldDistance = line.distanceFrom(oldPos) - m_player.r;
     const double distance = line.distanceFrom(m_player.pos) - m_player.r;
 
-    if (distance <= playerParams.walkSpeed)
+    if (oldDistance > 0 && distance <= 0 && m_player.speed.y >= 0)
     {
       const Vec2 normalizedVec = line.vector().normalized();
       const double angle = (line.begin.x < line.end.x) ? Math::Pi * 3 / 2 : Math::Pi / 2;
 
       m_player.pos += normalizedVec.rotated(angle) * -distance;
+      m_player.walkingLine = &line;
     }
   }
 }
 
 void Stage::movePlayer(const PlayerParams playerParams)
 {
-  double minDistance = DBL_MAX;
-
-  for (const auto& line : m_lines)
+  if (m_player.walkingLine != nullptr)
   {
-    minDistance = Min(minDistance, line.distanceFrom(m_player.pos) - m_player.r);
+    processWalkingPlayerInput(playerParams);
+  }
+  else
+  {
+    processGlidingPlayerInput(playerParams);
   }
 
-  if (minDistance <= 0)
-    processWalkingPlayerInput(playerParams);
-  else
-    processGlidingPlayerInput(playerParams);
-
+  const auto oldPos = m_player.pos;
   m_player.pos += m_player.speed;
 
-  processCollision(playerParams);
+  if (m_player.walkingLine != nullptr)
+  {
+    processWalkingCollision(playerParams);
+  }
+  else
+  {
+    processGlidingCollision(playerParams, oldPos);
+  }
 }
 
 bool Stage::isPlayerInStage()

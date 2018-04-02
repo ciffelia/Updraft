@@ -19,28 +19,12 @@ class Stage
 
   Array<Rect> m_updrafts;
 
-  Vec2 clampPlayerSpeed(const Vec2 speed, const PlayerParams playerParams);
-
-  void processWalkingPlayerInput(const PlayerParams playerParams);
-
-  void processGlidingPlayerInput(const PlayerParams playerParams);
-
-  void processWalkingCollision(const PlayerParams playerParams);
-
-  void processGlidingCollision(const PlayerParams playerParams, const Vec2 oldPos);
-
-  void movePlayer(const PlayerParams playerParams);
-
-  bool isPlayerInStage();
-
-  void killPlayer();
-
 public:
   Stage(const Vec2 stageSize)
     : m_font(L"Fonts\\Logger.fnt")
     , m_stageSize(stageSize)
     , m_playerInitialPos(400, 100)
-    , m_player(m_playerInitialPos)
+    , m_player(m_playerInitialPos, this)
   { }
 
   Array<Line>& lines();
@@ -50,6 +34,10 @@ public:
   Array<Rect>& updrafts();
 
   const Array<Rect>& updrafts() const;
+
+  bool isInStage(const Vec2 pos);
+
+  bool isInUpdraft(const Vec2 pos);
 
   void update(const PlayerParams playerParams);
 

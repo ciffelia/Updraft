@@ -3,18 +3,18 @@
 #include "System/Assert.hpp"
 #include "System/Logger.hpp"
 #include "System/FileSystem.hpp"
-#include "Utils/Array.hpp"
+#include "Utils/BinaryArray.hpp"
 
 Stage StageReader::read() const
 {
-  Array<uint8> mapData = FileSystem::Read(m_fileName);
+  BinaryArray mapData = FileSystem::Read(m_fileName);
 
   Assert(mapData.size() >= sizeof(uint8) * 3 + sizeof(uint16) * 5, "Map data size is invalid.");
 
   Assert(
-    mapData.at(0) == 'U' &&
-    mapData.at(1) == 'M' &&
-    mapData.at(2) == 'P',
+    mapData.read() == 'U' &&
+    mapData.read() == 'M' &&
+    mapData.read() == 'P',
     "Font data is invalid."
   );
 

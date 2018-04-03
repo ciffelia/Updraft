@@ -34,13 +34,13 @@ Font::Font(const wchar_t *fileName)
   m_data = FileSystem::Read(fileName);
 
   Assert(
-    m_data.at(0) == 'U' &&
-    m_data.at(1) == 'F' &&
-    m_data.at(2) == 'D',
+    m_data.read() == 'U' &&
+    m_data.read() == 'F' &&
+    m_data.read() == 'D',
     "Font data is invalid."
   );
 
-  m_height = m_data[3];
+  m_height = m_data.read();
 }
 
 void Font::draw(const CHAR8 *str, const Point pos, const Color color) const

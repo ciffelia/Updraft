@@ -5,14 +5,14 @@ extern "C" {
 }
 
 #include "../Utils/Types.hpp"
-#include "../Utils/Array.hpp"
+#include "../Utils/BinaryArray.hpp"
 #include "Point.hpp"
 #include "Color.hpp"
 #include "ColorPalette.hpp"
 
 class Font
 {
-  Array<uint8> m_data;
+  BinaryArray m_data;
 
   uint8 m_height;
 

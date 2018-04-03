@@ -7,12 +7,12 @@ void BinaryArray::skip(const uintn offset)
 
 uint8 BinaryArray::read()
 {
-  return read(pos);
+  return this->at(pos++);
 }
 
 uint8 BinaryArray::read(const uintn _pos)
 {
-  pos = _pos + 1;
+  pos = _pos;
 
-  return this->at(pos);
+  return this->at(pos++);
 }

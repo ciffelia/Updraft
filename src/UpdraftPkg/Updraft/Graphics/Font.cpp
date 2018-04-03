@@ -13,7 +13,7 @@ const uint8 *Font::getGlyphDataPtr(const char ch) const
   return &m_data[4 + 1024 * (ch - ' ') + 1];
 }
 
-void Font::drawGlyph(const char ch, const Point pos, const Color color) const
+uint8 Font::drawGlyph(const char ch, const Point pos, const Color color) const
 {
   const uint8 width = getGlyphWidth(ch);
   const uint8 *glyph = getGlyphDataPtr(ch);
@@ -27,6 +27,8 @@ void Font::drawGlyph(const char ch, const Point pos, const Color color) const
       Point(pos.x + x, pos.y + y).draw(Color(color, static_cast<uint8>(alpha * 255)));
     }
   }
+
+  return width;
 }
 
 Font::Font(const wchar_t *fileName)
@@ -49,27 +51,30 @@ void Font::draw(const CHAR8 *str, const Point pos, const Color color) const
 
   for (int i = 0; str[i] != '\0'; i++)
   {
-    if (str[i] == '\r' && str[i + 1] == '\n')
+    const char ch = str[i];
+    const char nextCh = str[i + 1];
+
+    if (ch == '\r' && nextCh == '\n')
     {
       currentPos.x = pos.x;
       currentPos.y += m_height;
       i++;
       continue;
     }
-    if (str[i] == '\n')
+    if (ch == '\n')
     {
       currentPos.x = pos.x;
       currentPos.y += m_height;
       continue;
     }
-    if (str[i] == '\r')
+    if (ch == '\r')
     {
       currentPos.x = pos.x;
       continue;
     }
 
-    drawGlyph(str[i], currentPos, color);
+    const auto width = drawGlyph(ch, currentPos, color);
 
-    currentPos.x += getGlyphWidth(str[i]);
+    currentPos.x += width;
   }
 }

@@ -14,13 +14,17 @@ class Font
 {
   BinaryArray m_data;
 
+  Array<Array<double>> m_alphaData;
+
   uint8 m_height;
 
   uint8 getGlyphWidth(const char ch) const;
 
   const uint8 *getGlyphDataPtr(const char ch) const;
 
-  void drawGlyph(const char ch, const Point pos, const Color color) const;
+  uint8 drawGlyph(const char ch, const Point pos, const Color color) const;
+
+  void calcAlphaData();
 
 public:
   Font(const wchar_t *fileName);

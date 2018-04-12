@@ -27,7 +27,7 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   Logger::Initialize();
   UsbKeyboard::Initialize();
 
-  Stage stage = StageReader(L"Map.ump").read();
+  Stage stage = StageReader(L"Map2.ump").read();
 
   const PlayerParams playerParams = {
     {0.1, 0.2}, {-6.0, -5.0}, {6.0, 3.0},

@@ -2,6 +2,11 @@
 
 #include "Utils/Format.hpp"
 
+Vec2 Stage::size()
+{
+  return m_stageSize;
+}
+
 Array<Line>& Stage::lines()
 {
   return m_lines;
@@ -44,9 +49,6 @@ bool Stage::isInUpdraft(const Vec2 pos)
 void Stage::update(const PlayerParams playerParams)
 {
   m_player.update(playerParams);
-
-  if (!isInStage(m_player.pos))
-    m_player.reset();
 }
 
 void Stage::draw() const

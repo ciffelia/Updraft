@@ -25,6 +25,25 @@ void Player::clampSpeed(const PlayerParams playerParams)
   }
 }
 
+void Player::clampPos()
+{
+  if (pos.x - r < 0)
+  {
+    speed.x = 0;
+    pos.x = r;
+  }
+  if (pos.y - r < 0)
+  {
+    speed.y = 0;
+    pos.y = r;
+  }
+  if (pos.x + r > m_stage->size().x)
+  {
+    speed.x = 0;
+    pos.x = m_stage->size().x - r;
+  }
+}
+
 void Player::jump(const PlayerParams playerParams)
 {
   speed.y = playerParams.jumpSpeed;
@@ -126,6 +145,11 @@ void Player::update(const PlayerParams playerParams)
   pos += speed;
 
   processCollision(playerParams, oldPos);
+
+  clampPos();
+
+  if (pos.y > m_stage->size().y)
+    reset();
 }
 
 void Player::draw() const

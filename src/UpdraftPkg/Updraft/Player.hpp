@@ -27,6 +27,8 @@ class Player
 
   void clampSpeed(const PlayerParams playerParams);
 
+  void clampPos();
+
   void jump(const PlayerParams playerParams);
 
   void processInput(const PlayerParams playerParams);

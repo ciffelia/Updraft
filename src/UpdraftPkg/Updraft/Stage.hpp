@@ -27,6 +27,8 @@ public:
     , m_player(m_playerInitialPos, this)
   { }
 
+  Vec2 size();
+
   Array<Line>& lines();
 
   const Array<Line>& lines() const;

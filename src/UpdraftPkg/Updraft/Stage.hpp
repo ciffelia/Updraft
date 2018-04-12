@@ -13,6 +13,8 @@ class Stage
 
   const Vec2 m_playerInitialPos;
 
+  Point m_scrollPos;
+
   Player m_player;
 
   Array<Line> m_lines;
@@ -24,10 +26,13 @@ public:
     : m_font(L"Fonts\\Logger.fnt")
     , m_stageSize(stageSize)
     , m_playerInitialPos(400, 100)
+    , m_scrollPos(0, 0)
     , m_player(m_playerInitialPos, this)
   { }
 
   Vec2 size();
+
+  Point& scrollPos();
 
   Array<Line>& lines();
 

@@ -4,6 +4,7 @@
 #include "Utils/Utility.hpp"
 #include "Graphics/Circle.hpp"
 #include "Graphics/ColorPalette.hpp"
+#include "Graphics/Screen.hpp"
 #include "Stage.hpp"
 
 bool Player::isGliding() const
@@ -125,6 +126,32 @@ void Player::processCollision(const PlayerParams playerParams, const Vec2 oldPos
   }
 }
 
+void Player::scrollStage() const
+{
+  const Point screenSize(Screen::Width(), Screen::Height());
+  const Point posPoint = pos.asPoint();
+
+  const Point diff = m_stage->scrollPos() + screenSize / 2 - posPoint;
+
+  if (diff.x < -30)
+    m_stage->scrollPos().x = posPoint.x - screenSize.x / 2 - 30;
+  if (diff.x > 30)
+    m_stage->scrollPos().x = posPoint.x - screenSize.x / 2 + 30;
+  if (diff.y < -30)
+    m_stage->scrollPos().y = posPoint.y - screenSize.y / 2 - 30;
+  if (diff.y > 30)
+    m_stage->scrollPos().y = posPoint.y - screenSize.y / 2 + 30;
+
+  if (m_stage->scrollPos().x < 0)
+    m_stage->scrollPos().x = 0;
+  if (m_stage->scrollPos().y < 0)
+    m_stage->scrollPos().y = 0;
+  if (m_stage->scrollPos().x > m_stage->size().x - screenSize.x)
+    m_stage->scrollPos().x = m_stage->size().x - screenSize.x;
+  if (m_stage->scrollPos().y > m_stage->size().y - screenSize.y)
+    m_stage->scrollPos().y = m_stage->size().y - screenSize.y;
+}
+
 void Player::reset()
 {
   pos = initialPos;
@@ -150,9 +177,13 @@ void Player::update(const PlayerParams playerParams)
 
   if (pos.y > m_stage->size().y)
     reset();
+
+  scrollStage();
 }
 
 void Player::draw() const
 {
-  Circle(pos.asPoint(), r).draw(Palette::Chocolate);
+  Circle(pos.asPoint(), r)
+    .movedBy(-m_stage->scrollPos())
+    .draw(Palette::Chocolate);
 }

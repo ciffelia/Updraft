@@ -7,6 +7,11 @@ Vec2 Stage::size()
   return m_stageSize;
 }
 
+Point& Stage::scrollPos()
+{
+  return m_scrollPos;
+}
+
 Array<Line>& Stage::lines()
 {
   return m_lines;
@@ -55,12 +60,16 @@ void Stage::draw() const
 {
   for (const auto& updraft : m_updrafts)
   {
-    updraft.draw(updraft.contains(m_player.pos) ? Palette::Deepskyblue : Palette::Skyblue);
+    updraft
+      .movedBy(-m_scrollPos)
+      .draw(updraft.contains(m_player.pos) ? Palette::Deepskyblue : Palette::Skyblue);
   }
 
   for (const auto& line : m_lines)
   {
-    line.draw(Palette::Deeppink);
+    line
+      .movedBy(-m_scrollPos)
+      .draw(Palette::Deeppink);
   }
 
   m_player.draw();

@@ -35,6 +35,8 @@ class Player
 
   void processCollision(const PlayerParams playerParams, const Vec2 oldPos);
 
+  void scrollStage() const;
+
 public:
   const Vec2 initialPos;
 

@@ -2,6 +2,17 @@
 
 #include "../Utils/Utility.hpp"
 
+Line &Line::moveBy(const Vec2 v)
+{
+  begin += v;
+  end += v;
+}
+
+Line Line::movedBy(const Vec2 v) const
+{
+  return Line(begin + v, end + v);
+}
+
 // Bresenham's line algorithm: https://ja.wikipedia.org/wiki/ブレゼンハムのアルゴリズム
 void Line::draw(const Color color) const
 {

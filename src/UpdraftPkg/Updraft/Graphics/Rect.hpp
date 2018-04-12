@@ -28,5 +28,9 @@ struct Rect {
     return Geometry::Contains(*this, shape);
   }
 
+  Rect& moveBy(const Point v);
+
+  Rect movedBy(const Point v) const;
+
   void draw(const Color color) const;
 };

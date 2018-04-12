@@ -20,5 +20,9 @@ struct Circle {
     , r(_r)
   { }
 
+  Circle& moveBy(const Point v);
+
+  Circle movedBy(const Point v) const;
+
   void draw(const Color color) const;
 };

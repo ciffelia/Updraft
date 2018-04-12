@@ -86,5 +86,9 @@ struct Line
     return Math::Abs(cross) / ab.length();
   }
 
+  Line& moveBy(const Vec2 v);
+
+  Line movedBy(const Vec2 v) const;
+
   void draw(const Color color) const;
 };

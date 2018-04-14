@@ -85,8 +85,6 @@ void Graphics::Update()
 {
   const auto status = s_GraphicsOutputProtocol->Blt(s_GraphicsOutputProtocol, s_bltBuffer, ::EfiBltBufferToVideo, 0, 0, 0, 0, Screen::Width(), Screen::Height(), 0);
   AssertEfiStatus(status, "Block Transfer failed.");
-
-  ClearScreen();
 }
 
 void Graphics::Dispose()

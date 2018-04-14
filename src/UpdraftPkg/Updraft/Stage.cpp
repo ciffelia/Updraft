@@ -1,6 +1,9 @@
 #include "Stage.hpp"
 
 #include "Utils/Format.hpp"
+#include "Utils/Utility.hpp"
+#include "Graphics/Screen.hpp"
+#include "Graphics/Graphics.hpp"
 
 Vec2 Stage::size()
 {
@@ -58,7 +61,25 @@ void Stage::update(const PlayerParams playerParams)
 
 void Stage::draw() const
 {
-  for (const auto& updraft : m_updrafts)
+  const int xStart = m_scrollPos.x,
+            xEnd = Min((int)m_stageSize.x, (int)(m_scrollPos.x + Screen::Width())),
+            yStart = m_scrollPos.y,
+            yEnd = Min((int)m_stageSize.y, (int)(m_scrollPos.y + Screen::Height()));
+  int i = 0;
+
+  for (int y = yStart; y < yEnd; ++y)
+  {
+    for (int x = xStart; x < xEnd; ++x)
+    {
+      if ((x % 400 < 200) != (y % 400 < 200))
+        Graphics::PlotBltBuffer(i, Palette::Pink);
+      else
+        Graphics::PlotBltBuffer(i, Palette::Lightpink);
+      i++;
+    }
+  }
+
+  for (const auto &updraft : m_updrafts)
   {
     updraft
       .movedBy(-m_scrollPos)

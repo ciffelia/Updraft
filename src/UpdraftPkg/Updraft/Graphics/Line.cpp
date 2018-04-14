@@ -1,6 +1,7 @@
 #include "Line.hpp"
 
 #include "../Utils/Utility.hpp"
+#include "Screen.hpp"
 
 Line &Line::moveBy(const Vec2 v)
 {
@@ -16,8 +17,14 @@ Line Line::movedBy(const Vec2 v) const
 // Bresenham's line algorithm: https://ja.wikipedia.org/wiki/ブレゼンハムのアルゴリズム
 void Line::draw(const Color color) const
 {
-  int x0 = static_cast<int>(begin.x), y0 = static_cast<int>(begin.y),
-      x1 = static_cast<int>(end.x), y1 = static_cast<int>(end.y);
+  int x0 = static_cast<int>(begin.x + 0.5), y0 = static_cast<int>(begin.y + 0.5),
+      x1 = static_cast<int>(end.x + 0.5), y1 = static_cast<int>(end.y + 0.5);
+
+  const Point upperLeft(Min(x0, x1), Min(y0, y1)), lowerRight(Max(x0, x1), Max(y0, y1));
+  if (lowerRight.x < 0 || lowerRight.y < 0)
+    return;
+  if (upperLeft.x > (int)Screen::Width() || upperLeft.y > (int)Screen::Height())
+    return;
 
   const bool steep = Math::Abs(y1 - y0) > Math::Abs(x1 - x0);
 

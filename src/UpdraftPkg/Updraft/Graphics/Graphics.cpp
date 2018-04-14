@@ -65,7 +65,7 @@ void Graphics::ClearScreen()
   const int32 bufSize = static_cast<int32>(Screen::Width() * Screen::Height());
 
   for (int i = 0; i < bufSize; i++)
-    s_bltBuffer[i] = {s_backgroundColor.b, s_backgroundColor.g, s_backgroundColor.r, 0xFF};
+    PlotBltBuffer(i, s_backgroundColor);
 }
 
 void Graphics::Initialize(const Color backgroundColor)
@@ -102,6 +102,11 @@ EFI_GRAPHICS_OUTPUT_PROTOCOL* Graphics::GraphicsOutputProtocol()
 EFI_GRAPHICS_OUTPUT_BLT_PIXEL* Graphics::BltBuffer()
 {
   return s_bltBuffer;
+}
+
+void Graphics::PlotBltBuffer(const uintn pos, const Color color)
+{
+  s_bltBuffer[pos] = {color.b, color.g, color.r, 0xFF};
 }
 
 void Graphics::BackgroundColor(const Color backgroundColor)

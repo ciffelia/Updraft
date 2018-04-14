@@ -41,6 +41,8 @@ public:
 
   static EFI_GRAPHICS_OUTPUT_BLT_PIXEL* BltBuffer();
 
+  static void PlotBltBuffer(const uintn pos, const Color color);
+
   static void BackgroundColor(const Color backgroundColor);
 
   static Color BackgroundColor();

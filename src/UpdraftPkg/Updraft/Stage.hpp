@@ -25,7 +25,7 @@ public:
   Stage(const Vec2 stageSize)
     : m_font(L"Fonts\\Logger.fnt")
     , m_stageSize(stageSize)
-    , m_playerInitialPos(400, 100)
+    , m_playerInitialPos(100, 0)
     , m_scrollPos(0, 0)
     , m_player(m_playerInitialPos, this)
   { }

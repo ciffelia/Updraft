@@ -30,10 +30,10 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   Stage stage = StageReader(L"Map2.ump").read();
 
   const PlayerParams playerParams = {
-    {0.1, 0.2}, {-6.0, -5.0}, {6.0, 3.0},
-    3.0,
-    -5.0,
-    -0.4
+    {0.15, 0.3}, {-9.0, -7.5}, {9.0, 4.5},
+    4.5,
+    -7.5,
+    -0.6
   };
 
   while (Lifecycle::Update())

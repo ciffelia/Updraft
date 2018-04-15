@@ -90,7 +90,7 @@ void Stage::draw() const
   {
     line
       .movedBy(-m_scrollPos)
-      .draw(Palette::Deeppink);
+      .draw(Palette::Deeppink, 2);
   }
 
   m_player.draw();

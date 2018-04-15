@@ -90,5 +90,5 @@ struct Line
 
   Line movedBy(const Vec2 v) const;
 
-  void draw(const Color color) const;
+  void draw(const Color color, const int thickness = 1) const;
 };

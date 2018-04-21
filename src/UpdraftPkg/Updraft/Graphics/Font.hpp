@@ -22,12 +22,12 @@ class Font
 
   const uint8 *getGlyphDataPtr(const char ch) const;
 
-  uint8 drawGlyph(const char ch, const Point pos, const Color color) const;
+  uint8 drawGlyph(const char ch, const Point pos, const Color color, const double scale) const;
 
   void calcAlphaData();
 
 public:
   Font(const wchar_t *fileName);
 
-  void draw(const CHAR8 *str, const Point pos, const Color color = Palette::Black) const;
+  void draw(const CHAR8 *str, const Point pos, const Color color = Palette::Black, const double scale = 1) const;
 };

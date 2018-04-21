@@ -17,6 +17,7 @@ extern "C" {
 #include "Graphics/Font.hpp"
 #include "StageReader.hpp"
 #include "Scene/SceneManager.hpp"
+#include "Scene/TitleScene.hpp"
 #include "Scene/PlayScene.hpp"
 
 EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
@@ -28,7 +29,7 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
   Logger::Initialize();
   UsbKeyboard::Initialize();
 
-  SceneManager::changeScene(new PlayScene(L"Map3.ump"));
+  SceneManager::changeScene(new TitleScene());
 
   while (Lifecycle::Update())
   {

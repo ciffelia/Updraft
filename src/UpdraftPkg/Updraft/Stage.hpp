@@ -3,6 +3,7 @@
 #include "Graphics/Font.hpp"
 #include "Graphics/Line.hpp"
 #include "Graphics/Rect.hpp"
+#include "Graphics/Circle.hpp"
 #include "Player.hpp"
 
 class Stage
@@ -12,6 +13,10 @@ class Stage
   const Vec2 m_stageSize;
 
   const Vec2 m_playerInitialPos;
+
+  const Circle m_goal;
+
+  int m_goalCount;
 
   Point m_scrollPos;
 
@@ -23,9 +28,11 @@ class Stage
 
 public:
   Stage(const Vec2 stageSize)
-    : m_font(L"Fonts\\Logger.fnt")
+    : m_font(L"Fonts\\MisakiGothic.fnt")
     , m_stageSize(stageSize)
     , m_playerInitialPos(100, 0)
+    , m_goal(2560, 215, 25)
+    , m_goalCount(-1)
     , m_scrollPos(0, 0)
     , m_player(m_playerInitialPos, this)
   { }

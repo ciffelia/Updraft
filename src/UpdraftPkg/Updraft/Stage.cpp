@@ -4,6 +4,9 @@
 #include "Utils/Utility.hpp"
 #include "Graphics/Screen.hpp"
 #include "Graphics/Graphics.hpp"
+#include "Utils/Utility.hpp"
+#include "Scene/SceneManager.hpp"
+#include "Scene/TitleScene.hpp"
 
 Vec2 Stage::size()
 {
@@ -56,7 +59,20 @@ bool Stage::isInUpdraft(const Vec2 pos)
 
 void Stage::update(const PlayerParams playerParams)
 {
-  m_player.update(playerParams);
+  if (m_goalCount == -1)
+  {
+    m_player.update(playerParams);
+
+    if (m_player.pos.distanceFrom(m_goal.center) < m_goal.r + m_player.r)
+      m_goalCount = 0;
+  }
+  else
+  {
+    m_goalCount++;
+
+    if (m_goalCount >= 180)
+      SceneManager::changeScene(new TitleScene());
+  }
 }
 
 void Stage::draw() const
@@ -95,8 +111,15 @@ void Stage::draw() const
 
   m_player.draw();
 
-  // const double distance = m_line.distanceFrom(m_player.pos) - m_player.r;
-  // const char *buf = Format("d: ", distance, ", walking: ", distance <= 0, ", v: ", m_player.speed);
-  // m_font.draw(buf, m_player.pos.asPoint(), Palette::White);
+  m_goal
+    .movedBy(-m_scrollPos)
+    .draw(Palette::Lightcyan);
+  m_font.draw("G", m_goal.center - Point(12, 17) - m_scrollPos, {20, 20, 20}, 2);
+
+  if (m_goalCount != -1)
+    m_font.draw("STAGE CLEAR", {80, 140}, Color(Palette::Indigo, Min(255, m_goalCount * 4)), 5);
+
+  // const char *buf = Format(m_player.pos);
+  // m_font.draw(buf, { 0, 0 }, Palette::White, 2);
   // delete[] buf;
 }

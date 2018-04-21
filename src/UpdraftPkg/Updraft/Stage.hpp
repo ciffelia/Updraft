@@ -12,7 +12,7 @@ class Stage
 
   const Vec2 m_stageSize;
 
-  const Vec2 m_playerInitialPos;
+  const Vec2 m_startPos;
 
   const Circle m_goal;
 
@@ -27,14 +27,14 @@ class Stage
   Array<Rect> m_updrafts;
 
 public:
-  Stage(const Vec2 stageSize)
+  Stage(const Vec2 stageSize, const Vec2 startPos, const Point goalPos)
     : m_font(L"Fonts\\MisakiGothic.fnt")
     , m_stageSize(stageSize)
-    , m_playerInitialPos(100, 0)
-    , m_goal(2560, 215, 25)
+    , m_startPos(startPos)
+    , m_goal(goalPos, 25)
     , m_goalCount(-1)
     , m_scrollPos(0, 0)
-    , m_player(m_playerInitialPos, this)
+    , m_player(m_startPos, this)
   { }
 
   Vec2 size();

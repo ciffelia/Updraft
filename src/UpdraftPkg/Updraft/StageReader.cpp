@@ -23,14 +23,18 @@ Stage StageReader::read() const
 
   const uint16 gridSize = realMapData[0];
   const Point stageSize = { realMapData[1], realMapData[2] };
-  const uint16 lineSize = realMapData[3];
-  const uint16 updraftSize = realMapData[4];
 
-  Stage stage(gridSize * Vec2(stageSize));
+  const Point startPos = { realMapData[3], realMapData[4] };
+  const Point goalPos = { realMapData[5], realMapData[6] };
+  
+  const uint16 lineSize = realMapData[7];
+  const uint16 updraftSize = realMapData[8];
+
+  Stage stage(gridSize * Vec2(stageSize), startPos, goalPos);
 
   for (uint16 i = 0; i < lineSize; i++)
   {
-    const auto *lineData = &realMapData[5 + 4 * i];
+    const auto *lineData = &realMapData[9 + 4 * i];
     stage.lines().emplace(
       gridSize * lineData[0],
       gridSize * lineData[1],
@@ -41,7 +45,7 @@ Stage StageReader::read() const
 
   for (uint16 i = 0; i < updraftSize; i++)
   {
-    const auto *updraftData = &realMapData[5 + 4 * lineSize + 4 * i];
+    const auto *updraftData = &realMapData[9 + 4 * lineSize + 4 * i];
     stage.updrafts().emplace(
       gridSize * updraftData[0],
       gridSize * updraftData[1],

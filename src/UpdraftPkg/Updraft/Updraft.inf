@@ -11,6 +11,8 @@
   Player.cpp
   Stage.cpp
   StageReader.cpp
+  Scene/SceneManager.cpp
+  Scene/PlayScene.cpp
   Utils/BinaryArray.cpp
   Utils/Math.cpp
   Utils/Misc.cpp

@@ -64,7 +64,7 @@ void Player::processInput(const PlayerParams playerParams)
     {
       speed.x -= playerParams.walkSpeed;
     }
-    if (Input::KeySpace.pressed())
+    if (Input::KeySpace.pressed() || Input::KeyUp.pressed())
     {
       walkingLine = nullptr;
       jump(playerParams);

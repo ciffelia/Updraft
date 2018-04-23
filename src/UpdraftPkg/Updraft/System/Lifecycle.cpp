@@ -3,7 +3,6 @@
 #include "UefiSystem.hpp"
 #include "Logger.hpp"
 #include "Assert.hpp"
-#include "Input.hpp"
 
 EFI_EVENT Lifecycle::s_timerEvent = nullptr;
 
@@ -59,9 +58,6 @@ bool Lifecycle::Update()
   WaitForTimerEvent();
 
   s_frameCount++;
-
-  if (Input::KeyEscape.pressed())
-    return false;
 
   return true;
 }

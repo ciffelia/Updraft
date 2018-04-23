@@ -1,5 +1,8 @@
 #include "PlayScene.hpp"
 
+#include "../System/Input.hpp"
+#include "SceneManager.hpp"
+#include "TitleScene.hpp"
 #include "../StageReader.hpp"
 
 PlayScene::PlayScene(const wchar_t *fileName)
@@ -15,6 +18,9 @@ PlayScene::PlayScene(const wchar_t *fileName)
 
 void PlayScene::update()
 {
+  if (Input::KeyEscape.pressed())
+    SceneManager::changeScene(new TitleScene());
+
   stage.update(playerParams);
 }
 

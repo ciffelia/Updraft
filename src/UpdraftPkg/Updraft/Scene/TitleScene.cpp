@@ -42,7 +42,11 @@ void TitleScene::drawTitle() const
 
 void TitleScene::update()
 {
-  if (Input::Key1.pressed())
+  if (Input::KeyCtrl.pressed() && Input::KeyEscape.pressed())
+  {
+    Lifecycle::Exit();
+  }
+  else if (Input::Key1.pressed())
   {
     SceneManager::changeScene(new PlayScene(L"Map1.ump"));
   }

@@ -82,16 +82,16 @@ namespace Input
   constexpr SingleKey KeyY(0x1C, false);
   constexpr SingleKey KeyZ(0x1D, false);
 
-  constexpr DoubleKey Key1(0x1E, 0x59, false);
-  constexpr DoubleKey Key2(0x1F, 0x5A, false);
-  constexpr DoubleKey Key3(0x20, 0x5B, false);
-  constexpr DoubleKey Key4(0x21, 0x5C, false);
-  constexpr DoubleKey Key5(0x22, 0x5D, false);
-  constexpr DoubleKey Key6(0x23, 0x5E, false);
-  constexpr DoubleKey Key7(0x24, 0x5F, false);
-  constexpr DoubleKey Key8(0x25, 0x60, false);
-  constexpr DoubleKey Key9(0x26, 0x61, false);
-  constexpr DoubleKey Key0(0x27, 0x62, false);
+  constexpr SingleKey Key1(0x1E, false);
+  constexpr SingleKey Key2(0x1F, false);
+  constexpr SingleKey Key3(0x20, false);
+  constexpr SingleKey Key4(0x21, false);
+  constexpr SingleKey Key5(0x22, false);
+  constexpr SingleKey Key6(0x23, false);
+  constexpr SingleKey Key7(0x24, false);
+  constexpr SingleKey Key8(0x25, false);
+  constexpr SingleKey Key9(0x26, false);
+  constexpr SingleKey Key0(0x27, false);
 
   constexpr DoubleKey KeyEnter(0x28, 0x58, false);
   constexpr SingleKey KeyEscape(0x29, false);

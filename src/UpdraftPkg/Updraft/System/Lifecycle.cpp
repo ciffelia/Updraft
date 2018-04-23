@@ -14,6 +14,8 @@ uint8 Lifecycle::s_fps = 60;
 
 uint32 Lifecycle::s_frameCount = 0;
 
+bool Lifecycle::s_isExitting = false;
+
 void Lifecycle::CreateTimerEvent()
 {
   const auto status = UefiSystem::SystemTable()->BootServices->CreateEvent(EVT_TIMER, 0, nullptr, nullptr, &s_timerEvent);
@@ -55,11 +57,19 @@ void Lifecycle::Initialize()
 
 bool Lifecycle::Update()
 {
+  if (s_isExitting)
+    return false;
+
   WaitForTimerEvent();
 
   s_frameCount++;
 
   return true;
+}
+
+void Lifecycle::Exit()
+{
+  s_isExitting = true;
 }
 
 uint8 Lifecycle::FPS()

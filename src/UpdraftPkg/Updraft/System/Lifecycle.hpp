@@ -17,6 +17,8 @@ class Lifecycle
 
   static uintn s_eventIndex;
 
+  static bool s_isExitting;
+
   static void CreateTimerEvent();
 
   static void SetTimer();
@@ -31,6 +33,8 @@ public:
   static void Initialize();
 
   static bool Update();
+
+  static void Exit();
 
   static uint8 FPS();
 

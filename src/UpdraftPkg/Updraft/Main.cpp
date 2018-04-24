@@ -36,8 +36,8 @@ EFI_STATUS UefiMain(EFI_HANDLE, EFI_SYSTEM_TABLE *SystemTable)
     SceneManager::update();
     SceneManager::draw();
 
-    const Vec2 circularPos = Vec2(200, 200) + Circular(100, Math::TwoPi * Lifecycle::FrameCount() / 180);
-    Circle(circularPos.asPoint(), 15).draw(Palette::Orange);
+    // const Vec2 circularPos = Vec2(200, 200) + Circular(100, Math::TwoPi * Lifecycle::FrameCount() / 180);
+    // Circle(circularPos.asPoint(), 15).draw(Palette::Orange);
 
     Logger::Update();
 

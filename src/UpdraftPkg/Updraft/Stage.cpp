@@ -70,7 +70,7 @@ void Stage::update(const PlayerParams playerParams)
   {
     m_goalCount++;
 
-    if (m_goalCount >= 180)
+    if (m_goalCount >= 120)
       SceneManager::changeScene(new TitleScene());
   }
 }

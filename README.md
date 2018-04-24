@@ -3,6 +3,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/gdgm3pft3gcovlrh?svg=true)](https://ci.appveyor.com/project/prince0203/updraft)
 [![CircleCI](https://circleci.com/gh/prince0203/Updraft.svg?style=svg)](https://circleci.com/gh/prince0203/Updraft)
 
+![Screenshot](Screenshot.png)
+
 ## Building Updraft on Windows
 
 ### Requirements
